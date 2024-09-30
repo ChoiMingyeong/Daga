@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MalzzonUtility", "MalzzonUtility\MalzzonUtility.csproj", "{EC79EA41-1366-4071-A2F3-534FB9BA6C35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DagaUtility", "DagaUtility.csproj", "{87E5EF7B-A43F-4814-B1B8-0C73D0078600}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EC79EA41-1366-4071-A2F3-534FB9BA6C35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC79EA41-1366-4071-A2F3-534FB9BA6C35}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC79EA41-1366-4071-A2F3-534FB9BA6C35}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC79EA41-1366-4071-A2F3-534FB9BA6C35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87E5EF7B-A43F-4814-B1B8-0C73D0078600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87E5EF7B-A43F-4814-B1B8-0C73D0078600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87E5EF7B-A43F-4814-B1B8-0C73D0078600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87E5EF7B-A43F-4814-B1B8-0C73D0078600}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {46B7FFE6-DDEA-4E85-83CE-F1B3E1E43713}
+		SolutionGuid = {834D0770-CBAF-4BE9-92F8-55299AF1564F}
 	EndGlobalSection
 EndGlobal
