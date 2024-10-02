@@ -1,6 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace DagaDev
 {
@@ -84,6 +87,41 @@ namespace DagaDev
         private async Task HandleClientAsync(TcpClient client)
         {
             NetworkStream stream = client.GetStream();
+            int offset = 0;
+            int lengthSize = sizeof(ushort);
+            byte[] lengthBuffer = new byte[lengthSize];
+            try
+            {
+                while(client.Connected)
+                {
+                    int bytesRead = await stream.ReadAsync(lengthBuffer.AsMemory(offset, lengthSize));
+                    if (bytesRead <= lengthSize)
+                    {
+                        break;
+                    }
+
+                    offset += bytesRead;
+                    ushort packetLength = BitConverter.ToUInt16(lengthBuffer);
+                    byte[] packetBuffer = new byte[packetLength];
+                    bytesRead = await stream.ReadAsync(packetBuffer.AsMemory(offset, packetLength));
+                    if (bytesRead <= packetLength)
+                    {
+                        break;
+                    }
+
+                    string message = System.Text.Encoding.UTF8.GetString(packetBuffer, 0, bytesRead);
+                    IPacket? packet = JsonSerializer.Deserialize<IPacket>(message);
+                    packet?.Execute();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                client.Close();
+            }
         }
     }
 }
