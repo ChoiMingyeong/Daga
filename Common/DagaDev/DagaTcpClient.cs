@@ -27,25 +27,5 @@ namespace DagaDev
                 return false;
             }
         }
-
-        public async Task<bool> SendAsync(IPacket packet)
-        {
-            if(_client == null)
-            {
-                return false;
-            }
-
-            try
-            {
-                using (NetworkStream stream = _client.GetStream())
-                {
-                    await stream.WriteAsync();
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
     }
 }
