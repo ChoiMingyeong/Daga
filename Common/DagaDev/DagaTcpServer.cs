@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
@@ -12,6 +13,8 @@ namespace DagaDev
         private TcpListener? _listener = null;
 
         private List<TcpClient>? _clients = null;
+
+        private ConcurrentQueue<IPacket> _packetQueue = [];
 
         private bool _isRunning = false;
 
@@ -111,7 +114,10 @@ namespace DagaDev
 
                     string message = System.Text.Encoding.UTF8.GetString(packetBuffer, 0, bytesRead);
                     IPacket? packet = JsonSerializer.Deserialize<IPacket>(message);
-                    packet?.Execute();
+                    if (packet != null)
+                    {
+                        _packetQueue.Enqueue(packet);
+                    }
                 }
             }
             catch (Exception)
