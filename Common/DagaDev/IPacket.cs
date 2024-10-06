@@ -2,6 +2,10 @@
 {
     public interface IPacket
     {
-        public Task Execute();
+    }
+
+    public class TestPacket : IPacket
+    {
+        public int AA {  get; set; }
     }
 }

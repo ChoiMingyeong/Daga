@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using System.Text.Json;
 
 namespace DagaDev
 {
@@ -28,16 +29,24 @@ namespace DagaDev
             }
         }
 
-        public async Task<bool> Send(IPacket packet)
+        public async Task<bool> SendAsync(IPacket packet)
         {
-            if(null==_client || false== _client.Connected)
+            if (null == _client || false == _client.Connected)
             {
                 return false;
             }
 
             NetworkStream stream = _client.GetStream();
-            
-            await stream.WriteAsync()
+
+            var jsonPacket = JsonSerializer.Serialize(packet);
+            if (null == jsonPacket)
+            {
+                return false;
+            }
+
+            ushort packetLength = (ushort)jsonPacket.Length;
+            var lengthBytes = BitConverter.GetBytes(packetLength);
+            await stream.WriteAsync(lengthBytes.AsMemory());
             return true;
         }
     }
