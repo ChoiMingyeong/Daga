@@ -1,9 +1,11 @@
-﻿using System;
+﻿using MemoryPack;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
+using System.Reflection;
+using System.Text;
 using System.Text.Json;
 
 namespace DagaDev
@@ -14,7 +16,7 @@ namespace DagaDev
 
         private List<TcpClient>? _clients = null;
 
-        private ConcurrentQueue<IPacket> _packetQueue = [];
+        public ConcurrentQueue<IPacket> PacketQueue { get; private set; } = [];
 
         private bool _isRunning = false;
 
@@ -23,8 +25,8 @@ namespace DagaDev
             _isRunning = false;
 
             _listener?.Dispose();
-            
-            if(null!=_clients)
+
+            if (null != _clients)
             {
                 foreach (var client in _clients)
                 {
@@ -56,14 +58,14 @@ namespace DagaDev
             _isRunning = false;
             _listener?.Stop();
 
-            if(null == _clients)
+            if (null == _clients)
             {
                 return;
             }
 
             foreach (var client in _clients)
             {
-                if(client.Connected)
+                if (client.Connected)
                 {
                     client.Close();
                 }
@@ -79,50 +81,53 @@ namespace DagaDev
             while (_isRunning)
             {
                 TcpClient client = await _listener.AcceptTcpClientAsync();
-                if(null == _clients)
+                if (null == _clients)
                 {
                     _clients = [];
                 }
                 _clients.Add(client);
+
+                Task task = Task.Run(async () =>
+                {
+                    await HandleClientAsync(client);
+                });
             }
         }
 
         private async Task HandleClientAsync(TcpClient client)
         {
+            Assembly assembly = Assembly.GetExecutingAssembly();
             NetworkStream stream = client.GetStream();
-            int offset = 0;
             int lengthSize = sizeof(ushort);
-            byte[] lengthBuffer = new byte[lengthSize];
+            byte[] buffer = new byte[lengthSize];
             try
             {
-                while(client.Connected)
+                while (client.Connected)
                 {
-                    int bytesRead = await stream.ReadAsync(lengthBuffer.AsMemory(offset, lengthSize));
-                    if (bytesRead <= lengthSize)
-                    {
-                        break;
-                    }
+                    await stream.ReadAsync(buffer.AsMemory(0, sizeof(byte)));
 
-                    offset += bytesRead;
-                    ushort packetLength = BitConverter.ToUInt16(lengthBuffer);
+                    byte typeNameLen = buffer[0];
+                    byte[] typeNameBuffer = new byte[typeNameLen];
+                    await stream.ReadAsync(typeNameBuffer.AsMemory(0, typeNameLen));
+
+                    string typeName = Encoding.UTF8.GetString(typeNameBuffer, 0, typeNameLen);
+                    var type = assembly.GetTypes().Single(p => p.Name == typeName);
+                    await stream.ReadAsync(buffer.AsMemory(0, lengthSize));
+
+                    ushort packetLength = BitConverter.ToUInt16(buffer);
                     byte[] packetBuffer = new byte[packetLength];
-                    bytesRead = await stream.ReadAsync(packetBuffer.AsMemory(offset, packetLength));
-                    if (bytesRead <= packetLength)
+                    await stream.ReadAsync(packetBuffer.AsMemory(0, packetLength));
+                    if (MemoryPackSerializer.Deserialize(type, packetBuffer) is IPacket aa)
                     {
-                        break;
+                        PacketQueue.Enqueue(aa);
                     }
 
-                    string message = System.Text.Encoding.UTF8.GetString(packetBuffer, 0, bytesRead);
-                    IPacket? packet = JsonSerializer.Deserialize<IPacket>(message);
-                    if (packet != null)
-                    {
-                        _packetQueue.Enqueue(packet);
-                    }
+                    await Task.Delay(1);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                Console.WriteLine(e.Message);
             }
             finally
             {
