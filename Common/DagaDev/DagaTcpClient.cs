@@ -45,15 +45,8 @@ namespace DagaDev
                 return false;
             }
 
-            var packetTypeNameBytes = Encoding.UTF8.GetBytes(packet.GetType().Name);
-
-            byte[] packetTypeNameLength = [(byte)packetTypeNameBytes.Length];
-            await stream.WriteAsync(packetTypeNameLength);
-            await stream.WriteAsync(packetTypeNameBytes);
-
-            ushort packetLength = (ushort)jsonPacket.Length;
-            var lengthBytes = BitConverter.GetBytes(packetLength);
-            await stream.WriteAsync(lengthBytes.AsMemory());
+            await stream.WriteAsync(BitConverter.GetBytes(packet.PacketID).AsMemory());
+            await stream.WriteAsync(BitConverter.GetBytes((ushort)jsonPacket.Length).AsMemory());
             await stream.WriteAsync(jsonPacket.AsMemory());
 
             return true;

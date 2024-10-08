@@ -1,9 +1,7 @@
-﻿using MemoryPack;
-
-namespace DagaDev
+﻿namespace DagaDev
 {
     public interface IPacket
     {
-        public uint GetPacketID();
+        public uint PacketID { get; init; }
     }
 }

@@ -1,12 +1,10 @@
 ﻿using MemoryPack;
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
-using System.Text.Json;
 
 namespace DagaDev
 {
@@ -98,26 +96,25 @@ namespace DagaDev
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             NetworkStream stream = client.GetStream();
-            int lengthSize = sizeof(ushort);
-            byte[] buffer = new byte[lengthSize];
+
+            byte[] idBuffer = new byte[sizeof(uint)];
+            byte[] lengthBuffer = new byte[sizeof(ushort)];
             try
             {
                 while (client.Connected)
                 {
-                    await stream.ReadAsync(buffer.AsMemory(0, sizeof(byte)));
+                    await stream.ReadAsync(idBuffer.AsMemory(0, idBuffer.Length));
+                    if(DagaPacketHandler.Instance.GetPacketType(BitConverter.ToUInt32(idBuffer, 0)) is not Type packetType)
+                    {
+                        await stream.FlushAsync();
+                        continue;
+                    }
 
-                    byte typeNameLen = buffer[0];
-                    byte[] typeNameBuffer = new byte[typeNameLen];
-                    await stream.ReadAsync(typeNameBuffer.AsMemory(0, typeNameLen));
+                    await stream.ReadAsync(lengthBuffer.AsMemory(0, lengthBuffer.Length));
+                    byte[] packetBuffer = new byte[BitConverter.ToUInt16(lengthBuffer, 0)];
+                    await stream.ReadAsync(packetBuffer.AsMemory(0, packetBuffer.Length));
 
-                    string typeName = Encoding.UTF8.GetString(typeNameBuffer, 0, typeNameLen);
-                    var type = assembly.GetTypes().Single(p => p.Name == typeName);
-                    await stream.ReadAsync(buffer.AsMemory(0, lengthSize));
-
-                    ushort packetLength = BitConverter.ToUInt16(buffer);
-                    byte[] packetBuffer = new byte[packetLength];
-                    await stream.ReadAsync(packetBuffer.AsMemory(0, packetLength));
-                    if (MemoryPackSerializer.Deserialize(type, packetBuffer) is IPacket aa)
+                    if (MemoryPackSerializer.Deserialize(packetType, packetBuffer) is IPacket aa)
                     {
                         PacketQueue.Enqueue(aa);
                     }
