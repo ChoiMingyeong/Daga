@@ -5,7 +5,7 @@ namespace DagaDev
 {
     internal class DagaPacketHandler : Singleton<DagaPacketHandler>
     {
-        private Dictionary<uint, IPacket> Packets { get; init; } = [];
+        private ConcurrentDictionary<uint, IPacket> Packets { get; init; } = [];
 
         public DagaPacketHandler()
         {
