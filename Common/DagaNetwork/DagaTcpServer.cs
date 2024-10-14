@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 
-namespace DagaDev
+namespace DagaNetwork
 {
     public class DagaTcpServer : IDisposable
     {

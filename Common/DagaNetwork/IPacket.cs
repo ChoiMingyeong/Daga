@@ -1,4 +1,4 @@
-﻿namespace DagaDev
+﻿namespace DagaNetwork
 {
     public interface IPacket
     {

@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DagaNetwork\DagaNetwork.csproj" />
+    <ProjectReference Include="..\DagaUtility\DagaUtility.csproj" />
+  </ItemGroup>
+
 </Project>

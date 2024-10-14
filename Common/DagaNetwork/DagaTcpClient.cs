@@ -2,10 +2,12 @@
 using System.Net.Sockets;
 using System.Text;
 
-namespace DagaDev
+namespace DagaNetwork
 {
     public class DagaTcpClient : IDisposable
     {
+        public bool IsConnected => _client?.Connected ?? false;
+
         private TcpClient? _client = null;
 
         public void Dispose()

@@ -1,4 +1,4 @@
-﻿namespace DagaDev
+﻿namespace DagaNetwork
 {
     internal class Program
     {

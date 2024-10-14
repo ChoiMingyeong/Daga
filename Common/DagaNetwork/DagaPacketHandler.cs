@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Reflection;
 
-namespace DagaDev
+namespace DagaNetwork
 {
     internal class DagaPacketHandler : Singleton<DagaPacketHandler>
     {
