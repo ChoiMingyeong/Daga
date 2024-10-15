@@ -1,7 +1,7 @@
 ﻿namespace DagaUtility
 {
-
-    public class DataTable
+    public class FileConverter
     {
+
     }
 }

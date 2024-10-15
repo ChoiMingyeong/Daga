@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DagaCommon\DagaCommon.csproj" />
     <ProjectReference Include="..\DagaDev\DagaDev.csproj" />
   </ItemGroup>
 

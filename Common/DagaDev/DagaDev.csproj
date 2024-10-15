@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DagaUtility\DagaUtility.csproj" />
+    <ProjectReference Include="..\DagaCommon\DagaCommon.csproj" />
   </ItemGroup>
 
 </Project>

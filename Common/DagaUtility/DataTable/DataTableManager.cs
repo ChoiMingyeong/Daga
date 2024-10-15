@@ -1,4 +1,4 @@
-﻿namespace DagaUtility
+﻿namespace DagaUtility.DataTable
 {
     public class DataTableManager
     {
