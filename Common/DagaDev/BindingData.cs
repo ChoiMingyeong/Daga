@@ -25,7 +25,10 @@
 
             set
             {
-                SetValue(value);
+                if(false == SetValue(value))
+                {
+                    throw new InvalidOperationException("DB set failed");
+                }
                 _value = value;
             }
         }
@@ -50,7 +53,10 @@
             {
                 _value = value;
                 // todo : DB 테이블에 업데이트하는 작업
+                return true;
             }
+
+            return true;
         }
 
         public void Commit()
