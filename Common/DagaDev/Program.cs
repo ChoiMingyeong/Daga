@@ -1,15 +1,23 @@
 ﻿using System.Text;
+using System.Text.Json;
 
 namespace DagaNetwork
 {
+
     internal class Program
     {
         static async Task Main(string[] args)
         {
             string url = "https://script.google.com/macros/s/AKfycbxVBoEEgN7E11tNwN3t_zKSrxULh6zo60hLoQ_oM5cK6waOFUhOwTKES8Ad4Co4si5l7g/exec";
-            string jsonData = "{{\"action\": 1,\"id\":\"test1\", \"pwd\":\"1111\", \"nickname\":\"test\"}}";
+            AccountData accountData = new AccountData()
+            {
+                action = ActionType.Register,
+                id = "test1",
+                pwd = "1111",
+                nickname = "tttt",
+            };
             HttpClient httpClient = new();
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonSerializer.Serialize(accountData), Encoding.UTF8, "application/json");
 
             try
             {
