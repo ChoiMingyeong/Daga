@@ -7,6 +7,8 @@
     {
         static void Main(string[] args)
         {
+            TypeMapper.Instance.ToString();
+            var type = TypeMapper.Instance["string"];
             //string url = "https://script.google.com/macros/s/AKfycbxVBoEEgN7E11tNwN3t_zKSrxULh6zo60hLoQ_oM5cK6waOFUhOwTKES8Ad4Co4si5l7g/exec";
             //AccountData accountData = new AccountData()
             //{
