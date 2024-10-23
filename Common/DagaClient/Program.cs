@@ -15,6 +15,7 @@ namespace DagaClient
                 await client.SendAsync(packet);
                 while (false == client.IsConnected) ;
             }
+
         }
     }
 }

@@ -17,14 +17,14 @@ namespace DagaDev
             var content = new StringContent("load", Encoding.UTF8, "application/json");
             using HttpClient client = new();
             var response = await client.PostAsync(_url, content);
-            if(false == response.IsSuccessStatusCode)
+            if (false == response.IsSuccessStatusCode)
             {
                 return false;
             }
 
             var body = await response.Content.ReadAsStringAsync();
             var enumDataArray = JsonSerializer.Deserialize<EnumData[]>(body);
-            if(null == enumDataArray)
+            if (null == enumDataArray)
             {
                 return false;
             }

@@ -25,7 +25,7 @@
 
             set
             {
-                if(false == SetValue(value))
+                if (false == SetValue(value))
                 {
                     throw new InvalidOperationException("DB set failed");
                 }

@@ -1,19 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MemoryPack" Version="1.21.3" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="MemoryPack" Version="1.21.3" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DagaCommon\DagaCommon.csproj" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<ProjectReference Include="..\DagaCommon\DagaCommon.csproj" />
+	</ItemGroup>
 </Project>
