@@ -1,4 +1,6 @@
-﻿namespace DagaUtility
+﻿using System.Text;
+
+namespace DagaUtility
 {
     public class AppsScriptClient(string url) : IDisposable
     {
@@ -11,11 +13,16 @@
             GC.SuppressFinalize(this);
         }
 
-        public async Task<bool> PostAsync(HttpContent content)
+        public async Task<string> PostAsync(string content)
         {
-            await _httpClient.PostAsync(_url, content);
+            var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(_url, stringContent);
+            if (false == response.IsSuccessStatusCode)
+            {
+                return string.Empty;
+            }
 
-            return true;
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }
