@@ -11,6 +11,8 @@ namespace DagaDev
         {
             TypeMapper.Instance.ToString();
             var type = TypeMapper.Instance["string"];
+            var type2 = TypeMapper.Instance["System.String"];
+            var typeName = TypeMapper.Instance[typeof(string)];
             var assembly = Assembly.GetExecutingAssembly().GetTypes()
                                         .Select(t => t.Namespace)
                                         .FirstOrDefault(ns => !string.IsNullOrEmpty(ns)); ;

@@ -1,17 +1,23 @@
 ﻿using DagaUtility;
-using System.Reflection;
+using System.Diagnostics;
 
 namespace DagaDev
 {
     public class TypeMapper : Singleton<TypeMapper>
     {
-        private readonly Dictionary<string, Type> _typeNameMapping;
+        private readonly Dictionary<string, Type> _nameMap = [];
+        private readonly Dictionary<string, string> _aliasDictionary = [];
 
         public Type? this[string typeName]
         {
             get
             {
-                if (_typeNameMapping.TryGetValue(typeName, out var type))
+                if(_aliasDictionary.TryGetValue(typeName, out string? fullName))
+                {
+                    return _nameMap[fullName];
+                }
+
+                if (_nameMap.TryGetValue(typeName, out Type? type))
                 {
                     return type;
                 }
@@ -22,51 +28,55 @@ namespace DagaDev
             }
         }
 
+        public string this[Type type]
+        {
+            get
+            {
+                Debug.Assert(null != type.FullName);
+
+                if (_aliasDictionary.ContainsValue(type.FullName))
+                {
+                    return _aliasDictionary.Single(p => p.Value == type.FullName).Key;
+                }
+
+                return type.Name;
+            }
+        }
+
         public TypeMapper()
         {
-            _typeNameMapping = [];
-
             InitDefaultTypes();
-            InitCustomEnumTypes();
         }
 
         private void InitDefaultTypes()
         {
-            MapTypeWithName(type: typeof(string));
-            MapTypeWithName(type: typeof(string), typeName: "string");
-            MapTypeWithName(type: typeof(byte));
-            MapTypeWithName(type: typeof(byte), typeName: "byte");
-            MapTypeWithName(type: typeof(short));
-            MapTypeWithName(type: typeof(short), typeName: "short");
-            MapTypeWithName(type: typeof(int));
-            MapTypeWithName(type: typeof(int), typeName: "int");
-            MapTypeWithName(type: typeof(long));
-            MapTypeWithName(type: typeof(long), typeName: "long");
-            MapTypeWithName(type: typeof(float));
-            MapTypeWithName(type: typeof(float), typeName: "float");
-            MapTypeWithName(type: typeof(double));
-            MapTypeWithName(type: typeof(double), typeName: "double");
-            MapTypeWithName(type: typeof(bool));
-            MapTypeWithName(type: typeof(bool), typeName: "bool");
-            MapTypeWithName(type: typeof(char));
-            MapTypeWithName(type: typeof(char), typeName: "char");
+            TryAddType(type: typeof(byte), alias: "byte");
+            TryAddType(type: typeof(sbyte), alias: "sbyte");
+            TryAddType(type: typeof(short), alias: "short");
+            TryAddType(type: typeof(ushort), alias: "ushort");
+            TryAddType(type: typeof(int), alias: "int");
+            TryAddType(type: typeof(uint), alias: "uint");
+            TryAddType(type: typeof(long), alias: "long");
+            TryAddType(type: typeof(ulong), alias: "ulong");
+            TryAddType(type: typeof(float), alias: "float");
+            TryAddType(type: typeof(double), alias: "double");
+            TryAddType(type: typeof(decimal), alias: "decimal");
+            TryAddType(type: typeof(char), alias: "char");
+            TryAddType(type: typeof(bool), alias: "bool");
+            TryAddType(type: typeof(object), alias: "object");
+            TryAddType(type: typeof(string), alias: "string");
         }
 
-        private void InitCustomEnumTypes()
+        public bool TryAddType(Type type, string alias = "")
         {
-            var enumType = Assembly
-                .GetExecutingAssembly()
-                .GetTypes();
-        }
+            Debug.Assert(null != type.FullName);
 
-        private bool MapTypeWithName(Type type)
-        {
-            return MapTypeWithName(typeName: type.Name, type: type);
-        }
-
-        private bool MapTypeWithName(string typeName, Type type)
-        {
-            return _typeNameMapping.TryAdd(key: typeName, value: type);
+            string trimAlias = alias.Trim();
+            if (false == string.IsNullOrEmpty(trimAlias))
+            {
+                _aliasDictionary.TryAdd(key: alias, value: type.FullName);
+            }
+            return _nameMap.TryAdd(key: type.FullName, value: type);
         }
     }
 }
