@@ -1,10 +1,5 @@
 ﻿using DagaUtility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace DagaDev
 {
@@ -16,7 +11,7 @@ namespace DagaDev
         {
             get
             {
-                if (_typeNameMapping.TryGetValue(typeName.Trim().ToLower(), out var type))
+                if (_typeNameMapping.TryGetValue(typeName, out var type))
                 {
                     return type;
                 }
@@ -31,34 +26,47 @@ namespace DagaDev
         {
             _typeNameMapping = [];
 
-            MapTypeWithName(typeof(string));
-            MapTypeWithName(typeof(string), "string");
-            MapTypeWithName(typeof(byte));
-            MapTypeWithName(typeof(byte), "byte");
-            MapTypeWithName(typeof(short));
-            MapTypeWithName(typeof(short), "short");
-            MapTypeWithName(typeof(int));
-            MapTypeWithName(typeof(int), "int");
-            MapTypeWithName(typeof(long));
-            MapTypeWithName(typeof(long), "long");
-            MapTypeWithName(typeof(float));
-            MapTypeWithName(typeof(float), "float");
-            MapTypeWithName(typeof(double));
-            MapTypeWithName(typeof(double), "double");
-            MapTypeWithName(typeof(bool));
-            MapTypeWithName(typeof(bool), "bool");
-            MapTypeWithName(typeof(char));
-            MapTypeWithName(typeof(char), "char");
+            InitDefaultTypes();
+            InitCustomEnumTypes();
+        }
+
+        private void InitDefaultTypes()
+        {
+            MapTypeWithName(type: typeof(string));
+            MapTypeWithName(type: typeof(string), typeName: "string");
+            MapTypeWithName(type: typeof(byte));
+            MapTypeWithName(type: typeof(byte), typeName: "byte");
+            MapTypeWithName(type: typeof(short));
+            MapTypeWithName(type: typeof(short), typeName: "short");
+            MapTypeWithName(type: typeof(int));
+            MapTypeWithName(type: typeof(int), typeName: "int");
+            MapTypeWithName(type: typeof(long));
+            MapTypeWithName(type: typeof(long), typeName: "long");
+            MapTypeWithName(type: typeof(float));
+            MapTypeWithName(type: typeof(float), typeName: "float");
+            MapTypeWithName(type: typeof(double));
+            MapTypeWithName(type: typeof(double), typeName: "double");
+            MapTypeWithName(type: typeof(bool));
+            MapTypeWithName(type: typeof(bool), typeName: "bool");
+            MapTypeWithName(type: typeof(char));
+            MapTypeWithName(type: typeof(char), typeName: "char");
+        }
+
+        private void InitCustomEnumTypes()
+        {
+            var enumType = Assembly
+                .GetExecutingAssembly()
+                .GetTypes();
         }
 
         private bool MapTypeWithName(Type type)
         {
-            return MapTypeWithName(type, type.Name);
+            return MapTypeWithName(typeName: type.Name, type: type);
         }
 
-        private bool MapTypeWithName(Type type, string typeName)
+        private bool MapTypeWithName(string typeName, Type type)
         {
-            return _typeNameMapping.TryAdd(typeName.Trim().ToLower(), type);
+            return _typeNameMapping.TryAdd(key: typeName, value: type);
         }
     }
 }

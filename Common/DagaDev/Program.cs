@@ -1,4 +1,6 @@
-﻿namespace DagaDev
+﻿using System.Reflection;
+
+namespace DagaDev
 {
 
 
@@ -9,6 +11,13 @@
         {
             TypeMapper.Instance.ToString();
             var type = TypeMapper.Instance["string"];
+            var assembly = Assembly.GetExecutingAssembly().GetTypes()
+                                        .Select(t => t.Namespace)
+                                        .FirstOrDefault(ns => !string.IsNullOrEmpty(ns)); ;
+
+            var a = Type.GetType("EnumA");
+            var a2 = typeof(EnumA);
+            Console.WriteLine(DagaDev.Constant.A);
             //string url = "https://script.google.com/macros/s/AKfycbxVBoEEgN7E11tNwN3t_zKSrxULh6zo60hLoQ_oM5cK6waOFUhOwTKES8Ad4Co4si5l7g/exec";
             //AccountData accountData = new AccountData()
             //{
