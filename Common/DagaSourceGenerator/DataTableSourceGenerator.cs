@@ -2,6 +2,8 @@
 {
     public class DataTableSourceGenerator : ISourceGenerator
     {
+        private List<ConstantDataTemplate> _dataList = [];
+
         public DataTableSourceGenerator()
         {
         }
