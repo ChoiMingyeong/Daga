@@ -4,20 +4,20 @@ namespace DagaSourceGenerator
 {
     public class Namespace
     {
-        private static string? _defaultNamespace = null;
-        public static Namespace DefaultNamespace
+        private static string? _default = null;
+        public static Namespace Default
         {
             get
             {
-                if (null == _defaultNamespace)
+                if (null == _default)
                 {
                     var assemblyNamespace = Assembly.GetExecutingAssembly().GetTypes()
                                                 .Select(t => t.Namespace)
                                                 .First(ns => !string.IsNullOrEmpty(ns));
-                    _defaultNamespace = assemblyNamespace ?? string.Empty;
+                    _default = assemblyNamespace ?? string.Empty;
                 }
 
-                return _defaultNamespace;
+                return _default;
             }
         }
 
@@ -31,6 +31,11 @@ namespace DagaSourceGenerator
         public static implicit operator Namespace(string @namespace)
         {
             return new Namespace { Value = @namespace };
+        }
+
+        public static Namespace operator +(Namespace a, Namespace b)
+        {
+            return new Namespace() { Value = $"{a.Value}.{b.Value}" };
         }
 
         public override string ToString()

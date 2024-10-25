@@ -13,5 +13,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DagaCommon\DagaCommon.csproj" />
+		<ProjectReference Include="..\DagaSourceGenerator\DagaSourceGenerator.csproj" />
 	</ItemGroup>
 </Project>

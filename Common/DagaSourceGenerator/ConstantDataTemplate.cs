@@ -3,10 +3,10 @@ using System.Text;
 
 namespace DagaSourceGenerator
 {
-    public class ConstantDataTemplate
+    public class ConstantDataTemplate : IDataTempltate
     {
 
-        public Namespace Namespace { get; set; } = Namespace.DefaultNamespace;
+        public Namespace Namespace { get; set; } = Namespace.Default;
 
         public required string Type { get; set; }
 

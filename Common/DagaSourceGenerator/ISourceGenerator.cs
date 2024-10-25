@@ -1,8 +1,8 @@
 ﻿namespace DagaSourceGenerator
 {
-    public interface ISourceGenerator
+    public interface ISourceGenerator<T> where T : IDataTempltate
     {
-        public void Initialize();
+        public void Initialize(IEnumerable<T> data);
 
         public void Generate();
     }

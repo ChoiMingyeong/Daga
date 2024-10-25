@@ -1,4 +1,5 @@
-﻿using DagaUtility;
+﻿using DagaSourceGenerator;
+using DagaUtility;
 using System.Reflection;
 
 namespace DagaDev
@@ -21,6 +22,54 @@ namespace DagaDev
             var a = Type.GetType("EnumA");
             var a2 = typeof(EnumA);
             Console.WriteLine(DagaDev.Constant.A);
+
+            ConstantSourceGenerator srcGen = new();
+            var dataList = new List<ConstantDataTemplate>
+            {
+                new()
+                {
+                    Type = "int",
+                    Name = "MAX_COUNT",
+                    Value = "500",
+                },
+                new()
+                {
+                    Namespace = Namespace.Default + "Constant",
+                    Type = "double",
+                    Name = "TEST_COUNT",
+                    Value = "100.83",
+                },
+                new()
+                {
+                    Namespace = Namespace.Default + "ProtocolS2C",
+                    Type = "ushort",
+                    Name = "SUCCESS",
+                    Value = "0",
+                },
+                new()
+                {
+                    Namespace = Namespace.Default + "ProtocolC2S",
+                    Type = "ushort",
+                    Name = "FAIL",
+                    Value = "1",
+                },
+                new()
+                {
+                    Namespace = Namespace.Default + "ProtocolS2C",
+                    Type = "ushort",
+                    Name = "FAIL",
+                    Value = "1",
+                },
+                new()
+                {
+                    Namespace = Namespace.Default + "ProtocolC2S",
+                    Type = "ushort",
+                    Name = "SUCCESS",
+                    Value = "0",
+                },
+            };
+            srcGen.Initialize(dataList);
+            srcGen.Generate();
             //string url = "https://script.google.com/macros/s/AKfycbxVBoEEgN7E11tNwN3t_zKSrxULh6zo60hLoQ_oM5cK6waOFUhOwTKES8Ad4Co4si5l7g/exec";
             //AccountData accountData = new AccountData()
             //{
