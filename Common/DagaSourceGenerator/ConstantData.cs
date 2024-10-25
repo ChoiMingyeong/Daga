@@ -1,12 +1,12 @@
 ﻿using DagaUtility;
-using System.Text;
 
 namespace DagaSourceGenerator
 {
-    public class ConstantDataTemplate : IDataTempltate
+    public class ConstantData : IDataTempltate
     {
-
         public Namespace Namespace { get; set; } = Namespace.Default;
+
+        public required ClassName ClassName { get; set; } = "Constant";
 
         public required string Type { get; set; }
 

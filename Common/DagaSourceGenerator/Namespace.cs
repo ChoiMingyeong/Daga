@@ -11,7 +11,7 @@ namespace DagaSourceGenerator
             {
                 if (null == _default)
                 {
-                    var assemblyNamespace = Assembly.GetExecutingAssembly().GetTypes()
+                    var assemblyNamespace = Assembly.GetEntryAssembly()?.GetTypes()
                                                 .Select(t => t.Namespace)
                                                 .First(ns => !string.IsNullOrEmpty(ns));
                     _default = assemblyNamespace ?? string.Empty;
@@ -35,7 +35,7 @@ namespace DagaSourceGenerator
 
         public static Namespace operator +(Namespace a, Namespace b)
         {
-            return new Namespace() { Value = $"{a.Value}.{b.Value}" };
+            return new Namespace() { Value = string.Join('.', a.Value, b.Value) };
         }
 
         public override string ToString()

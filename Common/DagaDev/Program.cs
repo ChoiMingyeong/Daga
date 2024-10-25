@@ -11,6 +11,8 @@ namespace DagaDev
     {
         static void Main(string[] args)
         {
+            
+
             TypeMapper.Instance.ToString();
             var type = TypeMapper.Instance["string"];
             var type2 = TypeMapper.Instance["System.String"];
@@ -20,49 +22,48 @@ namespace DagaDev
                                         .FirstOrDefault(ns => !string.IsNullOrEmpty(ns)); ;
 
             var a = Type.GetType("EnumA");
-            var a2 = typeof(EnumA);
-            Console.WriteLine(DagaDev.Constant.A);
 
             ConstantSourceGenerator srcGen = new();
-            var dataList = new List<ConstantDataTemplate>
+            var dataList = new List<ConstantData>
             {
                 new()
                 {
+                    ClassName = "Constant",
                     Type = "int",
                     Name = "MAX_COUNT",
                     Value = "500",
                 },
                 new()
                 {
-                    Namespace = Namespace.Default + "Constant",
+                    ClassName = "Constant",
                     Type = "double",
                     Name = "TEST_COUNT",
                     Value = "100.83",
                 },
                 new()
                 {
-                    Namespace = Namespace.Default + "ProtocolS2C",
+                    ClassName = "Constant",
                     Type = "ushort",
                     Name = "SUCCESS",
                     Value = "0",
                 },
                 new()
                 {
-                    Namespace = Namespace.Default + "ProtocolC2S",
+                    ClassName = "Constant",
                     Type = "ushort",
                     Name = "FAIL",
                     Value = "1",
                 },
                 new()
                 {
-                    Namespace = Namespace.Default + "ProtocolS2C",
+                    ClassName = "Constant",
                     Type = "ushort",
                     Name = "FAIL",
                     Value = "1",
                 },
                 new()
                 {
-                    Namespace = Namespace.Default + "ProtocolC2S",
+                    ClassName = "Constant",
                     Type = "ushort",
                     Name = "SUCCESS",
                     Value = "0",
