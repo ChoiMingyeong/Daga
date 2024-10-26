@@ -1,19 +1,19 @@
 ﻿namespace DagaSourceGenerator
 {
-    //public class EnumSourceGenerator : ISourceGenerator
-    //{
-    //    public EnumSourceGenerator()
-    //    {
-    //    }
+    public class EnumSourceGenerator : ISourceGenerator<EnumData>
+    {
+        public EnumSourceGenerator()
+        {
+        }
 
-    //    public void Initialize()
-    //    {
+        public void Initialize(IEnumerable<EnumData> data)
+        {
 
-    //    }
+        }
 
-    //    public void Generate()
-    //    {
+        public void Generate()
+        {
 
-    //    }
-    //}
+        }
+    }
 }

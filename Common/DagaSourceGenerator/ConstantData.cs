@@ -42,4 +42,11 @@ namespace DagaSourceGenerator
             return $"public const {Type} {Name} = {Value};";
         }
     }
+
+    public class EnumData : IDataTempltate
+    {
+        public Namespace Namespace { get; set; } = Namespace.Default;
+
+        public required ClassName ClassName { get; set; } = "Enum";
+    }
 }
