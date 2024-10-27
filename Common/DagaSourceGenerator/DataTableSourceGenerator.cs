@@ -1,21 +1,19 @@
 ﻿namespace DagaSourceGenerator
 {
-    //public class DataTableSourceGenerator : ISourceGenerator
-    //{
-    //    private List<ConstantDataTemplate> _dataList = [];
+    public class DataTableSourceGenerator : ISourceGenerator<DataTableData>
+    {
+        public DataTableSourceGenerator()
+        {
+        }
 
-    //    public DataTableSourceGenerator()
-    //    {
-    //    }
+        public void Initialize(IEnumerable<DataTableData> data)
+        {
 
-    //    public void Initialize()
-    //    {
+        }
 
-    //    }
+        public void Generate()
+        {
 
-    //    public void Generate()
-    //    {
-
-    //    }
-    //}
+        }
+    }
 }
