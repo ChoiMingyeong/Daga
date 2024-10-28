@@ -9,8 +9,4 @@ public class Constant
 	public const ushort SUCCESS = 0;
 
 	public const ushort FAIL = 1;
-
-	public const ushort FAIL = 1;
-
-	public const ushort SUCCESS = 0;
 }
