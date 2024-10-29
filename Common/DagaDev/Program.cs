@@ -1,5 +1,6 @@
 ﻿using DagaSourceGenerator;
 using DagaUtility;
+using Microsoft.CodeAnalysis.CSharp;
 using System.Reflection;
 
 namespace DagaDev
@@ -11,66 +12,81 @@ namespace DagaDev
     {
         static void Main(string[] args)
         {
-            
+            string code = @"
+        using System;
 
-            TypeMapper.Instance.ToString();
-            var type = TypeMapper.Instance["string"];
-            var type2 = TypeMapper.Instance["System.String"];
-            var typeName = TypeMapper.Instance[typeof(string)];
-            var assembly = Assembly.GetExecutingAssembly().GetTypes()
-                                        .Select(t => t.Namespace)
-                                        .FirstOrDefault(ns => !string.IsNullOrEmpty(ns)); ;
+        public class HelloWorld        {
+            public void SayHello()            {
+                Console.WriteLine(""Hello, World!"");            }
+        }";
 
-            var a = Type.GetType("EnumA");
+            // 코드 문자열을 구문 트리로 변환
+            var syntaxTree = CSharpSyntaxTree.ParseText(code);
 
-            ConstantSourceGenerator srcGen = new();
-            var dataList = new List<ConstantData>
-            {
-                new()
-                {
-                    ClassName = "Constant",
-                    Type = "int",
-                    Name = "MAX_COUNT",
-                    Value = "500",
-                },
-                new()
-                {
-                    ClassName = "Constant",
-                    Type = "double",
-                    Name = "TEST_COUNT",
-                    Value = "100.83",
-                },
-                new()
-                {
-                    ClassName = "Constant",
-                    Type = "ushort",
-                    Name = "SUCCESS",
-                    Value = "0",
-                },
-                new()
-                {
-                    ClassName = "Constant",
-                    Type = "ushort",
-                    Name = "FAIL",
-                    Value = "1",
-                },
-                new()
-                {
-                    ClassName = "Constant",
-                    Type = "ushort",
-                    Name = "FAIL",
-                    Value = "1",
-                },
-                new()
-                {
-                    ClassName = "Constant",
-                    Type = "ushort",
-                    Name = "SUCCESS",
-                    Value = "0",
-                },
-            };
-            srcGen.Initialize(dataList);
-            srcGen.Generate();
+            // 구문 트리의 루트 노드 가져오기
+            var root = syntaxTree.GetRoot();
+
+            // 루트 노드 출력
+            Console.WriteLine(root.ToString());
+
+            //TypeMapper.Instance.ToString();
+            //var type = TypeMapper.Instance["string"];
+            //var type2 = TypeMapper.Instance["System.String"];
+            //var typeName = TypeMapper.Instance[typeof(string)];
+            //var assembly = Assembly.GetExecutingAssembly().GetTypes()
+            //                            .Select(t => t.Namespace)
+            //                            .FirstOrDefault(ns => !string.IsNullOrEmpty(ns)); ;
+
+            //var a = Type.GetType("EnumA");
+
+            //ConstantSourceGenerator srcGen = new();
+            //var dataList = new List<ConstantData>
+            //{
+            //    new()
+            //    {
+            //        ClassName = "Constant",
+            //        Type = "int",
+            //        Name = "MAX_COUNT",
+            //        Value = "500",
+            //    },
+            //    new()
+            //    {
+            //        ClassName = "Constant",
+            //        Type = "double",
+            //        Name = "TEST_COUNT",
+            //        Value = "100.83",
+            //    },
+            //    new()
+            //    {
+            //        ClassName = "Constant",
+            //        Type = "ushort",
+            //        Name = "SUCCESS",
+            //        Value = "0",
+            //    },
+            //    new()
+            //    {
+            //        ClassName = "Constant",
+            //        Type = "ushort",
+            //        Name = "FAIL",
+            //        Value = "1",
+            //    },
+            //    new()
+            //    {
+            //        ClassName = "Constant",
+            //        Type = "ushort",
+            //        Name = "FAIL",
+            //        Value = "1",
+            //    },
+            //    new()
+            //    {
+            //        ClassName = "Constant",
+            //        Type = "ushort",
+            //        Name = "SUCCESS",
+            //        Value = "0",
+            //    },
+            //};
+            //srcGen.Initialize(dataList);
+            //srcGen.Generate();
             //string url = "https://script.google.com/macros/s/AKfycbxVBoEEgN7E11tNwN3t_zKSrxULh6zo60hLoQ_oM5cK6waOFUhOwTKES8Ad4Co4si5l7g/exec";
             //AccountData accountData = new AccountData()
             //{

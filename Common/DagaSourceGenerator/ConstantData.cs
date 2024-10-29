@@ -1,4 +1,7 @@
 ﻿using DagaUtility;
+using System.ComponentModel;
+using System.Data.SqlTypes;
+using System.Diagnostics;
 
 namespace DagaSourceGenerator
 {
@@ -41,5 +44,39 @@ namespace DagaSourceGenerator
 
             return $"public const {Type} {Name} = {Value};";
         }
+    }
+
+    public class SheetData<T> where T : ISheetLine
+    {
+        public required string SheetName { get; init; }
+
+        public Namespace Namespace { get; init; }
+
+        public string ClassName { get; init; }
+
+        public List<T> DataList { get; init; } = [];
+
+        public SheetData()
+        {
+            Debug.Assert(false == string.IsNullOrWhiteSpace(SheetName));
+
+            SheetName = SheetName.Trim();
+            var tokens = SheetName.Split('.');
+            var namespaceTokens = SheetName.Take(tokens.Length - 1);
+            var classNameToken = tokens[^1];
+
+            Namespace = Namespace.Default;
+
+            if (namespaceTokens.Any())
+            {
+                Namespace += string.Join('.', namespaceTokens);
+            }
+
+            ClassName = classNameToken;
+
+
+        }
+
+
     }
 }
