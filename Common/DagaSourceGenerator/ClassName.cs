@@ -13,5 +13,10 @@
         {
             return new ClassName() { Value = className };
         }
+
+        public override string ToString()
+        {
+            return $"public class {Value}";
+        }
     }
 }
