@@ -16,7 +16,7 @@
 
         public override string ToString()
         {
-            return $"public class {Value}";
+            return $"public partial class {Value}";
         }
     }
 }
