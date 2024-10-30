@@ -12,22 +12,51 @@ namespace DagaDev
     {
         static void Main(string[] args)
         {
-            string code = @"
-        using System;
+            List<EnumSheetLine> enumSheetLines = [];
+            enumSheetLines.Add(new EnumSheetLine()
+            {
+                Name = "None",
+                Value = "0",
+            });
+            enumSheetLines.Add(new EnumSheetLine()
+            {
+                Name = "One",
+            });
+            enumSheetLines.Add(new EnumSheetLine()
+            {
+                Name = "Two",
+            });
+            enumSheetLines.Add(new EnumSheetLine()
+            {
+                Name = "Four",
+                Value = "4",
+            });
 
-        public class HelloWorld        {
-            public void SayHello()            {
-                Console.WriteLine(""Hello, World!"");            }
-        }";
+            EnumSheet enumSheet = new()
+            {
+                Name = "TestEnum",
+                Type = TypeMapper.Instance["byte"] ?? typeof(int),
+                Values = enumSheetLines,
+            };
 
-            // 코드 문자열을 구문 트리로 변환
-            var syntaxTree = CSharpSyntaxTree.ParseText(code);
+            Console.WriteLine(enumSheet);
 
-            // 구문 트리의 루트 노드 가져오기
-            var root = syntaxTree.GetRoot();
+            //    string code = @"
+            //using System;
 
-            // 루트 노드 출력
-            Console.WriteLine(root.ToString());
+            //public class HelloWorld        {
+            //    public void SayHello()            {
+            //        Console.WriteLine(""Hello, World!"");            }
+            //}";
+
+            //    // 코드 문자열을 구문 트리로 변환
+            //    var syntaxTree = CSharpSyntaxTree.ParseText(code);
+
+            //    // 구문 트리의 루트 노드 가져오기
+            //    var root = syntaxTree.GetRoot();
+
+            //    // 루트 노드 출력
+            //    Console.WriteLine(root.ToString());
 
             //TypeMapper.Instance.ToString();
             //var type = TypeMapper.Instance["string"];
