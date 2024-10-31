@@ -9,7 +9,7 @@ namespace DagaSourceGenerator
 
         public Namespace Namespace { get; init; } = Namespace.Default;
 
-        public Type Type { get; init; } = typeof(int);
+        public string Type { get; init; } = string.Empty;
 
         public List<EnumSheetLine> Values { get; init; } = [];
 
@@ -18,9 +18,10 @@ namespace DagaSourceGenerator
             StringBuilder sb = new();
             sb.AppendLine(Namespace.ToString());
             sb.Append($"public enum {Name}");
-            if (Type != typeof(int))
+            if (false == string.IsNullOrWhiteSpace(Type) &&
+                TypeMapper.Instance[Type] is Type type)
             {
-                sb.Append($" : {TypeMapper.Instance[Type]}");
+                sb.Append($" : {TypeMapper.Instance[type]}");
             }
             sb.AppendLine("\n{");
             foreach (var value in Values)

@@ -1,7 +1,4 @@
 ﻿using DagaSourceGenerator;
-using DagaUtility;
-using Microsoft.CodeAnalysis.CSharp;
-using System.Reflection;
 
 namespace DagaDev
 {
@@ -12,6 +9,42 @@ namespace DagaDev
     {
         static void Main(string[] args)
         {
+            List<ConstantSheetLine> constantSheetLines = [];
+            constantSheetLines.Add(new ConstantSheetLine()
+            {
+                Name = "constant_string",
+                Type = "string",
+                Value = "test_token",
+            });
+
+            constantSheetLines.Add(new ConstantSheetLine()
+            {
+                Name = "constant_int",
+                Type = "int",
+                Value = "1000",
+            });
+
+            constantSheetLines.Add(new ConstantSheetLine()
+            {
+                Name = "constant_float",
+                Type = "int",
+                Value = "10.83",
+            });
+
+            constantSheetLines.Add(new ConstantSheetLine()
+            {
+                Name = "constant_byte",
+                Type = "byte",
+                Value = "155",
+            });
+
+            ConstantSheet constantSheet = new("TestConstant.Constant")
+            {
+                Values = constantSheetLines,
+            };
+
+            Console.WriteLine(constantSheet);
+
             List<EnumSheetLine> enumSheetLines = [];
             enumSheetLines.Add(new EnumSheetLine()
             {
@@ -35,11 +68,11 @@ namespace DagaDev
             EnumSheet enumSheet = new()
             {
                 Name = "TestEnum",
-                Type = TypeMapper.Instance["byte"] ?? typeof(int),
+                Type = "byte",
                 Values = enumSheetLines,
             };
 
-            Console.WriteLine(enumSheet);
+            //Console.WriteLine(enumSheet);
 
             //    string code = @"
             //using System;

@@ -1,4 +1,5 @@
 ﻿using DagaUtility;
+using System.Diagnostics;
 
 namespace DagaSourceGenerator
 {
@@ -12,7 +13,16 @@ namespace DagaSourceGenerator
 
         public override string ToString()
         {
-            return $"public const {TypeMapper.Instance[Type]} {Name} = {Value};";
+            var findType = TypeMapper.Instance[Type];
+            Debug.Assert(null != findType);
+
+            string format = Value;
+            if(findType == typeof(string))
+            {
+                format = $"\"{Value}\"";
+            }
+
+            return $"public const {TypeMapper.Instance[findType]} {Name} = {format};";
         }
     }
 }
