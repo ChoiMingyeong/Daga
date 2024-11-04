@@ -1,76 +1,153 @@
 ﻿using DagaSourceGenerator;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DagaDev
 {
+    public class TestLock
+    {
+        private static int _uid = 0;
 
+        private static int Uid { get => Interlocked.Increment(ref _uid); }
 
+        public readonly int Id = Uid;
+
+        public readonly object Lock = new();
+
+        public static void TestLockFunc(TestLock testLock1, TestLock testLock2)
+        {
+            List<TestLock> temp = [testLock1, testLock2];
+            temp = [.. temp.OrderBy(p => p.Id)];
+
+            var (firstLock, secondLock) = testLock1.Id < testLock2.Id ? 
+                (testLock1, testLock2) : (testLock2, testLock1);
+
+            lock (firstLock)
+            {
+                lock (secondLock)
+                {
+                    Thread.Sleep(100);
+                }
+            }
+        }
+
+        public static void TestNormalFunc(TestLock testLock1, TestLock testLock2)
+        {
+            Thread.Sleep(100);
+        }
+    }
 
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            List<ConstantSheetLine> constantSheetLines = [];
-            constantSheetLines.Add(new ConstantSheetLine()
+            // 개별 lock Test
+            List<TestLock> testLocks = [];
+            int count = 10;
+            for (int i = 0; i < count; i++)
             {
-                Name = "constant_string",
-                Type = "string",
-                Value = "test_token",
+                testLocks.Add(new TestLock());
+            }
+
+            Random random = new Random();
+            TimeSpan lockTime = TimeSpan.Zero;
+            Parallel.For(0, 1000, (i, CancellationToken)=>
+            {
+                int l1 = random.Next(0, count);
+                int l2;
+                do
+                {
+                    l2 = random.Next(0, count);
+                } while (l1 == l2);
+
+                DateTime start = DateTime.Now;
+                //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Selected.");
+                TestLock.TestLockFunc(testLocks[l1], testLocks[l2]);
+                lockTime += DateTime.Now.Subtract(start);
+                //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Completed! Time: {DateTime.Now - start}");
             });
 
-            constantSheetLines.Add(new ConstantSheetLine()
+            TimeSpan normalTime = TimeSpan.Zero;
+            for(int i=0; i<1000; i++)
             {
-                Name = "constant_int",
-                Type = "int",
-                Value = "1000",
-            });
+                int l1 = random.Next(0, count);
+                int l2;
+                do
+                {
+                    l2 = random.Next(0, count);
+                } while (l1 == l2);
 
-            constantSheetLines.Add(new ConstantSheetLine()
-            {
-                Name = "constant_float",
-                Type = "int",
-                Value = "10.83",
-            });
+                DateTime start = DateTime.Now;
+                //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Selected.");
+                TestLock.TestNormalFunc(testLocks[l1], testLocks[l2]);
+                normalTime += DateTime.Now.Subtract(start);
+                //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Completed! Time: {DateTime.Now - start}");
+            }
 
-            constantSheetLines.Add(new ConstantSheetLine()
-            {
-                Name = "constant_byte",
-                Type = "byte",
-                Value = "155",
-            });
+            Console.WriteLine(lockTime);
+            Console.WriteLine(normalTime);
 
-            ConstantSheet constantSheet = new("TestConstant.Constant")
-            {
-                Values = constantSheetLines,
-            };
+            //List<ConstantSheetLine> constantSheetLines = [];
+            //constantSheetLines.Add(new ConstantSheetLine()
+            //{
+            //    Name = "constant_string",
+            //    Type = "string",
+            //    Value = "test_token",
+            //});
 
-            Console.WriteLine(constantSheet);
+            //constantSheetLines.Add(new ConstantSheetLine()
+            //{
+            //    Name = "constant_int",
+            //    Type = "int",
+            //    Value = "1000",
+            //});
 
-            List<EnumSheetLine> enumSheetLines = [];
-            enumSheetLines.Add(new EnumSheetLine()
-            {
-                Name = "None",
-                Value = "0",
-            });
-            enumSheetLines.Add(new EnumSheetLine()
-            {
-                Name = "One",
-            });
-            enumSheetLines.Add(new EnumSheetLine()
-            {
-                Name = "Two",
-            });
-            enumSheetLines.Add(new EnumSheetLine()
-            {
-                Name = "Four",
-                Value = "4",
-            });
+            //constantSheetLines.Add(new ConstantSheetLine()
+            //{
+            //    Name = "constant_float",
+            //    Type = "int",
+            //    Value = "10.83",
+            //});
 
-            EnumSheet enumSheet = new()
-            {
-                Name = "TestEnum",
-                Type = "byte",
-                Values = enumSheetLines,
-            };
+            //constantSheetLines.Add(new ConstantSheetLine()
+            //{
+            //    Name = "constant_byte",
+            //    Type = "byte",
+            //    Value = "155",
+            //});
+
+            //ConstantSheet constantSheet = new("TestConstant.Constant")
+            //{
+            //    Values = constantSheetLines,
+            //};
+
+            //Console.WriteLine(constantSheet);
+
+            //List<EnumSheetLine> enumSheetLines = [];
+            //enumSheetLines.Add(new EnumSheetLine()
+            //{
+            //    Name = "None",
+            //    Value = "0",
+            //});
+            //enumSheetLines.Add(new EnumSheetLine()
+            //{
+            //    Name = "One",
+            //});
+            //enumSheetLines.Add(new EnumSheetLine()
+            //{
+            //    Name = "Two",
+            //});
+            //enumSheetLines.Add(new EnumSheetLine()
+            //{
+            //    Name = "Four",
+            //    Value = "4",
+            //});
+
+            //EnumSheet enumSheet = new()
+            //{
+            //    Name = "TestEnum",
+            //    Type = "byte",
+            //    Values = enumSheetLines,
+            //};
 
             //Console.WriteLine(enumSheet);
 
