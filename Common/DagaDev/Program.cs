@@ -15,11 +15,9 @@ namespace DagaDev
 
         public static void TestLockFunc(TestLock testLock1, TestLock testLock2)
         {
-            List<TestLock> temp = [testLock1, testLock2];
-            temp = [.. temp.OrderBy(p => p.Id)];
-
-            var (firstLock, secondLock) = testLock1.Id < testLock2.Id ? 
+            var (firstLock, secondLock) = testLock1.Id < testLock2.Id ?
                 (testLock1, testLock2) : (testLock2, testLock1);
+
 
             lock (firstLock)
             {
@@ -30,19 +28,23 @@ namespace DagaDev
             }
         }
 
+        private static readonly object _lock = new();
         public static void TestNormalFunc(TestLock testLock1, TestLock testLock2)
         {
-            Thread.Sleep(100);
+            lock (_lock)
+            {
+                Thread.Sleep(100);
+            }
         }
     }
 
     internal class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             // 개별 lock Test
             List<TestLock> testLocks = [];
-            int count = 10;
+            int count = 100000;
             for (int i = 0; i < count; i++)
             {
                 testLocks.Add(new TestLock());
@@ -50,7 +52,7 @@ namespace DagaDev
 
             Random random = new Random();
             TimeSpan lockTime = TimeSpan.Zero;
-            Parallel.For(0, 1000, (i, CancellationToken)=>
+            Parallel.For(0, 1000, (i, CancellationToken) =>
             {
                 int l1 = random.Next(0, count);
                 int l2;
@@ -67,7 +69,7 @@ namespace DagaDev
             });
 
             TimeSpan normalTime = TimeSpan.Zero;
-            for(int i=0; i<1000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 int l1 = random.Next(0, count);
                 int l2;
