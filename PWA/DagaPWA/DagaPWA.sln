@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DagaPWA", "DagaPWA.csproj", "{62F94E0C-EC43-42C4-BFCA-80958B29B996}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DagaPWA", "DagaPWA.csproj", "{5BE256E6-577F-48CF-9D4D-F62BAB66BC85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{62F94E0C-EC43-42C4-BFCA-80958B29B996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62F94E0C-EC43-42C4-BFCA-80958B29B996}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62F94E0C-EC43-42C4-BFCA-80958B29B996}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62F94E0C-EC43-42C4-BFCA-80958B29B996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE256E6-577F-48CF-9D4D-F62BAB66BC85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE256E6-577F-48CF-9D4D-F62BAB66BC85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE256E6-577F-48CF-9D4D-F62BAB66BC85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE256E6-577F-48CF-9D4D-F62BAB66BC85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BBC0091C-62C2-41AD-B330-DACD9622B95F}
+		SolutionGuid = {BE36EF90-DEFA-4969-84F7-B139115E6D2E}
 	EndGlobalSection
 EndGlobal
