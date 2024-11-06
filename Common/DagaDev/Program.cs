@@ -38,55 +38,77 @@ namespace DagaDev
         }
     }
 
+    public class  Test
+    {
+        public int A { get; set; }
+    }
+
     internal class Program
     {
+        static Dictionary<int, Test> keyValuePairs = [];
+
         static void Main(string[] args)
         {
-            // 개별 lock Test
-            List<TestLock> testLocks = [];
-            int count = 100000;
-            for (int i = 0; i < count; i++)
-            {
-                testLocks.Add(new TestLock());
-            }
+            Dictionary<int, Test?> testDic = [];
 
-            Random random = new Random();
-            TimeSpan lockTime = TimeSpan.Zero;
-            Parallel.For(0, 1000, (i, CancellationToken) =>
-            {
-                int l1 = random.Next(0, count);
-                int l2;
-                do
-                {
-                    l2 = random.Next(0, count);
-                } while (l1 == l2);
+            testDic[0] = new Test();
+            testDic[1] = null;
+            testDic[2] = new Test();
 
-                DateTime start = DateTime.Now;
-                //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Selected.");
-                TestLock.TestLockFunc(testLocks[l1], testLocks[l2]);
-                lockTime += DateTime.Now.Subtract(start);
-                //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Completed! Time: {DateTime.Now - start}");
-            });
+            //if (false == keyValuePairs.TryGetValue(0, out var test))
+            //{
+            //    test = new Test();
+            //    keyValuePairs[0] = test;
+            //}
 
-            TimeSpan normalTime = TimeSpan.Zero;
-            for (int i = 0; i < 1000; i++)
-            {
-                int l1 = random.Next(0, count);
-                int l2;
-                do
-                {
-                    l2 = random.Next(0, count);
-                } while (l1 == l2);
+            //test.A = 100;
 
-                DateTime start = DateTime.Now;
-                //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Selected.");
-                TestLock.TestNormalFunc(testLocks[l1], testLocks[l2]);
-                normalTime += DateTime.Now.Subtract(start);
-                //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Completed! Time: {DateTime.Now - start}");
-            }
 
-            Console.WriteLine(lockTime);
-            Console.WriteLine(normalTime);
+            //// 개별 lock Test
+            //List<TestLock> testLocks = [];
+            //int count = 100000;
+            //for (int i = 0; i < count; i++)
+            //{
+            //    testLocks.Add(new TestLock());
+            //}
+
+            //Random random = new Random();
+            //TimeSpan lockTime = TimeSpan.Zero;
+            //Parallel.For(0, 1000, (i, CancellationToken) =>
+            //{
+            //    int l1 = random.Next(0, count);
+            //    int l2;
+            //    do
+            //    {
+            //        l2 = random.Next(0, count);
+            //    } while (l1 == l2);
+
+            //    DateTime start = DateTime.Now;
+            //    //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Selected.");
+            //    TestLock.TestLockFunc(testLocks[l1], testLocks[l2]);
+            //    lockTime += DateTime.Now.Subtract(start);
+            //    //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Completed! Time: {DateTime.Now - start}");
+            //});
+
+            //TimeSpan normalTime = TimeSpan.Zero;
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    int l1 = random.Next(0, count);
+            //    int l2;
+            //    do
+            //    {
+            //        l2 = random.Next(0, count);
+            //    } while (l1 == l2);
+
+            //    DateTime start = DateTime.Now;
+            //    //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Selected.");
+            //    TestLock.TestNormalFunc(testLocks[l1], testLocks[l2]);
+            //    normalTime += DateTime.Now.Subtract(start);
+            //    //Console.WriteLine($"[{testLocks[l1].Id}, {testLocks[l2].Id}] Completed! Time: {DateTime.Now - start}");
+            //}
+
+            //Console.WriteLine(lockTime);
+            //Console.WriteLine(normalTime);
 
             //List<ConstantSheetLine> constantSheetLines = [];
             //constantSheetLines.Add(new ConstantSheetLine()
