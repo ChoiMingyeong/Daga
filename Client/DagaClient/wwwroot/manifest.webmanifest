@@ -1,6 +1,6 @@
 {
-  "name": "DagaPWA",
-  "short_name": "DagaPWA",
+  "name": "DagaClient",
+  "short_name": "DagaClient",
   "id": "./",
   "start_url": "./",
   "display": "standalone",
