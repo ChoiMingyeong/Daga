@@ -15,5 +15,20 @@ namespace DagaServer
         {
             return true;
         }
+
+        public async Task<WebSocket?> GetConnectionAsync(long accountID)
+        {
+            if(false == _connections.TryGetValue(accountID, out WebSocket? ws))
+            {
+                return null;
+            }
+
+            if(ws.State != WebSocketState.Connecting)
+            {
+                return null;
+            }
+
+            return ws;
+        }
     }
 }
