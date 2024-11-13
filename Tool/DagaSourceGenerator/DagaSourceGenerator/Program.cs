@@ -4,6 +4,7 @@
     {
         static void Main(string[] args)
         {
+            ExcelReader.ReadFiles(@"C:\Daytona\Doc\DataTable\DataTable");
         }
     }
 }
