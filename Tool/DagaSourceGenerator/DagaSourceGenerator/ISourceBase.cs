@@ -1,11 +1,14 @@
 ﻿namespace DagaSourceGenerator
 {
-    internal interface ISourceBase<T>
+    public interface ISourceBase
     {
-        public UID UID { get; }
+        public Uid Uid { get; init; }
+    }
 
-        public string Name { get; }
+    public interface IHeader
+    {
+        public string PropertyName { get; set; }
 
-        public T Value { get; }
+        public Type PropertyType { get; set; }
     }
 }
