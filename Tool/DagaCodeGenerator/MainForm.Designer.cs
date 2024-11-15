@@ -34,21 +34,23 @@ namespace DagaCodeGenerator
             Label label2;
             srcPathTextBox = new TextBox();
             srcSearchBtn = new Button();
-            srcCheckedListBox = new CheckedListBox();
             outputSearchBtn = new Button();
             outputPathTextBox = new TextBox();
             button3 = new Button();
-            statusStrip1 = new StatusStrip();
-            toolStripProgressBar1 = new ToolStripProgressBar();
+            splitContainer1 = new SplitContainer();
+            checkedListView1 = new CheckedListView();
             label1 = new Label();
             label2 = new Label();
-            statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 337);
+            label1.Location = new Point(3, 18);
             label1.Name = "label1";
             label1.Size = new Size(44, 15);
             label1.TabIndex = 0;
@@ -57,7 +59,7 @@ namespace DagaCodeGenerator
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 366);
+            label2.Location = new Point(3, 47);
             label2.Name = "label2";
             label2.Size = new Size(45, 15);
             label2.TabIndex = 4;
@@ -65,14 +67,14 @@ namespace DagaCodeGenerator
             // 
             // srcPathTextBox
             // 
-            srcPathTextBox.Location = new Point(62, 334);
+            srcPathTextBox.Location = new Point(53, 15);
             srcPathTextBox.Name = "srcPathTextBox";
             srcPathTextBox.Size = new Size(314, 23);
             srcPathTextBox.TabIndex = 1;
             // 
             // srcSearchBtn
             // 
-            srcSearchBtn.Location = new Point(382, 334);
+            srcSearchBtn.Location = new Point(373, 15);
             srcSearchBtn.Name = "srcSearchBtn";
             srcSearchBtn.Size = new Size(27, 23);
             srcSearchBtn.TabIndex = 2;
@@ -80,18 +82,9 @@ namespace DagaCodeGenerator
             srcSearchBtn.UseVisualStyleBackColor = true;
             srcSearchBtn.Click += srcSearchBtn_Click;
             // 
-            // srcCheckedListBox
-            // 
-            srcCheckedListBox.CheckOnClick = true;
-            srcCheckedListBox.FormattingEnabled = true;
-            srcCheckedListBox.Location = new Point(12, 12);
-            srcCheckedListBox.Name = "srcCheckedListBox";
-            srcCheckedListBox.Size = new Size(503, 310);
-            srcCheckedListBox.TabIndex = 3;
-            // 
             // outputSearchBtn
             // 
-            outputSearchBtn.Location = new Point(382, 363);
+            outputSearchBtn.Location = new Point(373, 44);
             outputSearchBtn.Name = "outputSearchBtn";
             outputSearchBtn.Size = new Size(27, 23);
             outputSearchBtn.TabIndex = 6;
@@ -101,68 +94,80 @@ namespace DagaCodeGenerator
             // 
             // outputPathTextBox
             // 
-            outputPathTextBox.Location = new Point(62, 363);
+            outputPathTextBox.Location = new Point(53, 44);
             outputPathTextBox.Name = "outputPathTextBox";
             outputPathTextBox.Size = new Size(314, 23);
             outputPathTextBox.TabIndex = 5;
             // 
             // button3
             // 
-            button3.Location = new Point(415, 334);
+            button3.Location = new Point(406, 15);
             button3.Name = "button3";
             button3.Size = new Size(100, 52);
             button3.TabIndex = 8;
             button3.Text = "Generate";
             button3.UseVisualStyleBackColor = true;
             // 
-            // statusStrip1
+            // splitContainer1
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripProgressBar1 });
-            statusStrip1.Location = new Point(0, 397);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(529, 22);
-            statusStrip1.TabIndex = 9;
-            statusStrip1.Text = "statusStrip1";
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.Location = new Point(10, 10);
+            splitContainer1.Name = "splitContainer1";
+            splitContainer1.Orientation = Orientation.Horizontal;
             // 
-            // toolStripProgressBar1
+            // splitContainer1.Panel1
             // 
-            toolStripProgressBar1.Alignment = ToolStripItemAlignment.Right;
-            toolStripProgressBar1.Name = "toolStripProgressBar1";
-            toolStripProgressBar1.Size = new Size(100, 16);
+            splitContainer1.Panel1.Controls.Add(checkedListView1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(label1);
+            splitContainer1.Panel2.Controls.Add(button3);
+            splitContainer1.Panel2.Controls.Add(srcPathTextBox);
+            splitContainer1.Panel2.Controls.Add(outputSearchBtn);
+            splitContainer1.Panel2.Controls.Add(srcSearchBtn);
+            splitContainer1.Panel2.Controls.Add(outputPathTextBox);
+            splitContainer1.Panel2.Controls.Add(label2);
+            splitContainer1.Size = new Size(509, 399);
+            splitContainer1.SplitterDistance = 314;
+            splitContainer1.TabIndex = 9;
+            // 
+            // checkedListView1
+            // 
+            checkedListView1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            checkedListView1.Dock = DockStyle.Fill;
+            checkedListView1.Location = new Point(0, 0);
+            checkedListView1.Name = "checkedListView1";
+            checkedListView1.Size = new Size(509, 314);
+            checkedListView1.TabIndex = 0;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(529, 419);
-            Controls.Add(statusStrip1);
-            Controls.Add(button3);
-            Controls.Add(outputSearchBtn);
-            Controls.Add(outputPathTextBox);
-            Controls.Add(label2);
-            Controls.Add(srcCheckedListBox);
-            Controls.Add(srcSearchBtn);
-            Controls.Add(srcPathTextBox);
-            Controls.Add(label1);
+            Controls.Add(splitContainer1);
+            MaximizeBox = false;
             Name = "MainForm";
+            Padding = new Padding(10);
             Text = "DagaCodeGenerator";
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private TextBox srcPathTextBox;
         private Button srcSearchBtn;
-        private CheckedListBox srcCheckedListBox;
         private Button outputSearchBtn;
         private TextBox outputPathTextBox;
         private Button button3;
-        private StatusStrip statusStrip1;
-        private ToolStripProgressBar toolStripProgressBar1;
+        private SplitContainer splitContainer1;
+        private CheckedListView checkedListView1;
     }
 }
