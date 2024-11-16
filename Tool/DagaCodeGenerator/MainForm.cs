@@ -25,10 +25,6 @@ namespace DagaCodeGenerator
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            tabPage1.Controls.Add(new MainViewPanel()
-            {
-                Dock = DockStyle.Fill,
-            });
         }
     }
 }

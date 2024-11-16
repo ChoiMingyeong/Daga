@@ -31,15 +31,17 @@ namespace DagaCodeGenerator
         private void InitializeComponent()
         {
             tabControl = new TabControl();
-            tabPage1 = new TabPage();
-            tabPage2 = new TabPage();
+            constantPage = new TabPage();
+            enumPage = new TabPage();
+            dataTablePage = new TabPage();
             tabControl.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl
             // 
-            tabControl.Controls.Add(tabPage1);
-            tabControl.Controls.Add(tabPage2);
+            tabControl.Controls.Add(constantPage);
+            tabControl.Controls.Add(enumPage);
+            tabControl.Controls.Add(dataTablePage);
             tabControl.Dock = DockStyle.Fill;
             tabControl.Location = new Point(10, 10);
             tabControl.Name = "tabControl";
@@ -47,25 +49,47 @@ namespace DagaCodeGenerator
             tabControl.Size = new Size(527, 364);
             tabControl.TabIndex = 0;
             // 
-            // tabPage1
+            // constantPage
             // 
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(519, 336);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "tabPage1";
-            tabPage1.UseVisualStyleBackColor = true;
+            constantPage.Location = new Point(4, 24);
+            constantPage.Name = "constantPage";
+            constantPage.Padding = new Padding(3);
+            constantPage.Size = new Size(519, 336);
+            constantPage.TabIndex = 0;
+            constantPage.Text = "Constant";
+            constantPage.UseVisualStyleBackColor = true;
+            constantPage.Controls.Add(new MainViewPanel()
+            {
+                Dock = DockStyle.Fill,
+            });
             // 
-            // tabPage2
+            // enumPage
             // 
-            tabPage2.Location = new Point(4, 24);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(519, 336);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "tabPage2";
-            tabPage2.UseVisualStyleBackColor = true;
+            enumPage.Location = new Point(4, 24);
+            enumPage.Name = "enumPage";
+            enumPage.Padding = new Padding(3);
+            enumPage.Size = new Size(519, 336);
+            enumPage.TabIndex = 1;
+            enumPage.Text = "Enum";
+            enumPage.UseVisualStyleBackColor = true;
+            enumPage.Controls.Add(new MainViewPanel()
+            {
+                Dock = DockStyle.Fill,
+            });
+            // 
+            // enumPage
+            // 
+            dataTablePage.Location = new Point(4, 24);
+            dataTablePage.Name = "dataTablePage";
+            dataTablePage.Padding = new Padding(3);
+            dataTablePage.Size = new Size(519, 336);
+            dataTablePage.TabIndex = 2;
+            dataTablePage.Text = "DataTable";
+            dataTablePage.UseVisualStyleBackColor = true;
+            dataTablePage.Controls.Add(new MainViewPanel()
+            {
+                Dock = DockStyle.Fill,
+            });
             // 
             // MainForm
             // 
@@ -86,7 +110,8 @@ namespace DagaCodeGenerator
         #endregion
 
         private TabControl tabControl;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
+        private TabPage constantPage;
+        private TabPage enumPage;
+        private TabPage dataTablePage;
     }
 }
