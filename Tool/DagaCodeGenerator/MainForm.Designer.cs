@@ -30,144 +30,63 @@ namespace DagaCodeGenerator
         /// </summary>
         private void InitializeComponent()
         {
-            Label label1;
-            Label label2;
-            srcPathTextBox = new TextBox();
-            srcSearchBtn = new Button();
-            outputSearchBtn = new Button();
-            outputPathTextBox = new TextBox();
-            button3 = new Button();
-            splitContainer1 = new SplitContainer();
-            checkedListView1 = new CheckedListView();
-            label1 = new Label();
-            label2 = new Label();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel1.SuspendLayout();
-            splitContainer1.Panel2.SuspendLayout();
-            splitContainer1.SuspendLayout();
+            tabControl = new TabControl();
+            tabPage1 = new TabPage();
+            tabPage2 = new TabPage();
+            tabControl.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // tabControl
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(3, 18);
-            label1.Name = "label1";
-            label1.Size = new Size(44, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Source";
+            tabControl.Controls.Add(tabPage1);
+            tabControl.Controls.Add(tabPage2);
+            tabControl.Dock = DockStyle.Fill;
+            tabControl.Location = new Point(10, 10);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new Size(527, 364);
+            tabControl.TabIndex = 0;
             // 
-            // label2
+            // tabPage1
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(3, 47);
-            label2.Name = "label2";
-            label2.Size = new Size(45, 15);
-            label2.TabIndex = 4;
-            label2.Text = "Output";
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(519, 336);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "tabPage1";
+            tabPage1.UseVisualStyleBackColor = true;
             // 
-            // srcPathTextBox
+            // tabPage2
             // 
-            srcPathTextBox.Location = new Point(53, 15);
-            srcPathTextBox.Name = "srcPathTextBox";
-            srcPathTextBox.Size = new Size(314, 23);
-            srcPathTextBox.TabIndex = 1;
-            // 
-            // srcSearchBtn
-            // 
-            srcSearchBtn.Location = new Point(373, 15);
-            srcSearchBtn.Name = "srcSearchBtn";
-            srcSearchBtn.Size = new Size(27, 23);
-            srcSearchBtn.TabIndex = 2;
-            srcSearchBtn.Text = "..";
-            srcSearchBtn.UseVisualStyleBackColor = true;
-            srcSearchBtn.Click += srcSearchBtn_Click;
-            // 
-            // outputSearchBtn
-            // 
-            outputSearchBtn.Location = new Point(373, 44);
-            outputSearchBtn.Name = "outputSearchBtn";
-            outputSearchBtn.Size = new Size(27, 23);
-            outputSearchBtn.TabIndex = 6;
-            outputSearchBtn.Text = "..";
-            outputSearchBtn.UseVisualStyleBackColor = true;
-            outputSearchBtn.Click += outputSearchBtn_Click;
-            // 
-            // outputPathTextBox
-            // 
-            outputPathTextBox.Location = new Point(53, 44);
-            outputPathTextBox.Name = "outputPathTextBox";
-            outputPathTextBox.Size = new Size(314, 23);
-            outputPathTextBox.TabIndex = 5;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(406, 15);
-            button3.Name = "button3";
-            button3.Size = new Size(100, 52);
-            button3.TabIndex = 8;
-            button3.Text = "Generate";
-            button3.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer1
-            // 
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.Location = new Point(10, 10);
-            splitContainer1.Name = "splitContainer1";
-            splitContainer1.Orientation = Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            splitContainer1.Panel1.Controls.Add(checkedListView1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            splitContainer1.Panel2.Controls.Add(label1);
-            splitContainer1.Panel2.Controls.Add(button3);
-            splitContainer1.Panel2.Controls.Add(srcPathTextBox);
-            splitContainer1.Panel2.Controls.Add(outputSearchBtn);
-            splitContainer1.Panel2.Controls.Add(srcSearchBtn);
-            splitContainer1.Panel2.Controls.Add(outputPathTextBox);
-            splitContainer1.Panel2.Controls.Add(label2);
-            splitContainer1.Size = new Size(509, 399);
-            splitContainer1.SplitterDistance = 314;
-            splitContainer1.TabIndex = 9;
-            // 
-            // checkedListView1
-            // 
-            checkedListView1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            checkedListView1.Dock = DockStyle.Fill;
-            checkedListView1.Location = new Point(0, 0);
-            checkedListView1.Name = "checkedListView1";
-            checkedListView1.Size = new Size(509, 314);
-            checkedListView1.TabIndex = 0;
+            tabPage2.Location = new Point(4, 24);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(519, 336);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "tabPage2";
+            tabPage2.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(529, 419);
-            Controls.Add(splitContainer1);
+            ClientSize = new Size(547, 384);
+            Controls.Add(tabControl);
             MaximizeBox = false;
             Name = "MainForm";
             Padding = new Padding(10);
             Text = "DagaCodeGenerator";
-            splitContainer1.Panel1.ResumeLayout(false);
-            splitContainer1.Panel2.ResumeLayout(false);
-            splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
+            Load += MainForm_Load;
+            tabControl.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private TextBox srcPathTextBox;
-        private Button srcSearchBtn;
-        private Button outputSearchBtn;
-        private TextBox outputPathTextBox;
-        private Button button3;
-        private SplitContainer splitContainer1;
-        private CheckedListView checkedListView1;
+        private TabControl tabControl;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
     }
 }

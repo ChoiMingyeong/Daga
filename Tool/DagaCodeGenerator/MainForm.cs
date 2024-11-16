@@ -15,12 +15,20 @@ namespace DagaCodeGenerator
 
         private void srcSearchBtn_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void outputSearchBtn_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            tabPage1.Controls.Add(new MainViewPanel()
+            {
+                Dock = DockStyle.Fill,
+            });
         }
     }
 }
