@@ -31,9 +31,9 @@ namespace DagaCodeGenerator
         private void InitializeComponent()
         {
             tabControl = new TabControl();
-            constantPage = new TabPage();
-            enumPage = new TabPage();
-            dataTablePage = new TabPage();
+            constantPage = new ConstantTabPage();
+            enumPage = new EnumTabPage();
+            dataTablePage = new DataTableTabPage();
             tabControl.SuspendLayout();
             SuspendLayout();
             // 
@@ -52,44 +52,26 @@ namespace DagaCodeGenerator
             // constantPage
             // 
             constantPage.Location = new Point(4, 24);
-            constantPage.Name = "constantPage";
             constantPage.Padding = new Padding(3);
             constantPage.Size = new Size(519, 336);
             constantPage.TabIndex = 0;
-            constantPage.Text = "Constant";
             constantPage.UseVisualStyleBackColor = true;
-            constantPage.Controls.Add(new MainViewPanel()
-            {
-                Dock = DockStyle.Fill,
-            });
             // 
             // enumPage
             // 
             enumPage.Location = new Point(4, 24);
-            enumPage.Name = "enumPage";
             enumPage.Padding = new Padding(3);
             enumPage.Size = new Size(519, 336);
             enumPage.TabIndex = 1;
-            enumPage.Text = "Enum";
             enumPage.UseVisualStyleBackColor = true;
-            enumPage.Controls.Add(new MainViewPanel()
-            {
-                Dock = DockStyle.Fill,
-            });
             // 
             // enumPage
             // 
             dataTablePage.Location = new Point(4, 24);
-            dataTablePage.Name = "dataTablePage";
             dataTablePage.Padding = new Padding(3);
             dataTablePage.Size = new Size(519, 336);
             dataTablePage.TabIndex = 2;
-            dataTablePage.Text = "DataTable";
             dataTablePage.UseVisualStyleBackColor = true;
-            dataTablePage.Controls.Add(new MainViewPanel()
-            {
-                Dock = DockStyle.Fill,
-            });
             // 
             // MainForm
             // 
@@ -110,8 +92,8 @@ namespace DagaCodeGenerator
         #endregion
 
         private TabControl tabControl;
-        private TabPage constantPage;
-        private TabPage enumPage;
-        private TabPage dataTablePage;
+        private ConstantTabPage constantPage;
+        private EnumTabPage enumPage;
+        private DataTableTabPage dataTablePage;
     }
 }

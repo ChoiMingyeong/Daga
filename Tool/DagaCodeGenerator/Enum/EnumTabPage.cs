@@ -1,8 +1,8 @@
 ﻿namespace DagaCodeGenerator
 {
-    public partial class ViewPanelBase : UserControl
+    public partial class EnumTabPage : TabPage
     {
-        public ViewPanelBase()
+        public EnumTabPage()
         {
             InitializeComponent();
         }

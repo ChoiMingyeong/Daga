@@ -1,6 +1,6 @@
 ﻿namespace DagaCodeGenerator
 {
-    partial class MainViewPanel
+    partial class ViewPanelBase
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -232,12 +232,12 @@
             genBtn.Text = "Generate";
             genBtn.UseVisualStyleBackColor = true;
             // 
-            // MainViewPanel
+            // ViewPanelBase
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(splitContainer1);
-            Name = "MainViewPanel";
+            Name = "ViewPanelBase";
             Size = new Size(468, 396);
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
