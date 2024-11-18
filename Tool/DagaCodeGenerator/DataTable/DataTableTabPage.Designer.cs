@@ -29,13 +29,6 @@ partial class DataTableTabPage
     private void InitializeComponent()
     {
         components = new System.ComponentModel.Container();
-        Name = "dataTablePage";
-        Text = "DataTable";
-        UseVisualStyleBackColor = true;
-        Controls.Add(new DataTableViewPanel()
-        {
-            Dock = DockStyle.Fill,
-        });
     }
 
     #endregion

@@ -31,7 +31,7 @@
             Label label1;
             Label label2;
             splitContainer1 = new SplitContainer();
-            checkedListView1 = new CheckedListView();
+            checkedListView = new CheckedListView();
             splitContainer2 = new SplitContainer();
             splitContainer3 = new SplitContainer();
             tableLayoutPanel1 = new TableLayoutPanel();
@@ -90,7 +90,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(checkedListView1);
+            splitContainer1.Panel1.Controls.Add(checkedListView);
             // 
             // splitContainer1.Panel2
             // 
@@ -101,12 +101,11 @@
             // 
             // checkedListView1
             // 
-            checkedListView1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            checkedListView1.Dock = DockStyle.Fill;
-            checkedListView1.Location = new Point(0, 0);
-            checkedListView1.Name = "checkedListView1";
-            checkedListView1.Size = new Size(468, 317);
-            checkedListView1.TabIndex = 0;
+            checkedListView.Dock = DockStyle.Fill;
+            checkedListView.Location = new Point(0, 0);
+            checkedListView.Name = "checkedListView1";
+            checkedListView.Size = new Size(468, 317);
+            checkedListView.TabIndex = 0;
             // 
             // splitContainer2
             // 
@@ -181,6 +180,7 @@
             srcPathSelectBtn.TabIndex = 1;
             srcPathSelectBtn.Text = "..";
             srcPathSelectBtn.UseVisualStyleBackColor = true;
+            srcPathSelectBtn.Click += SrcPathSelectBtnClick;
             // 
             // tableLayoutPanel2
             // 
@@ -219,6 +219,7 @@
             outputPathSelectBtn.TabIndex = 1;
             outputPathSelectBtn.Text = "..";
             outputPathSelectBtn.UseVisualStyleBackColor = true;
+            outputPathSelectBtn.Click += OutputPathSelectBtnClick;
             // 
             // genBtn
             // 
@@ -231,6 +232,7 @@
             genBtn.TabIndex = 0;
             genBtn.Text = "Generate";
             genBtn.UseVisualStyleBackColor = true;
+            genBtn.Click += GenBtnClick;
             // 
             // ViewPanelBase
             // 
@@ -263,16 +265,16 @@
 
         #endregion
 
-        private SplitContainer splitContainer1;
-        private CheckedListView checkedListView1;
-        private SplitContainer splitContainer2;
-        private Button genBtn;
-        private SplitContainer splitContainer3;
-        private TableLayoutPanel tableLayoutPanel1;
-        private TextBox srcPathTextBox;
-        private Button srcPathSelectBtn;
-        private TableLayoutPanel tableLayoutPanel2;
-        private TextBox outputPathTextBox;
-        private Button outputPathSelectBtn;
+        protected SplitContainer splitContainer1;
+        protected SplitContainer splitContainer2;
+        protected SplitContainer splitContainer3;
+        protected TableLayoutPanel tableLayoutPanel1;
+        protected TableLayoutPanel tableLayoutPanel2;
+        protected CheckedListView checkedListView;
+        protected Button genBtn;
+        protected TextBox srcPathTextBox;
+        protected Button srcPathSelectBtn;
+        protected TextBox outputPathTextBox;
+        protected Button outputPathSelectBtn;
     }
 }

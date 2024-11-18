@@ -6,4 +6,5 @@ public partial class DataTableViewPanel : ViewPanelBase
     {
         InitializeComponent();
     }
+
 }
