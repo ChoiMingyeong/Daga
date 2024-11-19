@@ -48,9 +48,29 @@
             }
             else
             {
+                bool allChecked = true;
                 foreach (ListViewItem item in SelectedItems)
                 {
-                    item.Checked = true;
+                    if (false == item.Checked)
+                    {
+                        allChecked = false;
+                        break;
+                    }
+                }
+
+                if (allChecked)
+                {
+                    foreach (ListViewItem item in SelectedItems)
+                    {
+                        item.Checked = false;
+                    }
+                }
+                else
+                {
+                    foreach (ListViewItem item in SelectedItems)
+                    {
+                        item.Checked = true;
+                    }
                 }
             }
         }
