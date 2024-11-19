@@ -4,7 +4,7 @@ namespace DagaCodeGenerator;
 
 public partial class ViewPanelBase : UserControl
 {
-    protected static readonly string _pattern = @"^(?!.*\\~\$).*\.((xlsx)|(csv)|(xls))$";
+    protected static readonly string _pattern = @"^(?!.*~\$).*$";
     protected static readonly Regex _regex = new(_pattern, RegexOptions.IgnoreCase);
 
     public ViewPanelBase()
@@ -22,9 +22,22 @@ public partial class ViewPanelBase : UserControl
             {
                 outputPathTextBox.Text = dialog.SelectedPath;
             }
-            var filePaths = Directory.GetFiles(dialog.SelectedPath).Where(p => _regex.IsMatch(p)).ToArray();
+            var filePaths = Directory.GetFiles(dialog.SelectedPath).Where(IsMyExtension).ToArray();
             checkedListView.AddFilePaths(true, filePaths);
         }
+    }
+
+    private bool IsMyExtension(string filePath)
+    {
+        if (false == _regex.IsMatch(filePath))
+        {
+            return false;
+        }
+
+        string extension = Path.GetExtension(filePath);
+        return extension.Equals(".csv", StringComparison.CurrentCultureIgnoreCase) ||
+           extension.Equals(".xlsx", StringComparison.CurrentCultureIgnoreCase) ||
+           extension.Equals(".xls", StringComparison.CurrentCultureIgnoreCase);
     }
 
     protected virtual void OutputPathSelectBtnClick(object sender, EventArgs e)
