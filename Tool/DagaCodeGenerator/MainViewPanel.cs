@@ -51,6 +51,36 @@ public partial class ViewPanelBase : UserControl
 
     protected virtual void GenBtnClick(object sender, EventArgs e)
     {
+        foreach (ListViewItem listViewItem in checkedListView.CheckedItems)
+        {
+            string filePath = listViewItem.SubItems[1].Text;
+            if (false == File.Exists(filePath))
+            {
+                continue;
+            }
 
+            string extension = Path.GetExtension(filePath);
+
+            if (extension.Equals(".csv", StringComparison.CurrentCultureIgnoreCase))
+            {
+                ReadCSVFile(filePath);
+            }
+            else if (extension.Equals(".xlsx", StringComparison.CurrentCultureIgnoreCase) ||
+                extension.Equals(".xls", StringComparison.CurrentCultureIgnoreCase))
+            {
+                ReadExcelFile(filePath);
+            }
+        }
+    }
+
+    protected virtual string[] ReadCSVFile(string filePath)
+    {
+
+        return [];
+    }
+
+    protected virtual string[] ReadExcelFile(string filePath)
+    {
+        return [];
     }
 }

@@ -9,9 +9,4 @@ public partial class ConstantViewPanel : ViewPanelBase
         InitializeComponent();
     }
 
-    protected override void GenBtnClick(object sender, EventArgs e)
-    {
-
-    }
-
 }
