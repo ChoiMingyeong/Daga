@@ -1,6 +1,9 @@
 ﻿namespace DagaCodeGenerator;
 
-public class CodeStringBase(IEnumerable<string[]> readLines)
+public class CodeStringBase
 {
+    public CodeStringBase(IEnumerable<string[]> readLines)
+    {
 
+    }
 }
