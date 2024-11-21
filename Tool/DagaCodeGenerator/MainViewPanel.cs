@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using ExcelDataReader;
+using System.Text.RegularExpressions;
 
 namespace DagaCodeGenerator;
 
@@ -9,6 +10,9 @@ public partial class ViewPanelBase : UserControl
 
     public ViewPanelBase()
     {
+        // ExcelDataReader 초기화
+        System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
         InitializeComponent();
     }
 
@@ -60,27 +64,53 @@ public partial class ViewPanelBase : UserControl
             }
 
             string extension = Path.GetExtension(filePath);
-
+            IEnumerable<string[]>? readLines = null;
             if (extension.Equals(".csv", StringComparison.CurrentCultureIgnoreCase))
             {
-                ReadCSVFile(filePath);
+                readLines = ReadCsvLines(filePath);
             }
             else if (extension.Equals(".xlsx", StringComparison.CurrentCultureIgnoreCase) ||
                 extension.Equals(".xls", StringComparison.CurrentCultureIgnoreCase))
             {
-                ReadExcelFile(filePath);
+                readLines = ReadExcelLines(filePath);
             }
+
+            if (null == readLines || false == readLines.Any())
+            {
+                continue;
+            }
+
+            CodeStringBase codeStringBase = new(readLines);
         }
     }
 
-    protected virtual string[] ReadCSVFile(string filePath)
+    protected virtual IEnumerable<string[]> ReadCsvLines(string filePath)
     {
-
-        return [];
+        using StreamReader reader = new(filePath);
+        string? line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            yield return line.Split(',');
+        }
     }
 
-    protected virtual string[] ReadExcelFile(string filePath)
+    protected virtual IEnumerable<string[]> ReadExcelLines(string filePath)
     {
-        return [];
+        using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+        using (var reader = ExcelReaderFactory.CreateReader(stream))
+        {
+            do
+            {
+                while (reader.Read()) // 현재 워크시트의 행을 한 줄씩 읽음
+                {
+                    var row = new string[reader.FieldCount];
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        row[i] = reader.GetValue(i)?.ToString() ?? string.Empty; // 각 셀의 값을 읽음
+                    }
+                    yield return row;
+                }
+            } while (reader.NextResult()); // 다음 워크시트로 이동
+        }
     }
 }
