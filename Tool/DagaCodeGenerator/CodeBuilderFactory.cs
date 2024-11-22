@@ -4,17 +4,13 @@
     {
         public static CodeBuilderBase Create(CodeBuilderType codeBuilderType, IEnumerable<string[]> readLines)
         {
-            switch (codeBuilderType)
+            return codeBuilderType switch
             {
-                case CodeBuilderType.Constant:
-                    return new ConstantCodeBuilder(readLines);
-                case CodeBuilderType.Enum:
-                    return new EnumCodeBuilder(readLines);
-                case CodeBuilderType.DataTable:
-                    return new DataTableCodeBuilder(readLines);
-            }
-
-            throw new ArgumentOutOfRangeException(nameof(codeBuilderType));
+                CodeBuilderType.Constant => new ConstantCodeBuilder(readLines),
+                CodeBuilderType.Enum => new EnumCodeBuilder(readLines),
+                CodeBuilderType.DataTable => new DataTableCodeBuilder(readLines),
+                _ => throw new ArgumentOutOfRangeException(nameof(codeBuilderType)),
+            };
         }
     }
 }
