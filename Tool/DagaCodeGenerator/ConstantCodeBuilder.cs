@@ -1,9 +1,12 @@
 ﻿namespace DagaCodeGenerator
 {
-    public class ConstantCodeBuilder : CodeBuilderBase
+    public class ConstantCodeBuilder : ICodeBuilderBase
     {
         public ConstantCodeBuilder(IEnumerable<string[]> readLines)
-            : base(readLines)
+        {
+        }
+
+        public void Dispose()
         {
         }
     }

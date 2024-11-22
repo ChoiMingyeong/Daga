@@ -1,9 +1,12 @@
 ﻿namespace DagaCodeGenerator
 {
-    public class DataTableCodeBuilder : CodeBuilderBase
+    public class DataTableCodeBuilder : ICodeBuilderBase
     {
         public DataTableCodeBuilder(IEnumerable<string[]> readLines)
-            : base(readLines)
+        {
+        }
+
+        public void Dispose()
         {
         }
     }

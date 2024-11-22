@@ -2,7 +2,7 @@
 {
     public static class CodeBuilderFactory
     {
-        public static CodeBuilderBase Create(CodeBuilderType codeBuilderType, IEnumerable<string[]> readLines)
+        public static ICodeBuilderBase Create(CodeBuilderType codeBuilderType, IEnumerable<string[]> readLines)
         {
             return codeBuilderType switch
             {
