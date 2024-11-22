@@ -2,7 +2,7 @@
 {
     public static class FileReaderFactory
     {
-        public static IFileReaderBase? Create(string filePath)
+        public static IFileReader? Create(string filePath)
         {
             if (false == File.Exists(filePath))
             {
