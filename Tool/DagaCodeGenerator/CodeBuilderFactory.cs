@@ -2,9 +2,9 @@
 {
     public static class CodeBuilderFactory
     {
-        public static CodeBuilderBase Create(CodeType codeType, IEnumerable<string[]> readLines)
+        public static CodeBuilderBase Create(CodeBuilderType codeBuilderType, IEnumerable<string[]> readLines)
         {
-            switch (codeType)
+            switch (codeBuilderType)
             {
                 case CodeBuilderType.Constant:
                     return new ConstantCodeBuilder(readLines);
@@ -14,7 +14,7 @@
                     return new DataTableCodeBuilder(readLines);
             }
 
-            throw new ArgumentOutOfRangeException(nameof(codeType));
+            throw new ArgumentOutOfRangeException(nameof(codeBuilderType));
         }
     }
 }
