@@ -79,8 +79,6 @@ public partial class ViewPanelBase : UserControl
             {
                 continue;
             }
-
-            CodeStringBase codeStringBase = new(readLines);
         }
     }
 
