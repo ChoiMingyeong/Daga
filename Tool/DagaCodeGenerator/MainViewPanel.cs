@@ -1,4 +1,5 @@
-﻿using ExcelDataReader;
+﻿using DagaCodeGenerator.FileReader;
+using ExcelDataReader;
 using System.Text.RegularExpressions;
 
 namespace DagaCodeGenerator;
@@ -63,17 +64,12 @@ public partial class ViewPanelBase : UserControl
                 continue;
             }
 
-            string extension = Path.GetExtension(filePath);
-            IEnumerable<string[]>? readLines = null;
-            if (extension.Equals(".csv", StringComparison.CurrentCultureIgnoreCase))
+            IEnumerable<string[]>? readLines;
+            using (IFileReaderBase? reader = FileReaderFactory.Create(filePath))
             {
-                readLines = ReadCsvLines(filePath);
+                readLines = reader?.ReadLines(filePath);
             }
-            else if (extension.Equals(".xlsx", StringComparison.CurrentCultureIgnoreCase) ||
-                extension.Equals(".xls", StringComparison.CurrentCultureIgnoreCase))
-            {
-                readLines = ReadExcelLines(filePath);
-            }
+
 
             if (null == readLines || false == readLines.Any())
             {

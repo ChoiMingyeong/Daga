@@ -1,4 +1,4 @@
-﻿namespace DagaCodeGenerator
+﻿namespace DagaCodeGenerator.CodeBuilder
 {
     public class EnumCodeBuilder : ICodeBuilderBase
     {

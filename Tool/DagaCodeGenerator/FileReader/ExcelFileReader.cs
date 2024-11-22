@@ -1,4 +1,4 @@
-﻿namespace DagaCodeGenerator
+﻿namespace DagaCodeGenerator.FileReader
 {
     public class ExcelFileReader : IFileReaderBase
     {
