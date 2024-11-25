@@ -2,6 +2,7 @@
 
 public abstract class ICode
 {
-    public ICode(IEnumerable<string[]> readLines);
+    public required IEnumerable<string[]> ReadLines { get; init; }
+
     public abstract bool CreateFile();
 }
