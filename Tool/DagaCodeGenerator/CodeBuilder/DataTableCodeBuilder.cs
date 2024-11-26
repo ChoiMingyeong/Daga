@@ -8,11 +8,6 @@ namespace DagaCodeGenerator.CodeBuilder
         {
         }
 
-        public ICode Build()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Dispose()
         {
             GC.SuppressFinalize(this);

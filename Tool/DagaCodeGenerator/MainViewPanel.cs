@@ -81,7 +81,6 @@ public partial class ViewPanelBase : UserControl
             {
                 foreach (var readLine in readLines)
                 {
-                    builder.Build();
                 }
             }
         }
