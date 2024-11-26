@@ -1,4 +1,6 @@
 ﻿using DagaSourceGenerator;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using System.Security.Cryptography.X509Certificates;
 
 namespace DagaDev
@@ -49,6 +51,29 @@ namespace DagaDev
 
         static void Main(string[] args)
         {
+
+            var namespaceDeclarartion = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("TestNamespace"))
+                .WithNamespaceKeyword(SyntaxFactory.Token(SyntaxKind.NamespaceKeyword));
+
+            var classDeclaration = SyntaxFactory.ClassDeclaration("TestClass")
+                .WithModifiers(SyntaxFactory.TokenList(
+                    SyntaxFactory.Token(SyntaxKind.PublicKeyword),
+                    SyntaxFactory.Token(SyntaxKind.StaticKeyword)));
+
+            var fieldDeclaration = SyntaxFactory.FieldDeclaration(
+                SyntaxFactory.VariableDeclaration(SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.IntKeyword)))
+                    .AddVariables(SyntaxFactory.VariableDeclarator("TestInt")
+                        .WithInitializer(SyntaxFactory.EqualsValueClause(
+                            SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(50))))))
+            .WithModifiers(SyntaxFactory.TokenList(
+                SyntaxFactory.Token(SyntaxKind.PublicKeyword),
+                SyntaxFactory.Token(SyntaxKind.StaticKeyword),
+                SyntaxFactory.Token(SyntaxKind.ConstKeyword)));
+
+            classDeclaration = classDeclaration.AddMembers(fieldDeclaration);
+            namespaceDeclarartion = namespaceDeclarartion.AddMembers(classDeclaration);
+            var str = namespaceDeclarartion.NormalizeWhitespace().ToFullString();
+
             Dictionary<int, Test?> testDic = [];
 
             testDic[0] = new Test();
