@@ -40,17 +40,115 @@ namespace DagaDev
         }
     }
 
-    public class  Test
+    public class Test
     {
         public int A { get; set; }
     }
 
     internal class Program
     {
+        enum Note
+        {
+            Quarter = 1,
+            Eighth = 2,
+            Triplet = 3,
+            Sixteenth = 4,
+        }
         static Dictionary<int, Test> keyValuePairs = [];
+
+        static byte BPM = 60;
+        static double Beat => 60000 / BPM;
+        static Note NowNote { get; set; } = Note.Quarter;
+
+
+        static void ChangeBPM(bool up = false, bool down = false)
+        {
+            if (up && BPM < 120)
+            {
+                ++BPM;
+            }
+
+            if (down && BPM > 40)
+            {
+                --BPM;
+            }
+
+            Console.WriteLine($"BPM : {BPM}");
+        }
+
+        static void ChangeNote(Note note)
+        {
+            if (note == NowNote)
+            {
+                return;
+            }
+
+            NowNote = note;
+            Console.WriteLine($"Note : {NowNote}");
+        }
 
         static void Main(string[] args)
         {
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    var key = Console.ReadKey(intercept: true).Key;
+                    switch (key)
+                    {
+                        case ConsoleKey.Add:
+                        case ConsoleKey.OemPlus:
+                            ChangeBPM(up: true);
+                            break;
+                        case ConsoleKey.Subtract:
+                        case ConsoleKey.OemMinus:
+                            ChangeBPM(down: true);
+                            break;
+
+                        case ConsoleKey.D1:
+                            ChangeNote(Note.Quarter);
+                            break;
+                        case ConsoleKey.D2:
+                            ChangeNote(Note.Eighth);
+                            break;
+                        case ConsoleKey.D3:
+                            ChangeNote(Note.Triplet);
+                            break;
+                        case ConsoleKey.D4:
+                            ChangeNote(Note.Sixteenth);
+                            break;
+                    }
+                    
+                    Thread.Sleep(100);
+                }
+            });
+
+            DateTime beatNow = DateTime.Now;
+            DateTime noteNow = beatNow;
+            while (true)
+            {
+                bool beat = DateTime.Now.Subtract(beatNow).TotalMilliseconds >= Beat;
+                bool note = DateTime.Now.Subtract(noteNow).TotalMilliseconds >= Beat / (double)NowNote;
+
+                if(!beat && !note)
+                {
+                    Thread.Sleep(1);
+                    continue;
+                }
+
+                if (beat)
+                {
+                    Console.WriteLine();
+                    beatNow = DateTime.Now;
+                }
+
+                if(note)
+                {
+                    Console.Write("* ");
+                    noteNow = DateTime.Now;
+                }
+            }
+
 
             var namespaceDeclarartion = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("TestNamespace"))
                 .WithNamespaceKeyword(SyntaxFactory.Token(SyntaxKind.NamespaceKeyword));
