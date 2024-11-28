@@ -1,6 +1,4 @@
-﻿using DagaCodeGenerator.Code;
-
-namespace DagaCodeGenerator.CodeBuilder;
+﻿namespace DagaCodeGenerator.CodeBuilder;
 
 public interface ICodeBuilder : IDisposable
 {

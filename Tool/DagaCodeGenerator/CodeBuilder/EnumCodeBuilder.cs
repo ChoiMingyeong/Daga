@@ -8,11 +8,6 @@ namespace DagaCodeGenerator.CodeBuilder
         {
         }
 
-        public ICode Build()
-        {
-            return new EnumCode();
-        }
-
         public void Dispose()
         {
             GC.SuppressFinalize(this);

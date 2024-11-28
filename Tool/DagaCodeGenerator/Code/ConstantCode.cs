@@ -20,7 +20,7 @@ public class ConstantCode : ICode
 
     protected override void InitDeclarations(in IEnumerable<string[]> readLines)
     {
-        _namespaceDeclaration = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(Namespace))
+        _namespaceDeclaration = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(Program.DefaultNamespace))
             .WithNamespaceKeyword(SyntaxFactory.Token(SyntaxKind.NamespaceKeyword))
             .NormalizeWhitespace();
 
