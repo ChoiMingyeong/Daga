@@ -5,8 +5,6 @@ namespace DagaCodeGenerator.Code;
 
 public abstract class ICode
 {
-    public required string Namespace { get; init; }
-
     public required string ClassName { get; init; }
 
     public required IEnumerable<string[]> ReadLines

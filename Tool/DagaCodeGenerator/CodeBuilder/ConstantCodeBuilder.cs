@@ -19,8 +19,14 @@ namespace DagaCodeGenerator.CodeBuilder
 
             foreach (var readLine in readLines)
             {
+                // 헤더 제거
                 if (readLines.First() == readLine)
                 {
+                    if(readLines.Count() != 4)
+                    {
+                        throw new FormatException();
+                    }
+
                     continue;
                 }
 
@@ -32,10 +38,12 @@ namespace DagaCodeGenerator.CodeBuilder
                 .WithModifiers(SyntaxFactory.TokenList(
                     SyntaxFactory.Token(SyntaxKind.PublicKeyword),
                     SyntaxFactory.Token(SyntaxKind.StaticKeyword),
-                    SyntaxFactory.Token(SyntaxKind.ConstKeyword)))
-                // Adding comment as leading trivia
-                .WithLeadingTrivia(SyntaxFactory.TriviaList(
-                    SyntaxFactory.Comment($"// {readLine[3]}")));
+                    SyntaxFactory.Token(SyntaxKind.ConstKeyword)));
+
+                if (string.IsNullOrEmpty(readLine[3]))
+                {
+                    fieldDeclaration = fieldDeclaration.WithLeadingTrivia(SyntaxFactory.TriviaList(SyntaxFactory.Comment($"// {readLine[3]}")));
+                }
 
                 classDeclaration = classDeclaration.AddMembers(fieldDeclaration);
             }
