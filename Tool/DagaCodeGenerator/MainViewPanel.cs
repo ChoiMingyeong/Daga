@@ -77,7 +77,7 @@ public partial class ViewPanelBase : UserControl
                 continue;
             }
 
-            using (ICodeBuilder? builder = CodeBuilderFactory.Create(_codeBuilderType, readLines))
+            using (ICodeBuilder? builder = CodeBuilderFactory.Create(_codeBuilderType, Path.GetFileName(filePath), readLines))
             {
                 foreach (var readLine in readLines)
                 {
