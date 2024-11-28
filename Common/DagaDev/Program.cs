@@ -89,65 +89,65 @@ namespace DagaDev
 
         static void Main(string[] args)
         {
-            Task.Run(() =>
-            {
-                while (true)
-                {
-                    var key = Console.ReadKey(intercept: true).Key;
-                    switch (key)
-                    {
-                        case ConsoleKey.Add:
-                        case ConsoleKey.OemPlus:
-                            ChangeBPM(up: true);
-                            break;
-                        case ConsoleKey.Subtract:
-                        case ConsoleKey.OemMinus:
-                            ChangeBPM(down: true);
-                            break;
+            //Task.Run(() =>
+            //{
+            //    while (true)
+            //    {
+            //        var key = Console.ReadKey(intercept: true).Key;
+            //        switch (key)
+            //        {
+            //            case ConsoleKey.Add:
+            //            case ConsoleKey.OemPlus:
+            //                ChangeBPM(up: true);
+            //                break;
+            //            case ConsoleKey.Subtract:
+            //            case ConsoleKey.OemMinus:
+            //                ChangeBPM(down: true);
+            //                break;
 
-                        case ConsoleKey.D1:
-                            ChangeNote(Note.Quarter);
-                            break;
-                        case ConsoleKey.D2:
-                            ChangeNote(Note.Eighth);
-                            break;
-                        case ConsoleKey.D3:
-                            ChangeNote(Note.Triplet);
-                            break;
-                        case ConsoleKey.D4:
-                            ChangeNote(Note.Sixteenth);
-                            break;
-                    }
+            //            case ConsoleKey.D1:
+            //                ChangeNote(Note.Quarter);
+            //                break;
+            //            case ConsoleKey.D2:
+            //                ChangeNote(Note.Eighth);
+            //                break;
+            //            case ConsoleKey.D3:
+            //                ChangeNote(Note.Triplet);
+            //                break;
+            //            case ConsoleKey.D4:
+            //                ChangeNote(Note.Sixteenth);
+            //                break;
+            //        }
                     
-                    Thread.Sleep(100);
-                }
-            });
+            //        Thread.Sleep(100);
+            //    }
+            //});
 
-            DateTime beatNow = DateTime.Now;
-            DateTime noteNow = beatNow;
-            while (true)
-            {
-                bool beat = DateTime.Now.Subtract(beatNow).TotalMilliseconds >= Beat;
-                bool note = DateTime.Now.Subtract(noteNow).TotalMilliseconds >= Beat / (double)NowNote;
+            //DateTime beatNow = DateTime.Now;
+            //DateTime noteNow = beatNow;
+            //while (true)
+            //{
+            //    bool beat = DateTime.Now.Subtract(beatNow).TotalMilliseconds >= Beat;
+            //    bool note = DateTime.Now.Subtract(noteNow).TotalMilliseconds >= Beat / (double)NowNote;
 
-                if(!beat && !note)
-                {
-                    Thread.Sleep(1);
-                    continue;
-                }
+            //    if(!beat && !note)
+            //    {
+            //        Thread.Sleep(1);
+            //        continue;
+            //    }
 
-                if (beat)
-                {
-                    Console.WriteLine();
-                    beatNow = DateTime.Now;
-                }
+            //    if (beat)
+            //    {
+            //        Console.WriteLine();
+            //        beatNow = DateTime.Now;
+            //    }
 
-                if(note)
-                {
-                    Console.Write("* ");
-                    noteNow = DateTime.Now;
-                }
-            }
+            //    if(note)
+            //    {
+            //        Console.Write("* ");
+            //        noteNow = DateTime.Now;
+            //    }
+            //}
 
 
             var namespaceDeclarartion = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("TestNamespace"))

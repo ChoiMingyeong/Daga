@@ -11,7 +11,7 @@ namespace DagaCodeGenerator.FileReader
 
         public IEnumerable<string[]>? ReadLines(string filePath)
         {
-            using var stream = File.Open(filePath, FileMode.Open, FileAccess.Read);
+            using var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
             using var reader = ExcelReaderFactory.CreateReader(stream);
 
             do
@@ -26,6 +26,8 @@ namespace DagaCodeGenerator.FileReader
                     yield return row;
                 }
             } while (reader.NextResult()); // 다음 워크시트로 이동
+
+            stream.Close();
         }
     }
 }

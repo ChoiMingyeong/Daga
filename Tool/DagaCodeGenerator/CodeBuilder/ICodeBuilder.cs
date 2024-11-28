@@ -2,4 +2,5 @@
 
 public interface ICodeBuilder : IDisposable
 {
+    public void Build();
 }

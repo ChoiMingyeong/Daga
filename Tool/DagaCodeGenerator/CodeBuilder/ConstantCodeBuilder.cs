@@ -9,20 +9,20 @@ namespace DagaCodeGenerator.CodeBuilder
     {
         public ConstantCodeBuilder(string fileName, IEnumerable<string[]> readLines)
         {
+            var namespaceDeclarartion = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(Program.DefaultNamespace))
+                .WithNamespaceKeyword(SyntaxFactory.Token(SyntaxKind.NamespaceKeyword));
+
+            var classDeclaration = SyntaxFactory.ClassDeclaration(fileName)
+                .WithModifiers(SyntaxFactory.TokenList(
+                    SyntaxFactory.Token(SyntaxKind.PublicKeyword),
+                    SyntaxFactory.Token(SyntaxKind.StaticKeyword)));
+
             foreach (var readLine in readLines)
             {
-                if(readLines.First() == readLine)
+                if (readLines.First() == readLine)
                 {
                     continue;
                 }
-
-                var namespaceDeclarartion = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(Program.DefaultNamespace))
-                    .WithNamespaceKeyword(SyntaxFactory.Token(SyntaxKind.NamespaceKeyword));
-
-                var classDeclaration = SyntaxFactory.ClassDeclaration(fileName)
-                    .WithModifiers(SyntaxFactory.TokenList(
-                        SyntaxFactory.Token(SyntaxKind.PublicKeyword),
-                        SyntaxFactory.Token(SyntaxKind.StaticKeyword)));
 
                 var fieldDeclaration = SyntaxFactory.FieldDeclaration(
                     SyntaxFactory.VariableDeclaration(SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.IntKeyword)))
@@ -38,10 +38,15 @@ namespace DagaCodeGenerator.CodeBuilder
                     SyntaxFactory.Comment($"// {readLine[3]}")));
 
                 classDeclaration = classDeclaration.AddMembers(fieldDeclaration);
-                namespaceDeclarartion = namespaceDeclarartion.AddMembers(classDeclaration);
-
-                var str = namespaceDeclarartion.NormalizeWhitespace().ToFullString();
             }
+
+            namespaceDeclarartion = namespaceDeclarartion.AddMembers(classDeclaration);
+            var str = namespaceDeclarartion.NormalizeWhitespace().ToFullString();
+        }
+
+        public void Build()
+        {
+            throw new NotImplementedException();
         }
 
 
