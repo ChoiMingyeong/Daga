@@ -1,12 +1,17 @@
 ﻿using DagaCodeGenerator.Code;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Reflection;
 
 namespace DagaCodeGenerator.CodeBuilder
 {
     public class ConstantCodeBuilder : ICodeBuilder
     {
+        NamespaceDeclarationSyntax ICodeBuilder.NamespaceDeclaration { get; init; } = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(Program.DefaultNamespace))
+                .WithNamespaceKeyword(SyntaxFactory.Token(SyntaxKind.NamespaceKeyword));
+        Dictionary<string, ClassDeclarationSyntax> ICodeBuilder.ClassDeclaration { get; init; } = [];
+
         public ConstantCodeBuilder(string fileName, IEnumerable<string[]> readLines)
         {
             var namespaceDeclarartion = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(Program.DefaultNamespace))
@@ -51,7 +56,6 @@ namespace DagaCodeGenerator.CodeBuilder
             namespaceDeclarartion = namespaceDeclarartion.AddMembers(classDeclaration);
             var str = namespaceDeclarartion.NormalizeWhitespace().ToFullString();
         }
-
         public void Build()
         {
             throw new NotImplementedException();

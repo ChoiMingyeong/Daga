@@ -20,14 +20,5 @@ public class EnumCode : ICode
 
     protected override void InitDeclarations(in IEnumerable<string[]> readLines)
     {
-        _namespaceDeclaration = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(Namespace))
-            .WithNamespaceKeyword(SyntaxFactory.Token(SyntaxKind.NamespaceKeyword))
-            .NormalizeWhitespace();
-
-        _classDeclaration = SyntaxFactory.ClassDeclaration(ClassName)
-            .WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.StaticKeyword)))
-            .NormalizeWhitespace();
-
-        _namespaceDeclaration = _namespaceDeclaration.AddMembers(_classDeclaration);
     }
 }
