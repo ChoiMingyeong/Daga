@@ -45,7 +45,7 @@ namespace DagaCodeGenerator.CodeBuilder
                     SyntaxFactory.Token(SyntaxKind.StaticKeyword),
                     SyntaxFactory.Token(SyntaxKind.ConstKeyword)));
 
-                if (string.IsNullOrEmpty(readLine[3]))
+                if (false == string.IsNullOrEmpty(readLine[3]))
                 {
                     fieldDeclaration = fieldDeclaration.WithLeadingTrivia(SyntaxFactory.TriviaList(SyntaxFactory.Comment($"// {readLine[3]}")));
                 }
