@@ -1,4 +1,4 @@
-namespace DagaServer
+namespace DagaEditorAPIServer
 {
     public class WeatherForecast
     {

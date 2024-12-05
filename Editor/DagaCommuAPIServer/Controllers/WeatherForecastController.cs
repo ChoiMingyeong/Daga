@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace DagaServer.Controllers
+namespace DagaCommuAPIServer.Controllers
 {
     [ApiController]
     [Route("[controller]")]

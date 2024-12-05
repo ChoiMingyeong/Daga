@@ -1,0 +1,6 @@
+@DagaEditorAPIServer_HostAddress = http://localhost:5037
+
+GET {{DagaEditorAPIServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
