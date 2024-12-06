@@ -5,6 +5,14 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DagaEditor", "DagaEditor.csproj", "{5C0DDB65-4979-49DD-820C-C3EC60E61B3C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DagaUtility", "..\..\Common\DagaUtility\DagaUtility.csproj", "{4F8D0F97-83B5-45AF-B2F6-2EA863FBD1CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DagaCommon", "..\..\Common\DagaCommon\DagaCommon.csproj", "{DC8FE7D6-85BF-40B0-9E9A-E708F7E6A5E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DagaEditorAPIServer", "..\DagaEditorAPIServer\DagaEditorAPIServer.csproj", "{E31B1165-56F6-4129-ACB2-3CD76C44CCC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DagaCommuAPIServer", "..\DagaCommuAPIServer\DagaCommuAPIServer.csproj", "{8C9DEE0A-3695-42B8-96B4-0865CAC5C05F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +23,22 @@ Global
 		{5C0DDB65-4979-49DD-820C-C3EC60E61B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C0DDB65-4979-49DD-820C-C3EC60E61B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C0DDB65-4979-49DD-820C-C3EC60E61B3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F8D0F97-83B5-45AF-B2F6-2EA863FBD1CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F8D0F97-83B5-45AF-B2F6-2EA863FBD1CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F8D0F97-83B5-45AF-B2F6-2EA863FBD1CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F8D0F97-83B5-45AF-B2F6-2EA863FBD1CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC8FE7D6-85BF-40B0-9E9A-E708F7E6A5E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC8FE7D6-85BF-40B0-9E9A-E708F7E6A5E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC8FE7D6-85BF-40B0-9E9A-E708F7E6A5E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC8FE7D6-85BF-40B0-9E9A-E708F7E6A5E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E31B1165-56F6-4129-ACB2-3CD76C44CCC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E31B1165-56F6-4129-ACB2-3CD76C44CCC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E31B1165-56F6-4129-ACB2-3CD76C44CCC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E31B1165-56F6-4129-ACB2-3CD76C44CCC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C9DEE0A-3695-42B8-96B4-0865CAC5C05F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C9DEE0A-3695-42B8-96B4-0865CAC5C05F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C9DEE0A-3695-42B8-96B4-0865CAC5C05F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C9DEE0A-3695-42B8-96B4-0865CAC5C05F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
