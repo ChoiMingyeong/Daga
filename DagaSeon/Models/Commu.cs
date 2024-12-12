@@ -1,6 +1,6 @@
-﻿using DagaHub.Identifiers;
+﻿using DagaSeon.Identifiers;
 
-namespace DagaHub.Models
+namespace DagaSeon.Models
 {
     public class Commu
     {

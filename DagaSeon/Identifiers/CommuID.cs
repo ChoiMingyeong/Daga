@@ -1,4 +1,4 @@
-﻿namespace DagaHub.Identifiers
+﻿namespace DagaSeon.Identifiers
 {
     public class CommuID
     {
