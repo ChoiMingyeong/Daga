@@ -1,9 +1,58 @@
 ﻿@page "/login"
-
-<PageTitle>Login</PageTitle>
+@using DagaSeon.Models
+@using System.Text.Json
+@using System.Text
+@using Microsoft.AspNetCore.Components.Forms
+@inject HttpClient Http
 
 <h1>Login</h1>
 
-@code {
+<EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
+    <div>
+        <label for="id">ID:</label>
+        <InputText id="id" @bind-Value="loginModel.Id" />
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <InputText id="password" type="password" @bind-Value="loginModel.Password" />
+    </div>
+    <button type="submit">Login</button>
+</EditForm>
+
+@code {
+    private LoginModel loginModel = new LoginModel();
+    private string message = string.Empty;
+
+    private async Task HandleLogin()
+    {
+        var loginData = new
+        {
+            Id = loginModel.Id,
+            Password = loginModel.Password
+        };
+
+        var json = JsonSerializer.Serialize(loginData);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        try
+        {
+            var response = await Http.PostAsync("https://your-api-endpoint.com/login", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                message = "Login successful!";
+            }
+            else
+            {
+                message = "Login failed. Please try again.";
+            }
+        }
+        catch (Exception ex)
+        {
+            message = $"An error occurred: {ex.Message}";
+        }
+    }
 }
