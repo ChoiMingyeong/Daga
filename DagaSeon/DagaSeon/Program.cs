@@ -1,3 +1,4 @@
+using DagaUtility.Security;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -7,6 +8,8 @@ namespace DagaSeon
     {
         public static async Task Main(string[] args)
         {
+            Password password = new("test1234");
+
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
