@@ -1,3 +1,4 @@
+using DagaCommon.Enums;
 using DagaRemote.Hub;
 using Microsoft.AspNetCore.SignalR.Client;
 using System.Diagnostics;
@@ -23,7 +24,7 @@ namespace DagaRemote
             await _hubConnection.StartAsync();
             _logger.LogInformation("SignalR Started.");
 
-            _hubConnection.On<string>("ReceiveMessage", message =>
+            _hubConnection.On<RemoteCommand>("ReceiveMessage", message =>
             {
                 _logger.LogInformation("Received message: {Message}", message);
             });
