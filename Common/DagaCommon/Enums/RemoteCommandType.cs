@@ -1,6 +1,6 @@
 ﻿namespace DagaCommon.Enums
 {
-    public enum RemoteCommand
+    public enum RemoteCommandType
     {
         Start,
         Stop,

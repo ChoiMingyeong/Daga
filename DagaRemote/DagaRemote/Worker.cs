@@ -24,7 +24,7 @@ namespace DagaRemote
             await _hubConnection.StartAsync();
             _logger.LogInformation("SignalR Started.");
 
-            _hubConnection.On<RemoteCommand>("ReceiveMessage", message =>
+            _hubConnection.On<RemoteCommandType>("ReceiveMessage", message =>
             {
                 _logger.LogInformation("Received message: {Message}", message);
             });
