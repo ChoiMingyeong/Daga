@@ -8,51 +8,85 @@ namespace DagaRemote
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private HubConnection _hubConnection;
+        private readonly IConfiguration _configuration;
+        private readonly List<Process> _processes = new();
 
-        public Worker(ILogger<Worker> logger)
+        public Worker(ILogger<Worker> logger, IConfiguration configuration)
         {
             _logger = logger;
-
-            _hubConnection = new HubConnectionBuilder()
-                .WithUrl("http://dagaops.duckdns.org:5001/remote")
-                .Build();
+            _configuration = configuration;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await _hubConnection.StartAsync();
-            _logger.LogInformation("SignalR Started.");
+            var exePaths = _configuration.GetSection("ExecutablePaths").Get<List<string>>();
 
-            _hubConnection.On<RemoteCommandType>("ReceiveMessage", message =>
+            if (exePaths == null || exePaths.Count == 0)
             {
-                _logger.LogInformation("Received message: {Message}", message);
-            });
+                _logger.LogError("No executable paths are configured.");
+                return;
+            }
 
-            _hubConnection.On<string>("RemoteCommand", command =>
+            _logger.LogInformation("Starting executables...");
+
+            foreach (var exePath in exePaths)
             {
-                if (false == string.IsNullOrWhiteSpace(command))
+                try
                 {
-                    _logger.LogInformation($"Remote Command : {command}");
-                    Process.Start(new ProcessStartInfo
+                    var process = new Process
                     {
-                        Arguments = "",
-                        UseShellExecute = true,
-                        FileName = "",
-                    });
+                        StartInfo = new ProcessStartInfo
+                        {
+                            FileName = exePath,
+                            UseShellExecute = true,
+                            CreateNoWindow = false,
+                        }
+                    };
+
+                    process.Start();
+                    _processes.Add(process);
+                    _logger.LogInformation($"Started: {exePath}");
                 }
-            });
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, $"Failed to start executable: {exePath}");
+                }
+            }
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                await _hubConnection.SendAsync("SendMessage", "Hello from Worker Service");
-
-                if (_logger.IsEnabled(LogLevel.Information))
-                {
-                    _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                }
                 await Task.Delay(1000, stoppingToken);
             }
+        }
+
+        public override async Task StopAsync(CancellationToken stoppingToken)
+        {
+            _logger.LogInformation("Stopping the worker...");
+            StopExecutables();
+            await base.StopAsync(stoppingToken);
+        }
+
+        private void StopExecutables()
+        {
+            foreach (var process in _processes)
+            {
+                if (process != null && !process.HasExited)
+                {
+                    try
+                    {
+                        _logger.LogInformation($"Stopping: {process.StartInfo.FileName}");
+                        process.Kill(true);
+                        process.WaitForExit();
+                        _logger.LogInformation($"Stopped: {process.StartInfo.FileName}");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, $"Failed to stop: {process.StartInfo.FileName}");
+                    }
+                }
+            }
+
+            _processes.Clear();
         }
     }
 }
