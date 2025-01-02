@@ -1,6 +1,6 @@
 namespace DagaDataGenerator.SrcGenerator;
 
-public interface ISrcGenerator
+public interface ISrcGenerator : IDisposable
 {
-
+    public bool CreateSource();
 }

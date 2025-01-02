@@ -11,7 +11,6 @@ namespace DagaDataGenerator
         static void Main()
         {
             Dictionary<uint, DataSet> test = [];
-            test.Add(1, new ItemData(1, "abc"));
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
