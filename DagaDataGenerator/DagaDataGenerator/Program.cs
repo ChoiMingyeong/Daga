@@ -13,15 +13,12 @@ namespace DagaDataGenerator
             using (EnumSrcGenerator gen = new())
             {
                 if(gen.TryAddEntity("CookType", "요리 과정 종류") &&
-                    gen["CookType"] is IEnum cookType)
+                    gen["CookType"] is IEnum cookType) 
                 {
                     cookType.TryAddEntity(new EnumEntity(name: "Washing", comment: "세척"));
                     cookType.TryAddEntity(new EnumEntity(name: "Preparing", comment: "손질"));
-                    cookType.TryAddEntity(new EnumEntity(name: "Chopping", comment: "큼직하게 자르기"));
+                    cookType.TryAddEntity(new EnumEntity(name: "Chopping", value: 10, comment: "큼직하게 자르기"));
                     cookType.TryAddEntity(new EnumEntity(name: "Slicing", comment: "얇게 썰기"));
-
-                    var wash = cookType[0]?.Value;
-                    var chop = cookType["Chopping"]?.Value;
                 }
             }
             // To customize application configuration such as set high DPI settings or default font,
