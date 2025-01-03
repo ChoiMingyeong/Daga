@@ -2,11 +2,6 @@ namespace DagaDataGenerator.SrcGenerator.Const;
 
 public class ConstSrcGenerator : ISrcGenerator
 {
-    public bool AddEntity()
-    {
-        throw new NotImplementedException();
-    }
-
     public bool CreateSource()
     {
         throw new NotImplementedException();
@@ -15,5 +10,10 @@ public class ConstSrcGenerator : ISrcGenerator
     public void Dispose()
     {
         GC.SuppressFinalize(this);
+    }
+
+    public bool TryAddEntity(params object?[]? objects)
+    {
+        throw new NotImplementedException();
     }
 }
