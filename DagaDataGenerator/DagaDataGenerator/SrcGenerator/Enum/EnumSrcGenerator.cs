@@ -45,30 +45,28 @@ public class EnumSrcGenerator(string @namespace) : ISrcGenerator
             return false;
         }
 
-        List<EnumDeclarationSyntax> declarations = [];
-        foreach (var @enum in Enums.Values)
-        {
-            if (@enum.ToSource() is EnumDeclarationSyntax enumDeclaration)
-            {
-                declarations.Add(@enumDeclaration);
-            }
-        }
-
         var compilationUnit = SyntaxFactory.CompilationUnit()
             .AddMembers(
                 SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(Namespace))
-                .AddMembers([.. declarations])
+                .AddMembers(Enums.Values.Select(p => p.ToSource()).ToArray())
             ).NormalizeWhitespace(elasticTrivia: true);
         var sourceCode = compilationUnit.ToFullString();
 
-        if(false == Directory.Exists(filePath))
+        if (false == Directory.Exists(filePath))
         {
             Directory.CreateDirectory(filePath);
         }
 
-        File.WriteAllText(Path.Combine(filePath, $"{fileName}.cs"), sourceCode);
+        try
+        {
+            File.WriteAllText(Path.Combine(filePath, $"{fileName}.cs"), sourceCode);
+        }
+        catch
+        {
+            return false;
+        }
 
-        return false;
+        return true;
     }
 
     public void Dispose()

@@ -40,7 +40,7 @@ public class IEnum
         return true;
     }
 
-    public EnumDeclarationSyntax? ToSource()
+    public EnumDeclarationSyntax ToSource()
     {
         var declaration = SyntaxFactory.EnumDeclaration(Name)
           .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword)) // public 접근 제한자
