@@ -38,7 +38,7 @@ public class EnumSrcGenerator(string @namespace) : ISrcGenerator
         return Enums.TryAdd(entity.Name, entity);
     }
 
-    public bool ToSource(string filePath, string fileName)
+    public bool CreateSource(string filePath, string fileName)
     {
         if (string.IsNullOrWhiteSpace(fileName))
         {

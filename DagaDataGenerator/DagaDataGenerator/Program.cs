@@ -31,7 +31,7 @@ namespace DagaDataGenerator
                     cookingUtensilType.TryAddEntity(new EnumEntity(name: "Knife", comment: "식칼"));
                 }
 
-                gen.ToSource("C:\\Daga\\DagaDataGenerator\\DagaDataGenerator\\data\\Enums", "Enums");
+                gen.CreateSource("C:\\Daga\\DagaDataGenerator\\DagaDataGenerator\\data\\Enums", "Enums");
             }
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
