@@ -2,7 +2,7 @@ namespace DagaDataGenerator.SrcGenerator.Packet;
 
 public class PacketSrcGenerator : ISrcGenerator
 {
-    public bool CreateSource()
+    public bool ToSource()
     {
         throw new NotImplementedException();
     }
