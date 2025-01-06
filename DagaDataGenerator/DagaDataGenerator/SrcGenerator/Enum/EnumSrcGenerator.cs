@@ -4,8 +4,10 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DagaDataGenerator.SrcGenerator.Enum;
 
-public class EnumSrcGenerator : ISrcGenerator
+public class EnumSrcGenerator(string @namespace) : ISrcGenerator
 {
+    public string Namespace { get; set; } = @namespace;
+
     public Dictionary<string, IEnum> Enums { get; private set; } = [];
 
     public IEnum? this[string enumName]
@@ -49,9 +51,10 @@ public class EnumSrcGenerator : ISrcGenerator
 
         var compilationUnit = SyntaxFactory.CompilationUnit()
             .AddMembers(
-                SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("MyNamespace"))
+                SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(Namespace))
                 .AddMembers([.. declarations])
-            ).NormalizeWhitespace();
+            ).NormalizeWhitespace(elasticTrivia: true);
+        var sourceCode = compilationUnit.ToFullString();
 
         return false;
     }

@@ -10,7 +10,7 @@ namespace DagaDataGenerator
         [STAThread]
         static void Main()
         {
-            using (EnumSrcGenerator gen = new())
+            using (EnumSrcGenerator gen = new("CooKing.Enums"))
             {
                 if(gen.TryAddEntity("CookType", "요리 과정 종류") &&
                     gen["CookType"] is IEnum cookType) 
@@ -20,6 +20,8 @@ namespace DagaDataGenerator
                     cookType.TryAddEntity(new EnumEntity(name: "Chopping", value: 10, comment: "큼직하게 자르기"));
                     cookType.TryAddEntity(new EnumEntity(name: "Slicing", comment: "얇게 썰기"));
                 }
+
+                gen.ToSource();
             }
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
