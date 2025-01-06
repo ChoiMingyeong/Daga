@@ -1,4 +1,7 @@
-﻿namespace DagaDataGenerator.SrcGenerator.Enum;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace DagaDataGenerator.SrcGenerator.Enum;
 
 public class IEnum
 {
@@ -12,7 +15,7 @@ public class IEnum
     {
         ArgumentNullException.ThrowIfNull(objects);
 
-        if (objects[0] is not string name)
+        if (objects[0] is not string name || string.IsNullOrWhiteSpace(name))
         {
             throw new InvalidCastException(nameof(objects));
         }
@@ -34,5 +37,12 @@ public class IEnum
         Entities.Add(entity);
 
         return true;
+    }
+
+    public EnumDeclarationSyntax? ToSource()
+    {
+        return SyntaxFactory.EnumDeclaration(Name)
+          .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword)) // public 접근 제한자
+          .AddMembers(Entities.Select(p => p.ToSource()).ToArray());
     }
 }
