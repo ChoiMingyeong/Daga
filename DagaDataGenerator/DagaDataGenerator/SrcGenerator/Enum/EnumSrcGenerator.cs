@@ -40,6 +40,11 @@ public class EnumSrcGenerator(string @namespace) : ISrcGenerator
 
     public bool ToSource(string filePath, string fileName)
     {
+        if (string.IsNullOrWhiteSpace(fileName))
+        {
+            return false;
+        }
+
         List<EnumDeclarationSyntax> declarations = [];
         foreach (var @enum in Enums.Values)
         {
@@ -55,6 +60,13 @@ public class EnumSrcGenerator(string @namespace) : ISrcGenerator
                 .AddMembers([.. declarations])
             ).NormalizeWhitespace(elasticTrivia: true);
         var sourceCode = compilationUnit.ToFullString();
+
+        if(false == Directory.Exists(filePath))
+        {
+            Directory.CreateDirectory(filePath);
+        }
+
+        File.WriteAllText(Path.Combine(filePath, $"{fileName}.cs"), sourceCode);
 
         return false;
     }
