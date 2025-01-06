@@ -1,3 +1,7 @@
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 namespace DagaDataGenerator.SrcGenerator.Enum;
 
 public class EnumSrcGenerator : ISrcGenerator
@@ -34,6 +38,21 @@ public class EnumSrcGenerator : ISrcGenerator
 
     public bool ToSource()
     {
+        List<EnumDeclarationSyntax> declarations = [];
+        foreach (var @enum in Enums.Values)
+        {
+            if (@enum.ToSource() is EnumDeclarationSyntax enumDeclaration)
+            {
+                declarations.Add(@enumDeclaration);
+            }
+        }
+
+        var compilationUnit = SyntaxFactory.CompilationUnit()
+            .AddMembers(
+                SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("MyNamespace"))
+                .AddMembers([.. declarations])
+            ).NormalizeWhitespace();
+
         return false;
     }
 
