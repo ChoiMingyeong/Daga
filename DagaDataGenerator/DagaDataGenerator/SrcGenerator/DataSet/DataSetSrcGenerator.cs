@@ -2,7 +2,7 @@ namespace DagaDataGenerator.SrcGenerator.DataSet;
 
 public class DataSetSrcGenerator : ISrcGenerator
 {
-    public bool ToSource()
+    public bool ToSource(string filePath, string fileName)
     {
         return false;
     }

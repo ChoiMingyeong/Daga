@@ -38,7 +38,7 @@ public class EnumSrcGenerator(string @namespace) : ISrcGenerator
         return Enums.TryAdd(entity.Name, entity);
     }
 
-    public bool ToSource()
+    public bool ToSource(string filePath, string fileName)
     {
         List<EnumDeclarationSyntax> declarations = [];
         foreach (var @enum in Enums.Values)
