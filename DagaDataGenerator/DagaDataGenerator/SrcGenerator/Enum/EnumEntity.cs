@@ -1,4 +1,8 @@
-﻿namespace DagaDataGenerator.SrcGenerator.Enum;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace DagaDataGenerator.SrcGenerator.Enum;
 
 public class EnumEntity
 {
@@ -13,5 +17,23 @@ public class EnumEntity
         Name = name;
         Value = value;
         Comment = comment;
+    }
+
+    public EnumMemberDeclarationSyntax ToSource()
+    {
+        var memberDeclaration = SyntaxFactory.EnumMemberDeclaration(Name);
+        if (null != Value)
+        {
+            memberDeclaration = memberDeclaration
+                .WithEqualsValue(SyntaxFactory.EqualsValueClause(
+                    SyntaxFactory.LiteralExpression(
+                        SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(Value.Value))));
+        }
+        if(false == string.IsNullOrEmpty(Comment))
+        {
+            memberDeclaration = memberDeclaration
+                .WithLeadingTrivia(SyntaxFactory.Comment($"// {Comment}"));
+        }
+        return memberDeclaration;
     }
 }
