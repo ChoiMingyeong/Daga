@@ -32,7 +32,7 @@ public class EnumSrcGenerator : ISrcGenerator
         return Enums.TryAdd(entity.Name, entity);
     }
 
-    public bool CreateSource()
+    public bool ToSource()
     {
         return false;
     }

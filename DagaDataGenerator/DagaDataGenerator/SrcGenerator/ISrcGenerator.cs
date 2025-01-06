@@ -4,5 +4,5 @@ public interface ISrcGenerator : IDisposable
 {
     public bool TryAddEntity(params object?[]? objects);
 
-    public bool CreateSource();
+    public bool ToSource();
 }

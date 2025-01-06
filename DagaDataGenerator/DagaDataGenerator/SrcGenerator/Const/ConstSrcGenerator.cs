@@ -2,7 +2,7 @@ namespace DagaDataGenerator.SrcGenerator.Const;
 
 public class ConstSrcGenerator : ISrcGenerator
 {
-    public bool CreateSource()
+    public bool ToSource()
     {
         throw new NotImplementedException();
     }
