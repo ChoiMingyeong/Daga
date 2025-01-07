@@ -20,6 +20,7 @@ public class IEnum
         {
             throw new InvalidCastException(nameof(objects));
         }
+
         Name = name;
 
         if (objects.Length > 1 && objects[1] is string summary)
