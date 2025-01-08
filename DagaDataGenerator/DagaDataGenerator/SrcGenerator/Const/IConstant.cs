@@ -1,3 +1,7 @@
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 namespace DagaDataGenerator.SrcGenerator.Const;
 
 public class IConstant
@@ -23,5 +27,19 @@ public class IConstant
         {
             Summary = summary;
         }
+    }
+
+    public ClassDeclarationSyntax ToSource()
+    {
+        var declaration = SyntaxFactory.ClassDeclaration(ClassName)
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+            .AddMembers(Entities.Select(p => p.ToSource()).ToArray()); 
+        
+        if (false == string.IsNullOrEmpty(Summary))
+        {
+            declaration = declaration.WithLeadingTrivia(SrcGeneratorFactory.CreateSummaryComment(Summary));
+        }
+
+        return declaration;
     }
 }
