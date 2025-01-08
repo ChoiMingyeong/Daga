@@ -1,35 +1,27 @@
-using System.Diagnostics.Eventing.Reader;
-
 namespace DagaDataGenerator.SrcGenerator.Const;
 
 public class IConstant
 {
-    public string Name { get; private set; }
+    public string ClassName { get; private set; }
 
-    public Type Type { get; set; }
+    public List<ConstantEntity> Entities { get; private set; } = [];
 
-    public object Value { get; set; }
-
-    public string? Comment { get; set; }
+    public string? Summary { get; private set; }
 
     public IConstant(object?[]? objects)
     {
         ArgumentNullException.ThrowIfNull(objects);
 
-        if (objects[0] is not string name || string.IsNullOrWhiteSpace(name) ||
-            objects[1] is not Type type ||
-            objects[2] is not object obj || ObjectConverter.ConvertObject(obj, type) is not object value)
+        if (objects[0] is not string className || string.IsNullOrWhiteSpace(className))
         {
             throw new InvalidCastException(nameof(objects));
         }
 
-        Name = name;
-        Type = type;
-        Value = value;
+        ClassName = className;
 
-        if (objects.Length > 4 && objects[3] is string comment)
+        if (objects.Length > 1 && objects[1] is string summary)
         {
-            Comment = comment;
+            Summary = summary;
         }
     }
 }
