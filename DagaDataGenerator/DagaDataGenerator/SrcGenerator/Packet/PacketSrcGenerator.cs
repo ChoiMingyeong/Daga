@@ -1,7 +1,9 @@
 namespace DagaDataGenerator.SrcGenerator.Packet;
 
-public class PacketSrcGenerator : ISrcGenerator
+public class PacketSrcGenerator(string @namespace) : ISrcGenerator
 {
+    public string Namespace { get; set; } = @namespace;
+
     public bool CreateSource(string filePath, string fileName)
     {
         throw new NotImplementedException();
