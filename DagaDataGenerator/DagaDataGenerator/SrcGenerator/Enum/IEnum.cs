@@ -49,33 +49,9 @@ public class IEnum
 
         if(false == string.IsNullOrEmpty(Summary))
         {
-            declaration = declaration.WithLeadingTrivia(CreateSummaryComment(Summary));
+            declaration = declaration.WithLeadingTrivia(SrcGeneratorFactory.CreateSummaryComment(Summary));
         }
 
         return declaration;
-    }
-    static SyntaxTriviaList CreateSummaryComment(string summaryText)
-    {
-        return SyntaxFactory.TriviaList(
-            SyntaxFactory.Trivia(
-                SyntaxFactory.DocumentationCommentTrivia(SyntaxKind.SingleLineDocumentationCommentTrivia)
-                    .WithContent(SyntaxFactory.List(new XmlNodeSyntax[]
-                    {
-                        SyntaxFactory.XmlText("/// "),
-                        SyntaxFactory.XmlElement(
-                            SyntaxFactory.XmlElementStartTag(SyntaxFactory.XmlName("summary")),
-                            SyntaxFactory.XmlElementEndTag(SyntaxFactory.XmlName("summary"))
-                        ).WithContent(
-                             SyntaxFactory.List<XmlNodeSyntax>(
-                            [
-                                SyntaxFactory.XmlText("\n"),
-                                SyntaxFactory.XmlText($"\t/// {summaryText}\n"),
-                                SyntaxFactory.XmlText("\t/// ")
-                            ])
-                        ),
-                        SyntaxFactory.XmlText("\n\t")
-                    }))
-            )
-        );
     }
 }
