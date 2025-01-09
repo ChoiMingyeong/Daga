@@ -25,8 +25,14 @@ public class ConstSrcGenerator(string @namespace) : ISrcGenerator
         return Constants.TryAdd(entity.ClassName, entity);
     }
 
-    public bool CreateSource(string filePath, string fileName)
+    public bool CreateSource(params string[] strs)
     {
+        if(strs.Length <= 1 ||
+            strs[0] is not string filePath)
+        {
+            return false;
+        }
+
         List<ClassDeclarationSyntax> classDeclarations = [];
         foreach (var (className, constant) in Constants)
         {

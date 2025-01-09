@@ -33,13 +33,16 @@ public class EnumSrcGenerator(string @namespace) : ISrcGenerator
         {
             return false;
         }
-
+        
         return Enums.TryAdd(entity.Name, entity);
     }
 
-    public bool CreateSource(string filePath, string fileName)
+    public bool CreateSource(params string[] strs)
     {
-        if (string.IsNullOrWhiteSpace(fileName))
+        if (strs.Length <= 2 ||
+            strs[0] is not string filePath ||
+            strs[1] is not string fileName ||
+            string.IsNullOrWhiteSpace(fileName))
         {
             return false;
         }

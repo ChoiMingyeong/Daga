@@ -4,10 +4,11 @@ public class PacketSrcGenerator(string @namespace) : ISrcGenerator
 {
     public string Namespace { get; set; } = @namespace;
 
-    public bool CreateSource(string filePath, string fileName)
+    public bool CreateSource(params string[] strs)
     {
         throw new NotImplementedException();
     }
+
     public void Dispose()
     {
         GC.SuppressFinalize(this);
