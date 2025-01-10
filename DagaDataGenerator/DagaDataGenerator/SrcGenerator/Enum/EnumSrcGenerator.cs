@@ -39,7 +39,7 @@ public class EnumSrcGenerator(string @namespace) : ISrcGenerator
 
     public bool CreateSource(params string[] strs)
     {
-        if (strs.Length <= 2 ||
+        if (strs.Length != 2 ||
             strs[0] is not string filePath ||
             strs[1] is not string fileName ||
             string.IsNullOrWhiteSpace(fileName))
