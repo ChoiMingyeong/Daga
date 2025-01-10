@@ -36,13 +36,13 @@ public class ConstSrcGenerator(string @namespace) : ISrcGenerator
         List<ClassDeclarationSyntax> classDeclarations = [];
         foreach (var (className, constant) in Constants)
         {
-            var partialClass = SyntaxFactory.ClassDeclaration(className)
-            .AddModifiers(SyntaxFactory.Token(SyntaxFactory.TriviaList(), SyntaxKind.PartialKeyword, SyntaxFactory.TokenList(), SyntaxFactory.Token(SyntaxFactory.TriviaList())))
-            .AddMembers(
-                SyntaxFactory.MethodDeclaration(SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), "Method1")
-                .AddModifiers(SyntaxFactory.Token(SyntaxFactory.SyntaxTriviaList(), SyntaxKind.PublicKeyword, SyntaxFactory.TokenList(), SyntaxFactory.Token(SyntaxFactory.SyntaxTriviaList())))
-                .WithBody(SyntaxFactory.Block())
-            );
+            //var partialClass = SyntaxFactory.ClassDeclaration(className)
+            //.AddModifiers(SyntaxFactory.Token(SyntaxFactory.TriviaList(), SyntaxKind.PartialKeyword, SyntaxFactory.TokenList(), SyntaxFactory.Token(SyntaxFactory.TriviaList())))
+            //.AddMembers(
+            //    SyntaxFactory.MethodDeclaration(SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), "Method1")
+            //    .AddModifiers(SyntaxFactory.Token(SyntaxFactory.SyntaxTriviaList(), SyntaxKind.PublicKeyword, SyntaxFactory.TokenList(), SyntaxFactory.Token(SyntaxFactory.SyntaxTriviaList())))
+            //    .WithBody(SyntaxFactory.Block())
+            //);
             constant.ToSource();
         }
 
@@ -60,7 +60,7 @@ public class ConstSrcGenerator(string @namespace) : ISrcGenerator
 
         try
         {
-            File.WriteAllText(Path.Combine(filePath, $"{fileName}.cs"), sourceCode);
+            //File.WriteAllText(Path.Combine(filePath, $"{fileName}.cs"), sourceCode);
         }
         catch
         {

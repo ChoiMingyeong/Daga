@@ -13,6 +13,7 @@ public class ConstantEntity
     public string Value { get; set; }
 
     public string? Comment { get; set; }
+
     public ConstantEntity(object?[]? objects)
     {
         ArgumentNullException.ThrowIfNull(objects);
@@ -33,6 +34,7 @@ public class ConstantEntity
             Comment = comment;
         }
     }
+
     public FieldDeclarationSyntax ToSource()
     {
         var declaration = SyntaxFactory.FieldDeclaration(
@@ -47,7 +49,7 @@ public class ConstantEntity
 
         if (false == string.IsNullOrWhiteSpace(Comment))
         {
-            declaration = declaration.WithTrailingTrivia(SyntaxFactory.Comment($"// {Comment}"));
+            declaration = Extensions.AddLeadingComment(declaration, Comment);
         }
 
         return declaration;

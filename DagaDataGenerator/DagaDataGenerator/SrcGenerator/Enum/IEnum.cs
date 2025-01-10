@@ -49,7 +49,7 @@ public class IEnum
 
         if(false == string.IsNullOrEmpty(Summary))
         {
-            declaration = declaration.WithLeadingTrivia(SrcGeneratorFactory.CreateSummaryComment(Summary));
+            declaration = Extensions.AddSummary(declaration, Summary);
         }
 
         return declaration;

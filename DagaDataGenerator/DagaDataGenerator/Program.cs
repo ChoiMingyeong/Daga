@@ -20,7 +20,7 @@ namespace DagaDataGenerator
                     cookType.TryAddEntity(new EnumEntity(name: "Slicing", comment: "얇게 썰기"));
                 }
 
-                if (gen.TryAddEntity("CookingUtensilType", "요리 과정 종류") && gen["CookingUtensilType"] is IEnum cookingUtensilType)
+                if (gen.TryAddEntity("CookingUtensilType", "요리 도구 종류") && gen["CookingUtensilType"] is IEnum cookingUtensilType)
                 {
                     cookingUtensilType.TryAddEntity(new EnumEntity(name: "Whisk", comment: "거품기"));
                     cookingUtensilType.TryAddEntity(new EnumEntity(name: "Tongs", comment: "집게"));

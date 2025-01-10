@@ -31,8 +31,7 @@ public class EnumEntity
         }
         if(false == string.IsNullOrEmpty(Comment))
         {
-            memberDeclaration = memberDeclaration
-                .WithLeadingTrivia(SyntaxFactory.Comment($"// {Comment}"));
+            memberDeclaration = Extensions.AddLeadingComment(memberDeclaration, Comment);
         }
         return memberDeclaration;
     }
