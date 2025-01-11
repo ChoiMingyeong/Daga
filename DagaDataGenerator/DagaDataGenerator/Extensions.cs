@@ -48,5 +48,8 @@ namespace DagaDataGenerator
         {
             return memberDeclaration.WithLeadingTrivia(CreateSummary(summary));
         }
+
+        internal static NamespaceDeclaration CreateNamespace(string @namespace)
+        {             return SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(@namespace));}
     }
 }
