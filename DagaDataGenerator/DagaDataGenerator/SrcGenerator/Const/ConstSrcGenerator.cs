@@ -27,7 +27,7 @@ public class ConstSrcGenerator(string @namespace) : ISrcGenerator
 
     public bool CreateSource(params string[] strs)
     {
-        if(strs.Length <= 1 ||
+        if (strs.Length <= 1 ||
             strs[0] is not string filePath)
         {
             return false;
@@ -48,9 +48,8 @@ public class ConstSrcGenerator(string @namespace) : ISrcGenerator
 
         // 전체 파일을 만들기 위해 네임스페이스 선언을 포함한 소스 트리 생성
         var compilationUnit = SyntaxFactory.CompilationUnit()
-            .AddMembers(SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(Namespace))
-                .AddMembers([.. classDeclarations]))
-            .NormalizeWhitespace(); 
+            .AddMembers(Extensions.CreateNamespace(Namespace).AddMembers([.. classDeclarations]))
+            .NormalizeWhitespace();
         var sourceCode = compilationUnit.ToFullString();
 
         if (false == Directory.Exists(filePath))

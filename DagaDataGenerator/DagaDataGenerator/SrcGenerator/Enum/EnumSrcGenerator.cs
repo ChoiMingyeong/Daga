@@ -49,7 +49,7 @@ public class EnumSrcGenerator(string @namespace) : ISrcGenerator
 
         var compilationUnit = SyntaxFactory.CompilationUnit()
             .AddMembers(
-                SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(Namespace))
+                Extensions.CreateNamespace(Namespace)
                 .AddMembers(Enums.Values.Select(p => p.ToSource()).ToArray())
             ).NormalizeWhitespace(elasticTrivia: true);
         var sourceCode = compilationUnit.ToFullString();
