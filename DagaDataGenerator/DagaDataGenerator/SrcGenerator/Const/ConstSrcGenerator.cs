@@ -24,19 +24,19 @@ public class ConstSrcGenerator(string @namespace) : ISrcGenerator
         }
     }
 
-    public bool TryAddEntity(params object?[]? objects)
+    public bool TryAddEntity(string name, string? summary = null, params ConstantEntity[] entities)
     {
         IConstant entity;
         try
         {
-            entity = new IConstant(objects);
+            entity = new IConstant(name, summary, entities);
         }
         catch
         {
             return false;
         }
 
-        return Constants.TryAdd(entity.ClassName, entity);
+        return Constants.TryAdd(entity.Name, entity);
     }
 
     public bool CreateSource(params string[] strs)

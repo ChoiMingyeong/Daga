@@ -22,18 +22,18 @@ public class EnumSrcGenerator(string @namespace) : ISrcGenerator
         }
     }
 
-    public bool TryAddEntity(params object?[]? objects)
+    public bool TryAddEntity(string name, string? summary = null, string? typeName = null, params EnumEntity[]? entities)
     {
         IEnum entity;
         try
         {
-            entity = new IEnum(objects);
+            entity = new IEnum(name, summary, typeName, entities ?? []);
         }
         catch
         {
             return false;
         }
-        
+
         return Enums.TryAdd(entity.Name, entity);
     }
 

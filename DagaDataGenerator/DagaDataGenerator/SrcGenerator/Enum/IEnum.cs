@@ -4,28 +4,18 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DagaDataGenerator.SrcGenerator.Enum;
 
-public class IEnum
+public class IEnum : ISrc<EnumEntity>
 {
-    public string Name { get; private set; }
+    public BaseListSyntax? BaseType { get; set; }
 
-    public List<EnumEntity> Entities { get; private set; } = [];
-
-    public string? Summary { get; private set; }
-
-    public IEnum(object?[]? objects)
+    public IEnum(string name, string? summary = null, string? typeName = null, params EnumEntity[] entities)
+        : base(name, summary, entities)
     {
-        ArgumentNullException.ThrowIfNull(objects);
-
-        if (objects[0] is not string name || string.IsNullOrWhiteSpace(name))
+        if (false == string.IsNullOrEmpty(typeName) &&
+            Extensions.GetTypeSyntax(typeName) is TypeSyntax typeSyntax &&
+            typeSyntax.IsNotNull)
         {
-            throw new InvalidCastException(nameof(objects));
-        }
-
-        Name = name;
-
-        if (objects.Length > 1 && objects[1] is string summary)
-        {
-            Summary = summary;
+            BaseType = Extensions.CreateBaseListSyntax(typeSyntax);
         }
     }
 
@@ -44,12 +34,17 @@ public class IEnum
     public EnumDeclarationSyntax ToSource()
     {
         var declaration = SyntaxFactory.EnumDeclaration(Name)
-          .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword)) // public 접근 제한자
+          .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
           .AddMembers(Entities.Select(p => p.ToSource()).ToArray());
 
-        if(false == string.IsNullOrEmpty(Summary))
+        if(null != BaseType)
         {
-            declaration = Extensions.AddSummary(declaration, Summary);
+            declaration = declaration.WithBaseList(BaseType);
+        }
+
+        if (false == string.IsNullOrEmpty(Summary))
+        {
+            declaration = Extensions.AddSummary(ref declaration, Summary);
         }
 
         return declaration;

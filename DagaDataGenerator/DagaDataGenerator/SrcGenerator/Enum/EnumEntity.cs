@@ -1,10 +1,9 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
+﻿using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DagaDataGenerator.SrcGenerator.Enum;
 
-public class EnumEntity
+public class EnumEntity : IEntity
 {
     public string Name { get; set; }
 
@@ -31,7 +30,7 @@ public class EnumEntity
         }
         if(false == string.IsNullOrEmpty(Comment))
         {
-            memberDeclaration = Extensions.AddLeadingComment(memberDeclaration, Comment);
+            memberDeclaration = Extensions.AddLeadingComment(ref memberDeclaration, Comment);
         }
         return memberDeclaration;
     }

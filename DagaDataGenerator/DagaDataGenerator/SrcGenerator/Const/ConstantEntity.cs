@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace DagaDataGenerator.SrcGenerator.Const;
 
-public class ConstantEntity
+public class ConstantEntity : IEntity
 {
     public string Name { get; private set; }
 
@@ -46,7 +46,7 @@ public class ConstantEntity
     {
         var declaration = SyntaxFactory.FieldDeclaration(
             SyntaxFactory.VariableDeclaration(
-                SyntaxFactory.ParseTypeName(TypeName))
+                Extensions.GetTypeSyntax(TypeName))
             .AddVariables(
                 SyntaxFactory.VariableDeclarator(Name)
                 .WithInitializer(
@@ -56,7 +56,7 @@ public class ConstantEntity
 
         if (false == string.IsNullOrWhiteSpace(Comment))
         {
-            declaration = Extensions.AddLeadingComment(declaration, Comment);
+            declaration = Extensions.AddLeadingComment(ref declaration, Comment);
         }
 
         return declaration;
