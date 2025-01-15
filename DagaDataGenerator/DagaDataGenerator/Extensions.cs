@@ -61,5 +61,17 @@ namespace DagaDataGenerator
         {
             return SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(@namespace));
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static TypeSyntax GetTypeSyntax(string typeName)
+        {
+            return SyntaxFactory.ParseTypeName(typeName);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static BaseListSyntax CreateBaseListSyntax(TypeSyntax typeSyntax)
+        {
+            return SyntaxFactory.BaseList(SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(SyntaxFactory.SimpleBaseType(typeSyntax)));
+        }
     }
 }
