@@ -1,6 +1,5 @@
 using DagaDataGenerator.SrcGenerator.Const;
 using DagaDataGenerator.SrcGenerator.Enum;
-using Microsoft.CodeAnalysis;
 
 namespace DagaDataGenerator
 {
@@ -10,39 +9,35 @@ namespace DagaDataGenerator
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static async Task Main()
         {
-            using (EnumSrcGenerator gen = new("CooKing.Enums"))
+            using (EnumSrcGenerator gen = new("Daga.Enums"))
             {
-                if (gen.TryAddEntity("CookType", "요리 과정 종류", "byte",
-                        new EnumEntity(name: "Washing", comment: "세척"),
-                        new EnumEntity(name: "Preparing", comment: "손질")) && gen["CookType"] is IEnum cookType)
-                {
-                    cookType.TryAddEntity(new EnumEntity(name: "Chopping", value: 10, comment: "큼직하게 자르기"));
-                    cookType.TryAddEntity(new EnumEntity(name: "Slicing", comment: "얇게 썰기"));
-                }
+                IEnum accountTypeEnum = new(
+                    name: "AccountType", 
+                    summary: "계정 타입 분류", 
+                    typeName: "byte",
+                    new EnumEntity(name: "SuperAdmin", comment: "최상위 관리자 (모든 권한 보유)"),
+                    new EnumEntity(name: "Admin", comment: "일반 관리자 (특정 권한 관리)"),
+                    new EnumEntity(name: "User", comment: "일반 사용자"),
+                    new EnumEntity(name: "Guest", comment: "비회원 또는 방문자")
+                    );
+                gen.TryAddEntity(accountTypeEnum);
 
-                if (gen.TryAddEntity(name: "CookingUtensilType", summary: "요리 도구 종류",
-                    entities: new EnumEntity(name: "Whisk", comment: "거품기")) && gen["CookingUtensilType"] is IEnum cookingUtensilType)
+                if (gen.TryAddEntity("CouplingType", "취향 필터링 분류", "byte",
+                    new EnumEntity("None"), new EnumEntity("All")) && gen["CouplingType"] is IEnum couplingType)
                 {
-                    cookingUtensilType.TryAddEntity(new EnumEntity(name: "Tongs", comment: "집게"));
-                    cookingUtensilType.TryAddEntity(new EnumEntity(name: "Strainer", comment: "체"));
-                    cookingUtensilType.TryAddEntity(new EnumEntity(name: "Peeler", comment: "껍질 벗기는 칼"));
-                    cookingUtensilType.TryAddEntity(new EnumEntity(name: "Ladle", comment: "국자"));
-                    cookingUtensilType.TryAddEntity(new EnumEntity(name: "Spatula", comment: "주걱"));
-                    cookingUtensilType.TryAddEntity(new EnumEntity(name: "Knife", comment: "식칼"));
+                    couplingType.TryAddEntity(new EnumEntity(name: "BL"));
+                    couplingType.TryAddEntity(new EnumEntity(name: "GL"));
                 }
 
                 gen.CreateSource("C:\\Daga\\DagaDataGenerator\\DagaDataGenerator\\data\\Enums", "Enums");
             }
 
-
-            using (ConstSrcGenerator gen = new("CooKing.Constants"))
+            using (ConstSrcGenerator gen = new("Daga.Constants"))
             {
-                if (gen.TryAddEntity(name: "Cooking", summary: "기본 요리 과정",
-                    new ConstantEntity(["WASHING_TIME_LIMIT", "long", "10000", "세척 시간"]),
-                    new ConstantEntity(["PREPARING_TIME_LIMIT", "uint", "10000", "손질 시간"]),
-                    new ConstantEntity(["CUTTING_TIME_LIMIT", "string", "10000", "자르기 시간"])))
+                if (gen.TryAddEntity(name: "Constants", summary: "공통 constant",
+                    new ConstantEntity(["RESET_TIME", "byte", "0", "리셋 시간(UTC 0시)"])))
                 {
                     gen.CreateSource("C:\\Daga\\DagaDataGenerator\\DagaDataGenerator\\data\\Constants", "Constants");
                 }
