@@ -29,7 +29,8 @@ namespace DagaDataGenerator
                         ).WithContent(
                              SyntaxFactory.List<XmlNodeSyntax>(
                             [
-                                SyntaxFactory.XmlText($"\n\t///{summary}\n\t///")
+                                SyntaxFactory.XmlText($"\n\t/// "),
+                                SyntaxFactory.XmlText($"{summary}\n\t///"),
                             ])
                         ),
                         SyntaxFactory.XmlText("\n\t")
