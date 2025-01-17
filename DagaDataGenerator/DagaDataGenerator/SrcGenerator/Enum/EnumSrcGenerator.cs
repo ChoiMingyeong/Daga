@@ -1,5 +1,6 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using System.Runtime.CompilerServices;
 
 namespace DagaDataGenerator.SrcGenerator.Enum;
 
@@ -20,6 +21,12 @@ public class EnumSrcGenerator(string @namespace) : ISrcGenerator
 
             return @enum;
         }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool TryAddEntity(IEnum entity)
+    {
+        return Enums.TryAdd(entity.Name, entity);
     }
 
     public bool TryAddEntity(string name, string? summary = null, string? typeName = null, params EnumEntity[]? entities)
