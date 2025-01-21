@@ -1,18 +1,35 @@
-﻿namespace DagaDataGenerator.SrcGenerator.DataTable;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-public class IDataTable(string name, string? summary = null, params DataTableEntity[] entities)
-    : ISrc<DataTableEntity>(name, summary, entities)
+namespace DagaDataGenerator.SrcGenerator.DataTable;
+
+public class IDataTable(string name, string? summary = null, params DataTableProperty[] entities)
+    : ISrc<DataTableProperty>(name, summary, entities)
 {
-    private uint _createID = 1;
-    public uint CreateID { get
-        {
-            return Interlocked.Increment(ref _createID);
-        } 
-    }
-    public bool TryAddEntities(string typeName, string name, string value)
+    private uint _dataTableIndex = 1;
+    public uint DataTableIndex
     {
+        get
+        {
+            return Interlocked.Increment(ref _dataTableIndex);
+        }
+    }
 
+    public bool TryAddEntities(DataTableProperty property)
+    {
+        if( Entities.Any(p=> p.Name.Equals(name)))
+        {
+            return false;
+        }
 
+        Entities.Add(property);
         return true;
+    }
+
+    public ClassDeclarationSyntax ToSource()
+    {
+        var declaration = SyntaxFactory.ClassDeclaration();
+
+        return declaration;
     }
 }
