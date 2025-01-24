@@ -1,4 +1,5 @@
 using BlazingPizza.Data;
+using BlazingPizza.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddServerSideBlazor();
 
 // Register the pizzas service
 builder.Services.AddSingleton<PizzaService>();
+
+builder.Services.AddScoped<OrderState>();
 
 var app = builder.Build();
 
