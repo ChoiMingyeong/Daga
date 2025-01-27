@@ -15,11 +15,11 @@ namespace DagaDataGenerator.SrcGenerator.DataTable
         {
         }
 
-        public PropertyDeclarationSyntax ToSource()
-        {
-            var declaration = SyntaxFactory.PropertyDeclaration();
+        //public PropertyDeclarationSyntax ToSource()
+        //{
+        //    var declaration = SyntaxFactory.PropertyDeclaration();
 
-            return declaration;
-        }
+        //    return declaration;
+        //}
     }
 }

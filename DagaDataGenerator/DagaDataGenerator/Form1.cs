@@ -7,12 +7,4 @@ namespace DagaDataGenerator
             InitializeComponent();
         }
     }
-
-    public partial class DatatableForm : Form
-    {
-        public partial class DatatableForm : Form
-        {
-            InitializeComponent();
-        }
-    }
 }

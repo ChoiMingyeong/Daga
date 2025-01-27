@@ -29,8 +29,8 @@ public class IDataTable(string name, string? summary = null, params DataTablePro
     public ClassDeclarationSyntax ToSource()
     {
         var declaration = SyntaxFactory.ClassDeclaration(Name)
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
-            .AddMembers(Entities.Select(p=>p.ToSource()).ToArray());
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+            //.AddMembers(Entities.Select(p=>p.ToSource()).ToArray());
 
         return declaration;
     }

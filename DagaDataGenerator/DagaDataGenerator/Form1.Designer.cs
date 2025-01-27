@@ -28,12 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            components = new System.ComponentModel.Container();
+            constantEditForm1 = new ConstantEditForm(components);
+            SuspendLayout();
+            // 
+            // constantEditForm1
+            // 
+            constantEditForm1.Location = new Point(96, 48);
+            constantEditForm1.Name = "constantEditForm1";
+            constantEditForm1.Size = new Size(550, 279);
+            constantEditForm1.TabIndex = 0;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(constantEditForm1);
+            Name = "Form1";
+            Text = "Form1";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private ConstantEditForm constantEditForm1;
     }
 }
