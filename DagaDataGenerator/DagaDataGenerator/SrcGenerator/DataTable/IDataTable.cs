@@ -35,3 +35,5 @@ public class IDataTable(string name, string? summary = null, params DataTablePro
         return declaration;
     }
 }
+
+// Sorry
