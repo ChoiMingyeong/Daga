@@ -32,5 +32,10 @@
 
             ShowingConfigureDialog = false;
         }
+
+        public void RemoveConfigurdePizza(Pizza pizza)
+        {
+            Order.Pizzas.Remove(pizza);
+        }
     }
 }
