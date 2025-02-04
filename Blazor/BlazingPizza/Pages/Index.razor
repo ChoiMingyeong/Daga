@@ -14,6 +14,11 @@
         <img src="img/pizza-slice.svg" />
         <div>Get Pizza</div>
     </a>
+
+    <a href="myorders" class="nav-tab">
+        <img src="~/img/bike.svg" />
+        <div>My orders</div>
+    </a>
 </div>
 
 <div class="main">
@@ -61,11 +66,11 @@
     }
 
     <div class="order-total @(order.Pizzas.Any() ? "" : "hidden")">
-         Total:
-         <span class="total-price">@order.GetFormattedTotalPrice()</span>
-         <a href="checkout" class="@(order.Pizzas.Count == 0 ? "btn btn-warning disabled" : "btn btn-warning")">
-             Order >
-         </a>
+        Total:
+        <span class="total-price">@order.GetFormattedTotalPrice()</span>
+        <a href="checkout" class="@(order.Pizzas.Count == 0 ? "btn btn-warning disabled" : "btn btn-warning")">
+            Order >
+        </a>
     </div>
 </div>
 
