@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlazingPizza;
+namespace BlazingPizza.Controllers;
 
 [Route("orders")]
 [ApiController]
@@ -19,12 +19,12 @@ public class OrdersController : Controller
     public async Task<ActionResult<List<OrderWithStatus>>> GetOrders()
     {
         var orders = await _db.Orders
-            .Include(o=>o.Pizzas).ThenInclude(p=>p.Special)
-            .Include(o=>o.Pizzas).ThenInclude(p=>p.Toppings).ThenInclude(t=>t.Topping)
-            .OrderByDescending(o=>o.CreatedTime)
+            .Include(o => o.Pizzas).ThenInclude(p => p.Special)
+            .Include(o => o.Pizzas).ThenInclude(p => p.Toppings).ThenInclude(t => t.Topping)
+            .OrderByDescending(o => o.CreatedTime)
             .ToListAsync();
 
-        return orders.Select(o=>OrderWithStatus.FromOrder(o)).ToList();
+        return orders.Select(o => OrderWithStatus.FromOrder(o)).ToList();
     }
 
     [HttpPost]
@@ -53,7 +53,7 @@ public class OrdersController : Controller
             .Include(o => o.Pizzas).ThenInclude(p => p.Toppings).ThenInclude(t => t.Topping)
             .SingleOrDefaultAsync();
 
-        if(null == order)
+        if (null == order)
         {
             return NotFound();
         }
