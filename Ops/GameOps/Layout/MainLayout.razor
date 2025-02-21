@@ -1,0 +1,48 @@
+﻿@inherits LayoutComponentBase
+<div class="page">
+    <div class="sidebar">
+        <NavMenu AuthenticationState="authenticationState" />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            @if (IsAuthenticated())
+            {
+                <a href="/login" @onclick="OnLogoutButtonClicked">Logout</a>
+                <a href="">@($"{authenticationState!.User.Identity!.Name}")</a>
+            }
+            else
+            {
+                <a href="/login">Login</a>
+            }
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code
+{
+    private AuthenticationState? authenticationState;
+    protected override async Task OnInitializedAsync()
+    {
+        authenticationState = await AuthService.GetAuthenticationStateAsync();
+    }
+
+    private bool IsAuthenticated()
+    {
+        return null != authenticationState
+            && null != authenticationState.User
+            && null != authenticationState.User.Identity
+            && authenticationState.User.Identity.IsAuthenticated;
+    }
+
+    private async Task OnLogoutButtonClicked()
+    {
+        await AuthService.MarkUseAsLoggedOut();
+        authenticationState = null;
+        Navigation.NavigateTo("/login", forceLoad: true);
+    }
+}

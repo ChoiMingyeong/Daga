@@ -1,0 +1,70 @@
+﻿@page "/login"
+@attribute [AllowAnonymous]
+@implements IDisposable
+
+<h3>Login</h3>
+
+<EditForm EditContext="editContext" OnValidSubmit="OnLoginButtonClicked" OnInvalidSubmit="ShowError">
+    <label>Email</label>
+    <div>
+        <InputText @bind-Value="login!.Email" />
+        <ValidationMessage For="@(() => login.Email)" />
+    </div>
+    <label>Password</label>
+    <div>
+        <InputText @bind-Value="login.Password" type="@passwordInputType" />
+        <ValidationMessage For="@(() => login.Password)" />
+    </div>
+    <button class="btn-outline-primary" type="submit" disabled=@isError>
+        Login
+    </button>
+    <DataAnnotationsValidator />
+</EditForm>
+
+@if (isLoginFailed)
+{
+    <label class="alert alert-danger">아이디 혹은 비밀번호를 다시 확인해주세요.</label>
+}
+
+@code {
+    OpsCommon.Login login = new();
+    bool isError = false;
+    EditContext? editContext = null;
+    string passwordInputType = "password";
+    bool isLoginFailed = false;
+
+    protected override void OnInitialized()
+    {
+        editContext = new(login);
+        editContext.OnFieldChanged += HandleFieldChanged;
+    }
+
+    private async void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        isError = !editContext!.Validate();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        editContext!.OnFieldChanged -= HandleFieldChanged;
+    }
+
+    async Task OnLoginButtonClicked()
+    {
+        if (null == await AuthService.MarkUserAsAuthenticated(login))
+        {
+            isLoginFailed = true;
+            await InvokeAsync(StateHasChanged);
+        }
+        else
+        {
+            Navigation.NavigateTo("/", forceLoad: true);
+        }
+    }
+
+    protected void ShowError()
+    {
+        isError = true;
+    }
+}
