@@ -1,0 +1,1 @@
+Blazor Web Assembly+Web Api(Db EfCore)
