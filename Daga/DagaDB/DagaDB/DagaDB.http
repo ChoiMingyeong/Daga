@@ -1,0 +1,6 @@
+@DagaDB_HostAddress = http://localhost:5155
+
+GET {{DagaDB_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
