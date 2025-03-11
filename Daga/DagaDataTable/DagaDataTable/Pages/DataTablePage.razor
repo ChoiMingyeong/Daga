@@ -1,0 +1,16 @@
+﻿@page "/datatable"
+
+<select @bind="selectedValue" size="10">
+    <option disabled selected>-- 선택하세요 --</option>
+    @foreach (var item in options)
+    {
+        <option value="@item">@item</option>
+    }
+</select>
+
+<p>선택된 값: @selectedValue</p>
+
+@code {
+    private string selectedValue = "";
+    private List<string> options = new() { "옵션1", "옵션2", "옵션3", "옵션4" };
+}
