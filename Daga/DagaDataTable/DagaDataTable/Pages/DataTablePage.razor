@@ -1,16 +1,62 @@
 ﻿@page "/datatable"
+@using System.Data
 
-<select @bind="selectedValue" size="10">
+<select @bind="selectedValue">
     <option disabled selected>-- 선택하세요 --</option>
-    @foreach (var item in options)
+    @foreach (var item in dataTables)
     {
-        <option value="@item">@item</option>
+        <option value="@item.TableName">@item.TableName</option>
     }
 </select>
 
-<p>선택된 값: @selectedValue</p>
+@if (SelectedDataTable != null)
+{
+    <h3>@selectedValue 데이터</h3>
+    <table border="1" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                @foreach (DataColumn column in SelectedDataTable.Columns)
+                {
+                    <th>@column.ColumnName</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in SelectedDataTable.Rows)
+            {
+                <tr>
+                    @foreach (var item in row.ItemArray)
+                    {
+                        <td>@item</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<button @onclick="OnAddDataTableButtonClicked">데이터테이블 추가</button>
 
 @code {
     private string selectedValue = "";
-    private List<string> options = new() { "옵션1", "옵션2", "옵션3", "옵션4" };
+    private List<DataTable> dataTables = new();
+    private DataTable? SelectedDataTable =>
+        dataTables.FirstOrDefault(predicate => predicate.TableName == selectedValue);
+
+    private async Task OnAddDataTableButtonClicked()
+    {
+        DataTable dataTable = new($"Test_{dataTables.Count + 1}");
+        DataColumn idColumn = new("ID", typeof(int))
+        {
+            AutoIncrement = true,
+            AutoIncrementSeed = 1,
+            AutoIncrementStep = 1,
+            ReadOnly = true,
+        };
+        dataTable.Columns.Add(idColumn);
+        dataTables.Add(dataTable);
+
+        await InvokeAsync(StateHasChanged);
+    }
+
 }
