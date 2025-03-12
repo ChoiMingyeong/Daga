@@ -1,62 +1,73 @@
 ﻿@page "/datatable"
 @using System.Data
+@using MudBlazor
 
-<select @bind="selectedValue">
-    <option disabled selected>-- 선택하세요 --</option>
-    @foreach (var item in dataTables)
+<MudContainer>
+    <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnAddDataTableButtonClicked" Class="mt-4">
+        데이터테이블 추가
+    </MudButton>
+    <MudSelect T="DataTable" @bind-Value="SelectedDataTable" Label="데이터 테이블 선택">
+        @foreach (var item in dataTables)
+        {
+            <MudSelectItem Value="@item">@item.TableName</MudSelectItem>
+        }
+    </MudSelect>
+    @if (SelectedDataTable != null)
     {
-        <option value="@item.TableName">@item.TableName</option>
-    }
-</select>
-
-@if (SelectedDataTable != null)
-{
-    <h3>@selectedValue 데이터</h3>
-    <table border="1" style="width: 100%; border-collapse: collapse;">
-        <thead>
-            <tr>
+        <MudTable Items="@(GetDataRows())" Hover="true" Striped="true" Bordered="true">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">@(SelectedDataTable.TableName)</MudText>
+            </ToolBarContent>
+            <HeaderContent>
                 @foreach (DataColumn column in SelectedDataTable.Columns)
                 {
-                    <th>@column.ColumnName</th>
+                    <MudTh>@column.ColumnName</MudTh>
                 }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (DataRow row in SelectedDataTable.Rows)
-            {
-                <tr>
+            </HeaderContent>
+            <RowTemplate>
+                @foreach (DataRow row in SelectedDataTable.Rows)
+                {
                     @foreach (var item in row.ItemArray)
                     {
-                        <td>@item</td>
+                        <MudTd>@item</MudTd>
                     }
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
-<button @onclick="OnAddDataTableButtonClicked">데이터테이블 추가</button>
+                }
+            </RowTemplate>
+        </MudTable>
+    }
+</MudContainer>
 
 @code {
-    private string selectedValue = "";
-    private List<DataTable> dataTables = new();
-    private DataTable? SelectedDataTable =>
-        dataTables.FirstOrDefault(predicate => predicate.TableName == selectedValue);
+    private List<DataTable> dataTables = [];
+    private DataTable? SelectedDataTable;
+
+    private List<DataRow> GetDataRows()
+    {
+        List<DataRow> result = [];
+        if (null != SelectedDataTable)
+        {
+            foreach (var row in SelectedDataTable.Rows)
+            {
+                result.Add((DataRow)row);
+            }
+        }
+        return result;
+    }
 
     private async Task OnAddDataTableButtonClicked()
     {
+
+
         DataTable dataTable = new($"Test_{dataTables.Count + 1}");
         DataColumn idColumn = new("ID", typeof(int))
-        {
-            AutoIncrement = true,
-            AutoIncrementSeed = 1,
-            AutoIncrementStep = 1,
-            ReadOnly = true,
-        };
+            {
+                AutoIncrement = true,
+                AutoIncrementSeed = 1,
+                AutoIncrementStep = 1,
+                ReadOnly = true,
+            };
         dataTable.Columns.Add(idColumn);
         dataTables.Add(dataTable);
-
         await InvokeAsync(StateHasChanged);
     }
-
 }
