@@ -1,0 +1,73 @@
+﻿@page "/datatable"
+@using System.Data
+@using MudBlazor
+
+<MudContainer>
+    <MudButton Variant="Variant.Outlined" OnClick="OnAddDataTableButtonClicked" Class="mt-4">
+        데이터테이블 추가
+    </MudButton>
+    <MudSelect T="DataTable" @bind-Value="SelectedDataTable" Label="데이터 테이블 선택">
+        @foreach (var item in dataTables)
+        {
+            <MudSelectItem Value="@item">@item.TableName</MudSelectItem>
+        }
+    </MudSelect>
+    @if (SelectedDataTable != null)
+    {
+        <MudTable Items="@(GetDataRows())" Hover="true" Striped="true" Bordered="true">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">@(SelectedDataTable.TableName)</MudText>
+            </ToolBarContent>
+            <HeaderContent>
+                @foreach (DataColumn column in SelectedDataTable.Columns)
+                {
+                    <MudTh>@column.ColumnName</MudTh>
+                }
+            </HeaderContent>
+            <RowTemplate>
+                @foreach (DataRow row in SelectedDataTable.Rows)
+                {
+                    @foreach (var item in row.ItemArray)
+                    {
+                        <MudTd>@item</MudTd>
+                    }
+                }
+            </RowTemplate>
+        </MudTable>
+    }
+</MudContainer>
+
+@code {
+    private List<DataTable> dataTables = [];
+    private DataTable? SelectedDataTable;
+
+    private List<DataRow> GetDataRows()
+    {
+        List<DataRow> result = [];
+        if (null != SelectedDataTable)
+        {
+            foreach (var row in SelectedDataTable.Rows)
+            {
+                result.Add((DataRow)row);
+            }
+        }
+        return result;
+    }
+
+    private async Task OnAddDataTableButtonClicked()
+    {
+
+
+        DataTable dataTable = new($"Test_{dataTables.Count + 1}");
+        DataColumn idColumn = new("ID", typeof(int))
+            {
+                AutoIncrement = true,
+                AutoIncrementSeed = 1,
+                AutoIncrementStep = 1,
+                ReadOnly = true,
+            };
+        dataTable.Columns.Add(idColumn);
+        dataTables.Add(dataTable);
+        await InvokeAsync(StateHasChanged);
+    }
+}
