@@ -6,11 +6,11 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar>
+    <MudAppBar Elevation="0">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudSpacer />
-        <MudAvatar>
-            <MudIconButton Icon="@Icons.Material.Filled.Person"/>
+        <MudAvatar Color="Color.Primary">
+            <MudIconButton Icon="@Icons.Material.Filled.Person" />
         </MudAvatar>
     </MudAppBar>
     <MudDrawer @bind-Open="@drawerOpen">
@@ -26,9 +26,9 @@
         {
             PaletteLight = new()
             {
-                AppbarBackground = Colors.Gray.Default,
-                Primary = Colors.Gray.Darken3,
-            }
+                AppbarBackground = Colors.Gray.Darken3,
+                Primary = Colors.Cyan.Lighten2,
+            },
         };
 
     bool drawerOpen = true;
