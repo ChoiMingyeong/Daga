@@ -1,15 +1,19 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider IsDarkMode=true/>
+<MudThemeProvider Theme="theme" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
     <MudAppBar>
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <MudAvatar>
+            <MudIconButton Icon="@Icons.Material.Filled.Person"/>
+        </MudAvatar>
     </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen">
+    <MudDrawer @bind-Open="@drawerOpen">
         <NavMenu />
     </MudDrawer>
     <MudMainContent>
@@ -18,10 +22,23 @@
 </MudLayout>
 
 @code {
-    bool _drawerOpen = true;
+    MudTheme theme = new()
+        {
+            PaletteLight = new()
+            {
+                AppbarBackground = Colors.Gray.Default,
+                Primary = Colors.Gray.Darken3,
+            }
+        };
+
+    bool drawerOpen = true;
+    bool isDefaultAvartar = false;
+    string name = "min";
+    string src = string.Empty;
+    //string src = "icon-192.png";
 
     void DrawerToggle()
     {
-        _drawerOpen = !_drawerOpen;
+        drawerOpen = !drawerOpen;
     }
 }
