@@ -6,12 +6,12 @@ namespace DagaCommon.Models
     {
         public ulong ID { get; init; }
 
-        public string Name { get; init; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
-        public List<Role> Roles { get; private set; } = [];
+        public List<Role> Roles { get; set; } = [];
 
-        public List<Account> Accounts { get; private set; } = [];
+        public List<Account> Accounts { get; set; } = [];
 
-        public List<DataTable> DataTables { get; private set; } = [];
+        public List<DataTable> DataTables { get; set; } = [];
     }
 }
