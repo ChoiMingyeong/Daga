@@ -17,7 +17,7 @@ namespace DagaTools.Services
             }
         }
 
-        public Project? SelectedProject { get; private set; } = null;
+        public Project? SelectedProject { get; set; } = null;
 
         public void Initialize()
         {

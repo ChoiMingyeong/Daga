@@ -7,9 +7,9 @@
 
 <MudLayout>
     <MudAppBar Elevation="0">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudIconButton Color="Color.Secondary" Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudSpacer />
-        <MudAvatar Color="Color.Primary">
+        <MudAvatar Color="Color.Secondary">
             <MudIconButton Icon="@Icons.Material.Filled.Person" />
         </MudAvatar>
     </MudAppBar>
@@ -26,15 +26,14 @@
         {
             PaletteLight = new()
             {
-                AppbarBackground = Colors.Gray.Darken3,
-                Primary = Colors.Cyan.Lighten2,
+                AppbarBackground = Colors.Brown.Darken3,
+                Primary = Colors.LightGreen.Darken3,
+                Secondary = Colors.Yellow.Lighten5,
             },
         };
 
     bool drawerOpen = true;
     bool isDefaultAvartar = false;
-    string name = "min";
-    string src = string.Empty;
     //string src = "icon-192.png";
 
     void DrawerToggle()
