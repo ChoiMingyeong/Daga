@@ -56,10 +56,8 @@
 
     private async Task OnAddDataTableButtonClicked()
     {
-
-
         DataTable dataTable = new($"Test_{dataTables.Count + 1}");
-        DataColumn idColumn = new("ID", typeof(int))
+        DataColumn idColumn = new("ID", typeof(uint))
             {
                 AutoIncrement = true,
                 AutoIncrementSeed = 1,
