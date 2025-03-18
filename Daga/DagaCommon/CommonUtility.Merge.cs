@@ -1,25 +1,25 @@
-﻿using System.Reflection;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
+using System.Reflection;
 
 namespace DagaCommon
 {
-    public static class CalculatorHelper
+    public static partial class CommonUtility
     {
         public static readonly Dictionary<Type, Action<PropertyInfo, object, object>> _customMergeActions = new();
 
         private static readonly ConcurrentDictionary<Type, PropertyInfo[]> _propertyCache = new();
 
-        public static bool TryAdd(Type propertyType, Action<PropertyInfo, object, object> action)
+        public static bool TryAddCustomMergeAction(Type propertyType, Action<PropertyInfo, object, object> action)
         {
             return _customMergeActions.TryAdd(propertyType, action);
         }
 
-        public static bool Remove(Type propertyType)
+        public static bool RemoveCustomMergeAction(Type propertyType)
         {
             return _customMergeActions.Remove(propertyType);
         }
 
-        public static void AddProperties<T>(T target, T source)
+        public static void MergeProperties<T>(T target, T source)
         {
             if (target == null) throw new ArgumentNullException(nameof(target), "Target 객체가 null입니다.");
             if (source == null) throw new ArgumentNullException(nameof(source), "Source 객체가 null입니다.");
