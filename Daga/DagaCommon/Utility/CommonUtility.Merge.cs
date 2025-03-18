@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Reflection;
 
-namespace DagaCommon
+namespace DagaCommon.Utility
 {
     public static partial class CommonUtility
     {

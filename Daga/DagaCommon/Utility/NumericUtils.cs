@@ -1,4 +1,4 @@
-﻿namespace DagaCommon
+﻿namespace DagaCommon.Utility
 {
     public static class NumericUtils
     {

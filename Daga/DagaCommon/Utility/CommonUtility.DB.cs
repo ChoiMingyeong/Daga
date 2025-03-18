@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace DagaCommon
+namespace DagaCommon.Utility
 {
     public static partial class CommonUtility
     {
@@ -20,7 +20,7 @@ namespace DagaCommon
                  .ToArray());
 
             if (keyProperties.Length == 0)
-                throw new InvalidOperationException($"클래스 {type.Name}에 [Key] 속성이 없습니다.");
+                return null;
 
             // 단일 키일 경우, 해당 값 반환
             if (keyProperties.Length == 1)
