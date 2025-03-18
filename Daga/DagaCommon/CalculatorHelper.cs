@@ -4,6 +4,19 @@ namespace DagaCommon
 {
     public static class CalculatorHelper
     {
+        // Dictionary<Type, Action<T, T>> 선언 (타입에 따라 다른 처리를 수행)
+        public static readonly Dictionary<Type, Action<PropertyInfo, object, object>> _customMergeActions = [];
+
+        public static bool TryAdd(Type propertyType, Action<PropertyInfo, object, object> action)
+        {
+            return _customMergeActions.TryAdd(propertyType, action);
+        }
+
+        public static bool Remove(Type propertyType)
+        {
+            return _customMergeActions.Remove(propertyType);
+        }
+
         /// <summary>
         /// <see cref="typeof(T)"/>가 숫자타입일 때, target의 값을 source의 값과 합산합니다.
         /// </summary>
@@ -26,16 +39,32 @@ namespace DagaCommon
                     throw new ArgumentNullException();
                 }
 
-                if (IsNumericType(prop.PropertyType))
+                if (_customMergeActions.TryGetValue(prop.PropertyType, out var action))
+                {
+                    action(prop, target, source);
+                }
+                else if (typeof(string) == prop.PropertyType)
+                {
+                    var targetValue = Convert.ToString(prop.GetValue(target) ?? string.Empty);
+                    var sourceValue = Convert.ToString(prop.GetValue(source) ?? string.Empty);
+
+                    if (string.IsNullOrEmpty(sourceValue))
+                    {
+                        continue;
+                    }
+
+                    prop.SetValue(target, targetValue + sourceValue);
+                }
+                else if (IsNumericType(prop.PropertyType))
                 {
                     var targetValue = Convert.ToDouble(prop.GetValue(target) ?? 0);
                     var sourceValue = Convert.ToDouble(prop.GetValue(source) ?? 0);
-                    
+
                     double addValue;
                     if (sourceValue < 0)
                     {
                         var typeMinValue = GetMinValue(prop.PropertyType);
-                        addValue = (targetValue >= typeMinValue - sourceValue)? targetValue + sourceValue : typeMinValue;
+                        addValue = (targetValue >= typeMinValue - sourceValue) ? targetValue + sourceValue : typeMinValue;
 
                     }
                     else

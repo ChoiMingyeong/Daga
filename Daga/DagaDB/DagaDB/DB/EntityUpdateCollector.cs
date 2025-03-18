@@ -21,6 +21,10 @@ namespace DagaDB.DB
         [Calculate]
         [Column("value2")]
         public int Value2 { get; set; } = 0;
+
+        [Calculate]
+        [Column("value3")]
+        public string Value3 { get; set; } = string.Empty;
     }
 
     public class CalculatorTest
