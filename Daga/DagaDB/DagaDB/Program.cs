@@ -10,7 +10,7 @@ namespace DagaDB
             CalculatorTest calculatorTest = new CalculatorTest();
             calculatorTest.AddEntity(new TestTable() { Id = 1, Value = 1 });
             calculatorTest.AddEntity(new TestTable() { Id = 2, Value = 20 });
-            calculatorTest.AddEntity(new TestTable() { Id = 1, Value = 10 });
+            calculatorTest.AddEntity(new TestTable() { Id = 1, Value = 10, Value2 = 5 });
             calculatorTest.AddEntity(new TestTable() { Id = 3, Value = 30 });
             calculatorTest.AddEntity(new TestTable() { Id = 2, Value = 2 });
             calculatorTest.AddEntity(new TestTable() { Id = 3, Value = 3 });
