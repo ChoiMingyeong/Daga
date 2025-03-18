@@ -30,9 +30,55 @@ namespace DagaCommon
                 {
                     var targetValue = Convert.ToDouble(prop.GetValue(target) ?? 0);
                     var sourceValue = Convert.ToDouble(prop.GetValue(source) ?? 0);
-                    prop.SetValue(target, Convert.ChangeType(targetValue + sourceValue, prop.PropertyType));
+                    
+                    double addValue;
+                    if (sourceValue < 0)
+                    {
+                        var typeMinValue = GetMinValue(prop.PropertyType);
+                        addValue = (targetValue >= typeMinValue - sourceValue)? targetValue + sourceValue : typeMinValue;
+
+                    }
+                    else
+                    {
+                        var typeMaxValue = GetMaxValue(prop.PropertyType);
+                        addValue = (targetValue <= typeMaxValue - sourceValue) ? targetValue + sourceValue : typeMaxValue;
+                    }
+
+                    prop.SetValue(target, Convert.ChangeType(addValue, prop.PropertyType));
                 }
             }
+        }
+
+        private static double GetMinValue(Type type)
+        {
+            if (type == typeof(int)) return int.MinValue;
+            if (type == typeof(uint)) return uint.MinValue;
+            if (type == typeof(long)) return long.MinValue;
+            if (type == typeof(ulong)) return ulong.MinValue;
+            if (type == typeof(short)) return short.MinValue;
+            if (type == typeof(ushort)) return ushort.MinValue;
+            if (type == typeof(byte)) return byte.MinValue;
+            if (type == typeof(sbyte)) return sbyte.MinValue;
+            if (type == typeof(double)) return double.MinValue;
+            if (type == typeof(float)) return float.MinValue;
+
+            throw new ArgumentException("지원되지 않는 숫자 타입입니다.", nameof(type));
+        }
+
+        private static double GetMaxValue(Type type)
+        {
+            if (type == typeof(int)) return int.MaxValue;
+            if (type == typeof(uint)) return uint.MaxValue;
+            if (type == typeof(long)) return long.MaxValue;
+            if (type == typeof(ulong)) return ulong.MaxValue;
+            if (type == typeof(short)) return short.MaxValue;
+            if (type == typeof(ushort)) return ushort.MaxValue;
+            if (type == typeof(byte)) return byte.MaxValue;
+            if (type == typeof(sbyte)) return sbyte.MaxValue;
+            if (type == typeof(double)) return double.MaxValue;
+            if (type == typeof(float)) return float.MaxValue;
+
+            throw new ArgumentException("지원되지 않는 숫자 타입입니다.", nameof(type));
         }
 
         private static bool IsNumericType(Type type)
