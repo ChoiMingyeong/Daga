@@ -8,10 +8,12 @@ namespace DagaCommon.Utility
     {
         private static readonly ConcurrentDictionary<Type, PropertyInfo[]> _keyPropertyCache = new();
 
-        public static object? GetOrAddKey<T>(T entity)
+        public static Key? GetOrAddKey<T>(T entity)
         {
             if (entity == null)
+            {
                 throw new ArgumentNullException(nameof(entity));
+            }
 
             var type = typeof(T);
             var keyProperties = _keyPropertyCache.GetOrAdd(type, t =>
@@ -20,16 +22,12 @@ namespace DagaCommon.Utility
                  .ToArray());
 
             if (keyProperties.Length == 0)
-                return null;
-
-            // 단일 키일 경우, 해당 값 반환
-            if (keyProperties.Length == 1)
             {
-                return keyProperties[0].GetValue(entity);
+                return null;
             }
 
-            // 복합 키일 경우, Tuple 생성
-            return Tuple.Create(keyProperties.Select(p => p.GetValue(entity)).ToArray());
+            var keyValues = keyProperties.Select(p => p.GetValue(entity)).ToArray();
+            return new Key(keyValues);
         }
     }
 }
