@@ -15,7 +15,8 @@
                 // 필요한 경우 Bool 객체 추가
                 while (_value.Count <= listIndex)
                 {
-                    _value.Add(new Bool(Enumerable.Repeat(false, 8).ToArray()));
+                    _value.Add(new Bool([.. Enumerable.Repeat(false, 
+                        (_value.Count == listIndex) ? boolIndex + 1 : 8)]));
                 }
 
                 return _value[listIndex][boolIndex];
@@ -29,7 +30,8 @@
                 // 필요한 경우 Bool 객체 추가
                 while (_value.Count <= listIndex)
                 {
-                    _value.Add(new Bool(Enumerable.Repeat(false, 8).ToArray()));
+                    _value.Add(new Bool([.. Enumerable.Repeat(false, 
+                        (_value.Count == listIndex) ? boolIndex + 1 : 8)]));
                 }
 
                 // 값 설정
@@ -48,7 +50,7 @@
 
         public IEnumerable<bool> ToEnumerable()
         {
-            for(var i = 0; i < _value.Count; i++)
+            for (var i = 0; i < _value.Count; i++)
             {
                 foreach (var b in _value[i].ToEnumerable())
                 {
@@ -59,12 +61,17 @@
 
         public List<bool> ToList()
         {
-            return ToEnumerable().ToList();
+            return [.. ToEnumerable()];
         }
 
         public bool[] ToArray()
         {
-            return ToEnumerable().ToArray();
+            return [.. ToEnumerable()];
+        }
+        
+        public IEnumerable<byte> ToBytes()
+        {
+            return _value.Select(p=>p.ToByte());
         }
 
         private static void ValidateIndex(int index)

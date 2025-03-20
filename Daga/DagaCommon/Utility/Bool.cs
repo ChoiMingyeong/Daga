@@ -4,8 +4,6 @@
     {
         private static readonly byte[] _flags = [1, 2, 4, 8, 16, 32, 64, 128];
 
-        private readonly byte _size = 8;
-
         private byte _value = 0;
 
         private byte _capacity = 1;
@@ -45,6 +43,8 @@
             {
                 this[i] = list[i];
             }
+
+            _capacity = length;
         }
 
         public IEnumerable<bool> ToEnumerable()
@@ -57,12 +57,17 @@
 
         public List<bool> ToList()
         {
-            return ToEnumerable().ToList();
+            return [.. ToEnumerable()];
         }
 
         public bool[] ToArray()
         {
-            return ToEnumerable().ToArray();
+            return [.. ToEnumerable()];
+        }
+
+        public byte ToByte()
+        {
+            return _value;
         }
 
         private static void ValidateIndex(byte index)
