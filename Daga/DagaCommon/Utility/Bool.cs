@@ -4,7 +4,11 @@
     {
         private static readonly byte[] _flags = [1, 2, 4, 8, 16, 32, 64, 128];
 
+        private readonly byte _size = 8;
+
         private byte _value = 0;
+
+        private byte _capacity = 1;
 
         public bool this[byte index]
         {
@@ -24,6 +28,11 @@
                 {
                     _value &= (byte)~_flags[index];
                 }
+
+                if(index >= _capacity)
+                {
+                    _capacity = (byte)(index + 1);
+                }
             }
         }
 
@@ -40,7 +49,7 @@
 
         public IEnumerable<bool> ToEnumerable()
         {
-            for (byte i = 0; i < _flags.Length; i++)
+            for (byte i = 0; i < _capacity; i++)
             {
                 yield return (_value & _flags[i]) != 0;
             }

@@ -4,8 +4,6 @@
     {
         private List<Bool> _value = [];
 
-        private byte _lastIndex = 0;
-
         public bool this[int index]
         {
             get
@@ -17,7 +15,7 @@
                 // 필요한 경우 Bool 객체 추가
                 while (_value.Count <= listIndex)
                 {
-                    _value.Add(new Bool());
+                    _value.Add(new Bool(Enumerable.Repeat(false, 8).ToArray()));
                 }
 
                 return _value[listIndex][boolIndex];
@@ -31,17 +29,11 @@
                 // 필요한 경우 Bool 객체 추가
                 while (_value.Count <= listIndex)
                 {
-                    _value.Add(new Bool());
+                    _value.Add(new Bool(Enumerable.Repeat(false, 8).ToArray()));
                 }
 
                 // 값 설정
                 _value[listIndex][boolIndex] = value;
-
-                // _lastIndex 업데이트
-                if (listIndex == _value.Count - 1 && boolIndex > _lastIndex)
-                {
-                    _lastIndex = boolIndex;
-                }
             }
         }
 
@@ -58,7 +50,7 @@
         {
             for(var i = 0; i < _value.Count; i++)
             {
-                foreach (var b in _value[i].ToEnumerable().Take(_lastIndex + 1))
+                foreach (var b in _value[i].ToEnumerable())
                 {
                     yield return b;
                 }
