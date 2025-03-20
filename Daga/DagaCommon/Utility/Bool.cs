@@ -16,7 +16,7 @@
             set
             {
                 ValidateIndex(index);
-                if(value)
+                if (value)
                 {
                     _value |= _flags[index];
                 }
@@ -27,7 +27,7 @@
             }
         }
 
-        public Bool(IEnumerable<bool> boolList)
+        public Bool(params bool[] boolList)
         {
             var list = boolList.Take(8).ToList(); // 최대 8개만 가져와 리스트로 변환
             byte length = (byte)list.Count;
@@ -36,10 +36,6 @@
             {
                 this[i] = list[i];
             }
-        }
-
-        public Bool(params bool[] boolList) : this((IEnumerable<bool>)boolList)
-        {
         }
 
         public IEnumerable<bool> ToEnumerable()
@@ -59,7 +55,8 @@
         {
             return ToEnumerable().ToArray();
         }
-        private void ValidateIndex(byte index)
+
+        private static void ValidateIndex(byte index)
         {
             if (index >= 8)
             {
