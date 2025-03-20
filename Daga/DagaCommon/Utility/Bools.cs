@@ -2,7 +2,7 @@
 {
     public class Bools
     {
-        private List<Bool> _value = [];
+        private readonly List<Bool> _value = [];
 
         public bool this[int index]
         {
