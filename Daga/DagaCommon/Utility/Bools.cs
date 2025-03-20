@@ -8,34 +8,13 @@
         {
             get
             {
-                ValidateIndex(index);
-                int listIndex = index / 8;
-                byte boolIndex = (byte)(index % 8);
-
-                // 필요한 경우 Bool 객체 추가
-                while (_value.Count <= listIndex)
-                {
-                    _value.Add(new Bool([.. Enumerable.Repeat(false, 
-                        (_value.Count == listIndex) ? boolIndex + 1 : 8)]));
-                }
-
-                return _value[listIndex][boolIndex];
+                ValidateIndex(index, out int listIndex, out byte bitIndex);
+                return _value[listIndex][bitIndex];
             }
             set
             {
-                ValidateIndex(index);
-                int listIndex = index / 8;
-                byte boolIndex = (byte)(index % 8);
-
-                // 필요한 경우 Bool 객체 추가
-                while (_value.Count <= listIndex)
-                {
-                    _value.Add(new Bool([.. Enumerable.Repeat(false, 
-                        (_value.Count == listIndex) ? boolIndex + 1 : 8)]));
-                }
-
-                // 값 설정
-                _value[listIndex][boolIndex] = value;
+                ValidateIndex(index, out int listIndex, out byte bitIndex);
+                _value[listIndex][bitIndex] = value;
             }
         }
 
@@ -68,18 +47,28 @@
         {
             return [.. ToEnumerable()];
         }
-        
+
         public IEnumerable<byte> ToBytes()
         {
-            return _value.Select(p=>p.ToByte());
+            return _value.Select(p => p.ToByte());
         }
 
-        private static void ValidateIndex(int index)
+        private void ValidateIndex(int index, out int listIndex, out byte bitIndex)
         {
             if (index < 0)
             {
                 throw new IndexOutOfRangeException("Index must be greater than or equal to 0.");
             }
+
+            listIndex = index / 8;
+            bitIndex = (byte)(index % 8);
+
+            // 필요한 경우 Bool 객체 추가
+            while (_value.Count <= listIndex)
+            {
+                _value.Add(new Bool([.. Enumerable.Repeat(false, (_value.Count == listIndex) ? bitIndex + 1 : 8)]));
+            }
+
         }
     }
 }
