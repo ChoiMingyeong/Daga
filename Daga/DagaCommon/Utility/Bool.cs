@@ -6,7 +6,7 @@
 
         private byte _value = 0;
 
-        private byte _capacity = 1;
+        private byte _capacity = 0;
 
         public bool this[byte index]
         {
@@ -27,7 +27,7 @@
                     _value &= (byte)~_flags[index];
                 }
 
-                if(index >= _capacity)
+                if (index + 1 >= _capacity)
                 {
                     _capacity = (byte)(index + 1);
                 }
@@ -45,6 +45,45 @@
             }
 
             _capacity = length;
+        }
+
+        public Bool(byte value)
+        {
+            _value = value;
+            _capacity = 8;
+        }
+
+        public void Add(bool b)
+        {
+            if (_capacity >= 8)
+            {
+                throw new IndexOutOfRangeException("Bool can only contain up to 8 values.");
+            }
+
+            this[_capacity] = b;
+        }
+
+        public byte Count()
+        {
+            return _capacity;
+        }
+
+        public void RemoveAt(byte index)
+        {
+            ValidateIndex(index);
+            if (index >= _capacity)
+            {
+                throw new IndexOutOfRangeException("Index is out of range.");
+            }
+
+            _value = (byte)((_value & ((1 << index) - 1)) | ((_value >> (index + 1)) << index));
+            _capacity--;
+        }
+
+        public void Clear()
+        {
+            _value = 0;
+            _capacity = 0;
         }
 
         public IEnumerable<bool> ToEnumerable()
