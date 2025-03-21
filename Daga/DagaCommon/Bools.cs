@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace DagaCommon
+﻿namespace DagaCommon
 {
     public class Bools
     {
