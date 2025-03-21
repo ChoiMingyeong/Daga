@@ -1,4 +1,4 @@
-﻿namespace DagaCommon.Utility
+﻿namespace DagaCommon
 {
     public class Key
     {

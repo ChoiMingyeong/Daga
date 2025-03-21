@@ -1,4 +1,6 @@
-﻿namespace DagaCommon.Utility
+﻿using System.Text.Json;
+
+namespace DagaCommon
 {
     public class Bools
     {
@@ -18,7 +20,7 @@
             }
         }
 
-        public Bools(params bool[] boolList)
+        public Bools(params IEnumerable<bool> boolList)
         {
             var list = boolList.ToList();
             for (var i = 0; i < list.Count; i++)
@@ -27,10 +29,34 @@
             }
         }
 
+        public Bools(int size = 0, params IEnumerable<byte> byteList)
+        {
+            if (size <= 0)
+            {
+                throw new ArgumentException("Size must be greater than 0.");
+            }
+
+            int listSize = (size / 8) + 1; 
+            byte bitSize = (byte)(size % 8);
+            var list = byteList.ToList();
+            for (int i = 0; i < listSize; ++i)
+            {
+                byte value = list.Count <= i ? (byte)0 : list[i];
+                byte boolSize = i == listSize - 1 ? bitSize : (byte)8;
+                _value.Add(new Bool(list.Count <= i ? (byte)0 : list[i], i == listSize - 1 ? bitSize : (byte)8));
+            }
+        }
+
+        public Bools(in Bools other)
+        {
+            _value = new Bools(other.ToList())._value;
+        }
+
         public void Add(bool b)
         {
-            ValidateIndex(Count(), out _, out _);
-            this[Count()] = b;
+            int index = Count();
+            ValidateIndex(index, out _, out _);
+            this[index] = b;
         }
 
         public void AddRange(IEnumerable<bool> boolList)
@@ -126,14 +152,7 @@
 
             while (_value.Count <= listIndex)
             {
-                if (_value.Count == listIndex)
-                {
-                    _value.Add(new Bool([.. Enumerable.Repeat(false, bitIndex + 1)]));
-                }
-                else
-                {
-                    _value.Add(new Bool(0));
-                }
+                _value.Add(new Bool(0, (byte)(_value.Count == listIndex ? bitIndex + 1 : 8)));
             }
 
         }
