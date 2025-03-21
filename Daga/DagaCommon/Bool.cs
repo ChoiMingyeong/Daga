@@ -27,7 +27,7 @@
                     _value &= (byte)~_flags[index];
                 }
 
-                if (index + 1 >= _size)
+                if (index + 1 > _size)
                 {
                     _size = (byte)(index + 1);
                 }

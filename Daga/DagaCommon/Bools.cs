@@ -241,7 +241,6 @@
             {
                 _value.Add(new Bool(0, (byte)(_value.Count == listIndex ? bitIndex + 1 : 8)));
             }
-
         }
     }
 }
