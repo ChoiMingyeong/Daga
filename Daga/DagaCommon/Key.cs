@@ -20,7 +20,15 @@
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(KeyValues);
+            unchecked // 오버플로우 무시 (더 균일한 해시 분포)
+            {
+                int hash = 17;
+                foreach (var keyValue in KeyValues)
+                {
+                    hash = hash * 31 + (keyValue?.GetHashCode() ?? 0);
+                }
+                return hash;
+            }
         }
 
         public override string ToString()
