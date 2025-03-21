@@ -67,7 +67,12 @@
 
         public int Count()
         {
-            return _value.Count * 8 - (8 - _value.LastOrDefault()?.Count() ?? 0);
+            if(_value.Count == 0)
+            {
+                return 0;
+            }
+
+            return _value.Count * 8 - (8 - _value[^1].Count());
         }
 
         public void RemoveAt(byte index)
@@ -127,6 +132,54 @@
         public IEnumerable<byte> ToBytes()
         {
             return _value.Select(p => p.ToByte());
+        }
+
+        public IEnumerable<ushort> ToUShorts()
+        {
+            for (int i = 0; i < _value.Count; i += 2)
+            {
+                ushort value = 0;
+                int remaining = Math.Min(2, _value.Count - i); // 남은 개수 확인
+
+                for (int j = 0; j < remaining; j++)
+                {
+                    value |= (ushort)(_value[i + j].ToByte() << (j * 8));
+                }
+
+                yield return value;
+            }
+        }
+
+        public IEnumerable<uint> ToUInts()
+        {
+            for (int i = 0; i < _value.Count; i += 4)
+            {
+                uint value = 0;
+                int remaining = Math.Min(4, _value.Count - i); // 남은 개수 확인
+
+                for (int j = 0; j < remaining; j++)
+                {
+                    value |= (uint)(_value[i + j].ToByte() << (j * 8));
+                }
+
+                yield return value;
+            }
+        }
+
+        public IEnumerable<ulong> ToULongs()
+        {
+            for (int i = 0; i < _value.Count; i += 8)
+            {
+                ulong value = 0;
+                int remaining = Math.Min(8, _value.Count - i); // 남은 개수만큼 반복
+
+                for (int j = 0; j < remaining; j++)
+                {
+                    value |= (ulong)_value[i + j].ToByte() << (j * 8);
+                }
+
+                yield return value;
+            }
         }
 
         private void ValidateIndex(int index, out int listIndex, out byte bitIndex)
