@@ -27,22 +27,58 @@
             }
         }
 
-        public Bools(int size = 0, params IEnumerable<byte> byteList)
+        public Bools(int size = 0, params IEnumerable<byte> bytes)
         {
             if (size <= 0)
             {
                 throw new ArgumentException("Size must be greater than 0.");
             }
 
-            int listSize = (size / 8) + 1; 
+            int listSize = (size / 8) + 1;
             byte bitSize = (byte)(size % 8);
-            var list = byteList.ToList();
+            var list = bytes.ToList();
             for (int i = 0; i < listSize; ++i)
             {
-                byte value = list.Count <= i ? (byte)0 : list[i];
-                byte boolSize = i == listSize - 1 ? bitSize : (byte)8;
                 _value.Add(new Bool(list.Count <= i ? (byte)0 : list[i], i == listSize - 1 ? bitSize : (byte)8));
             }
+        }
+
+        public Bools(int size = 0, params IEnumerable<ushort> ushorts) : this(size, ushorts.SelectMany(ToBytes))
+        {
+        }
+
+        public Bools(int size = 0, params IEnumerable<uint> uints) : this(size, uints.SelectMany(ToBytes))
+        {
+        }
+
+        public Bools(int size = 0, params IEnumerable<ulong> ulongs) : this(size, ulongs.SelectMany(ToBytes))
+        {
+        }
+
+        private static IEnumerable<byte> ToBytes(ushort value)
+        {
+            yield return (byte)(value & 0xFF);
+            yield return (byte)((value >> 8) & 0xFF);
+        }
+
+        private static IEnumerable<byte> ToBytes(uint value)
+        {
+            yield return (byte)(value & 0xFF);
+            yield return (byte)((value >> 8) & 0xFF);
+            yield return (byte)((value >> 16) & 0xFF);
+            yield return (byte)((value >> 24) & 0xFF);
+        }
+
+        private static IEnumerable<byte> ToBytes(ulong value)
+        {
+            yield return (byte)(value & 0xFF);
+            yield return (byte)((value >> 8) & 0xFF);
+            yield return (byte)((value >> 16) & 0xFF);
+            yield return (byte)((value >> 24) & 0xFF);
+            yield return (byte)((value >> 32) & 0xFF);
+            yield return (byte)((value >> 40) & 0xFF);
+            yield return (byte)((value >> 48) & 0xFF);
+            yield return (byte)((value >> 56) & 0xFF);
         }
 
         public Bools(in Bools other)
@@ -67,7 +103,7 @@
 
         public int Count()
         {
-            if(_value.Count == 0)
+            if (_value.Count == 0)
             {
                 return 0;
             }
