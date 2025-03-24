@@ -1,49 +1,33 @@
-using DagaCommon;
-using DagaDB.DB;
-
 namespace DagaDB
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            Bool @bool = new([true, false, false, true]);
-            @bool.RemoveAt(1);
-            @bool[1] = true;
-
-            Bools bools1 = new();
-            bools1.Add(true);
-            bools1[150] = true;
-            Bools bools2 = new(bools1);
-            bools1[3] = true;
-            Bools bools3 = new(12, [170, 5]);
-
-            var size = bools1.Count();
-            var bytes = bools1.ToBytes();
-            var ushorts = bools1.ToUShorts();
-            var uints = bools1.ToUInts();
-            var ulongs = bools1.ToULongs();
-
-            Bools bools4 = new(size, bytes);
-            Bools bools5 = new(size, ushorts);
-            Bools bools6 = new(size, uints);
-            Bools bools7 = new(size, ulongs);
-
-            CalculatorTest calculatorTest = new CalculatorTest();
-            calculatorTest.AddEntity(new TestTable() { Id = 1, Value = 1, Value2 = 5 });
-            calculatorTest.AddEntity(new TestTable() { Id = 1, Value = 1, Value2 = 5, Value3 = "Test" });
-            calculatorTest.AddEntity(new TestTable() { Id = 2, Value = 20 });
-            calculatorTest.AddEntity(new TestTable() { Id = 2, Value = 2 });
-            calculatorTest.AddEntity(new TestTable() { Id = 3, Value = 3, Value3 = "Test" });
-            calculatorTest.AddEntity(new TestTable() { Id = 3, Value = 3, Value3 = "String" });
-
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            if (builder.Configuration["Port"] is not string portConfig
+                || true == string.IsNullOrWhiteSpace(portConfig)
+                || false == int.TryParse(portConfig, out int port))
+            {
+                throw new Exception("Invalid config");
+            }
 
+            builder.WebHost.UseKestrel(p => p.ListenAnyIP(port));
+
+            builder.Services.AddCors(p =>
+            {
+                p.AddDefaultPolicy(p =>
+                {
+                    p.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            builder.Services.AddEndpointsApiExplorer();
 
             var app = builder.Build();
 
@@ -53,10 +37,12 @@ namespace DagaDB
                 app.MapOpenApi();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+            app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

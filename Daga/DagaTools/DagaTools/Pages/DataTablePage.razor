@@ -1,6 +1,6 @@
 ﻿@page "/datatable"
+@attribute [AllowAnonymous]
 @using System.Data
-@using MudBlazor
 
 <MudContainer>
     <MudButton Variant="Variant.Filled" OnClick="OnAddDataTableButtonClicked" Class="mt-4">
@@ -14,30 +14,34 @@
     </MudSelect>
     @if (SelectedDataTable != null)
     {
-        <MudTable Items="@(GetDataRows())" Hover="true" Striped="true" Bordered="true">
+        <MudTable Items="@(GetDataRows())" Hover="true" Dense="true" Bordered="true">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">@(SelectedDataTable.TableName)</MudText>
+                <MudSpacer />
+                <MudIconButton Icon="@Icons.Material.Filled.Add" Size="Size.Small" OnClick="@(()=>OnRowAddButtonClicked())" />
             </ToolBarContent>
             <HeaderContent>
                 @foreach (DataColumn column in SelectedDataTable.Columns)
                 {
                     <MudTh>@column.ColumnName</MudTh>
                 }
+                <MudTh />
             </HeaderContent>
             <RowTemplate>
-                @foreach (DataRow row in SelectedDataTable.Rows)
+                @foreach (var item in @context.ItemArray)
                 {
-                    @foreach (var item in row.ItemArray)
-                    {
-                        <MudTd>@item</MudTd>
-                    }
+                    <MudTd>@item</MudTd>
                 }
+                <MudTd>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(()=>OnDeleteButtonClicked((DataRow)@context))" />
+                </MudTd>
             </RowTemplate>
         </MudTable>
     }
 </MudContainer>
 
-@code {
+@code
+{
     private List<DataTable> dataTables = [];
     private DataTable? SelectedDataTable;
 
@@ -65,7 +69,36 @@
                 ReadOnly = true,
             };
         dataTable.Columns.Add(idColumn);
+
+
+        // DataColumn nameColumn = new("Name", typeof(string))
+        //     {
+        //         DefaultValue = "Unknown",
+        //         AllowDBNull = false,
+        //     };
+
+        // dataTable.Columns.Add(nameColumn);
+
         dataTables.Add(dataTable);
+
         await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task OnDeleteButtonClicked(DataRow row)
+    {
+        if (null != SelectedDataTable)
+        {
+            SelectedDataTable.Rows.Remove(row);
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async Task OnRowAddButtonClicked()
+    {
+        if (null != SelectedDataTable)
+        {
+            SelectedDataTable.Rows.Add();
+            await InvokeAsync(StateHasChanged);
+        }
     }
 }

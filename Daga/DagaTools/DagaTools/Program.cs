@@ -1,4 +1,7 @@
+using Blazored.SessionStorage;
 using DagaTools.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
@@ -13,12 +16,31 @@ public class Program
         builder.RootComponents.Add<App>("#app");
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
-        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-        builder.Services.AddScoped<AuthService>();
+        if (builder.Configuration["DBUrl"] is not string dbUrl
+            || true == string.IsNullOrWhiteSpace(dbUrl))
+        {
+            throw new Exception("Invalid config");
+        }
 
+        builder.Services.AddAuthorizationCore(p =>
+        {
+            p.DefaultPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+            p.FallbackPolicy = p.DefaultPolicy;
+        });
         builder.Services.AddMudServices();
+        builder.Services.AddBlazoredSessionStorage();
 
+        builder.Services.AddScoped<DBService>(p => new(new HttpClient
+        {
+            BaseAddress = new Uri(dbUrl)
+        }));
+        builder.Services.AddScoped<AuthService>();
+        builder.Services.AddScoped<AuthenticationStateProvider, AuthService>();
 
-        await builder.Build().RunAsync();
+        var app = builder.Build();
+
+        await app.RunAsync();
     }
 }

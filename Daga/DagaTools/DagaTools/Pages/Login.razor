@@ -1,0 +1,26 @@
+﻿@page "/login"
+@attribute [AllowAnonymous]
+
+<MudContainer>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnLoginButtonClicked">Login</MudButton>
+</MudContainer>
+
+@code
+{
+    DagaCommon.Models.Login loginData = new();
+
+    private async Task OnLoginButtonClicked()
+    {
+        loginData.Email = "admin";
+        loginData.Password = "1234";
+
+        if (null == await AuthService.MarkUserAsAuthenticated(loginData))
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("", forceLoad: true);
+        }
+    }
+}
