@@ -8,6 +8,8 @@ namespace DagaDB.DB.Tables
     [Table("role")]
     public class RoleTable
     {
+        public static byte CreateID = 1;
+
         [Key]
         [Column("project_id")]
         public ulong ProjectID { get; set; }

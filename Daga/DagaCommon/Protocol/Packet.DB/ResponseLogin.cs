@@ -9,7 +9,5 @@ namespace DagaCommon.Protocol
         public uint AccountID { get; set; }
 
         public string Name { get; set; } = string.Empty;
-
-        public Dictionary<ulong, string> Projects { get; set; } = [];
     }
 }

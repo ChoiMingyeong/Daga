@@ -5,7 +5,7 @@
     <MudButton Variant="Variant.Filled" OnClick="OnAddDataTableButtonClicked" Class="mt-4">
         데이터테이블 추가
     </MudButton>
-    <MudSelect T="DataTable" @bind-Value="SelectedDataTable" Label="데이터 테이블 선택">
+    <MudSelect T="System.Data.DataTable" @bind-Value="SelectedDataTable" Label="데이터 테이블 선택">
         @foreach (var item in dataTables)
         {
             <MudSelectItem Value="@item">@item.TableName</MudSelectItem>
@@ -41,8 +41,8 @@
 
 @code
 {
-    private List<DataTable> dataTables = [];
-    private DataTable? SelectedDataTable;
+    private List<System.Data.DataTable> dataTables = [];
+    private System.Data.DataTable? SelectedDataTable;
 
     private List<DataRow> GetDataRows()
     {
@@ -59,7 +59,7 @@
 
     private async Task OnAddDataTableButtonClicked()
     {
-        DataTable dataTable = new($"Test_{dataTables.Count + 1}");
+        System.Data.DataTable dataTable = new($"Test_{dataTables.Count + 1}");
         DataColumn idColumn = new("ID", typeof(uint))
             {
                 AutoIncrement = true,

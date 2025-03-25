@@ -29,21 +29,6 @@ public class AuthController : ControllerBase
             Name = dbAccount.Name,
         };
 
-        var projectIDs = DagaDbContext.Instance.ProjectAccounts.Where(p => p.AccountID == dbAccount.ID).Select(p=>p.ProjectID).ToList();
-        foreach (var projectID in projectIDs)
-        {
-            var dbProject = DagaDbContext.Instance.Projects.SingleOrDefault(p => p.ID == projectID);
-            if (null == dbProject)
-            {
-                continue;
-            }
-
-            if(false == resPacket.Projects.TryAdd(dbProject.ID, dbProject.Name))
-            {
-                continue;
-            }
-        }
-
         return Ok(resPacket);
     }
 
