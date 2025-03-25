@@ -1,4 +1,6 @@
-﻿namespace DagaCommon.Models
+﻿using DagaCommon.Enums;
+
+namespace DagaCommon.Models
 {
     public class Role
     {
@@ -12,22 +14,13 @@
             Description = "Admin",
         };
 
-        public ushort ID { get; init; }
+        public ushort ID { get; private set; }
 
-        private string _name = string.Empty;
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            private set
-            {
-                _name = value.ToLower();
-            }
-        }
+        public string Name { get; private set; } = string.Empty;
 
         public string Description { get; private set; } = string.Empty;
+
+        public Dictionary<PermissionType, Privileges> Permissions { get; set; } = [];
 
         public Role(ushort id, string name)
         {
