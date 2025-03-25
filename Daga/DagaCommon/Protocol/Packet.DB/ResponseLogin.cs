@@ -10,6 +10,6 @@ namespace DagaCommon.Protocol
 
         public string Name { get; set; } = string.Empty;
 
-        public List<Project> Projects { get; set; } = [];
+        public Dictionary<ulong, string> Projects { get; set; } = [];
     }
 }

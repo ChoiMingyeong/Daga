@@ -2,7 +2,7 @@
 @attribute [AllowAnonymous]
 
 <MudContainer>
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnSignupButtonClicked">Signup</MudButton>
+    <MudButton Variant="Variant.Filled" OnClick="OnSignupButtonClicked">Signup</MudButton>
 </MudContainer>
 
 @code
@@ -18,7 +18,7 @@
     {
         if (true == await AuthService.SignupAsync(signupData))
         {
-            NavigationManager.NavigateTo("login", forceLoad: true);
+            NavigationManager.NavigateTo("login");
         }
     }
 }

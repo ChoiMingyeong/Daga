@@ -29,7 +29,7 @@ public class AuthController : ControllerBase
             Name = dbAccount.Name,
         };
 
-        var projectIDs = DagaDbContext.Instance.ProjectAccounts.Where(p => p.AccountID == dbAccount.ID).Select(p => p.ProjectID).ToList();
+        var projectIDs = DagaDbContext.Instance.ProjectAccounts.Where(p => p.AccountID == dbAccount.ID).Select(p=>p.ProjectID).ToList();
         foreach (var projectID in projectIDs)
         {
             var dbProject = DagaDbContext.Instance.Projects.SingleOrDefault(p => p.ID == projectID);
@@ -38,29 +38,10 @@ public class AuthController : ControllerBase
                 continue;
             }
 
-            var permissions = DagaDbContext.Instance.Permissions
-                .Where(p => p.ProjectID == projectID)
-                .ToDictionary(p => p.PermissionType, p => p.Privileges);
-
-            var roles = DagaDbContext.Instance.Roles
-                .Where(p => p.ProjectID == projectID)
-                .Select(p => new Role() { ID = p.ID, Name = p.Name, Description = p.Description, Permissions = permissions, })
-                .ToList();
-
-            var accounts = DagaDbContext.Instance.ProjectAccounts
-                .Where(p => p.ProjectID == projectID)
-                .ToDictionary(p=> p.AccountID, p=>p.RoleID);
-
-            Project project = new()
+            if(false == resPacket.Projects.TryAdd(dbProject.ID, dbProject.Name))
             {
-                ID = dbProject.ID,
-                Name = dbProject.Name,
-                Roles = roles,
-                Accounts = accounts,
-                DataTables = [],
-            };
-
-            resPacket.Projects.Add(project);
+                continue;
+            }
         }
 
         return Ok(resPacket);

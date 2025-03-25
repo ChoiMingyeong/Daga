@@ -28,7 +28,6 @@ namespace DagaTools.Services
                     {
                         ID = recPacket.AccountID,
                         Name = recPacket.Name,
-                        Projects = recPacket.Projects,
                     };
                 }
             }

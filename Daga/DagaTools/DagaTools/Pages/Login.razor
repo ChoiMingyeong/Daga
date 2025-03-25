@@ -2,7 +2,8 @@
 @attribute [AllowAnonymous]
 
 <MudContainer>
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnLoginButtonClicked">Login</MudButton>
+    <MudButton Variant="Variant.Filled" OnClick="OnLoginButtonClicked">Login</MudButton>
+    <MudButton Variant="Variant.Filled" OnClick="@(()=>NavigationManager.NavigateTo("signup"))">Signup</MudButton>
 </MudContainer>
 
 @code
