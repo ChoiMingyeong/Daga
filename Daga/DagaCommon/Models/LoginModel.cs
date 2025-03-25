@@ -2,9 +2,9 @@
 
 namespace DagaCommon.Models
 {
-    public class Login
+    public class LoginModel
     {
-        [Required(ErrorMessage ="")]
+        [Required]
         public string Email { get; set; } = string.Empty;
 
         [Required]
