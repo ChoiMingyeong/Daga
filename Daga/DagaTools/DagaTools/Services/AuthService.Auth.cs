@@ -21,9 +21,9 @@ namespace DagaTools.Services
             return new AuthenticationState(Principal);
         }
 
-        public async Task<Account?> MarkUserAsAuthenticated(Login login)
+        public async Task<Account?> LoginAsync(LoginModel data)
         {
-            _account = await _dbService.LoginAsync(login);
+            _account = await _dbService.LoginAsync(data);
             if (null == _account)
             {
                 return null;
@@ -40,6 +40,11 @@ namespace DagaTools.Services
             _account = null;
             await _sessionStorageService.RemoveItemAsync(nameof(Account));
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
+
+        public async Task<bool> SignupAsync(SignupModel data)
+        {
+            return await _dbService.SignupAsync(data);
         }
     }
 }

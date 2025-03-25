@@ -7,14 +7,15 @@
 
 @code
 {
-    DagaCommon.Models.Login loginData = new();
+    DagaCommon.Models.LoginModel loginData = new()
+        {
+            Email = "test@example.com",
+            Password = "1234",
+        };
 
     private async Task OnLoginButtonClicked()
     {
-        loginData.Email = "admin";
-        loginData.Password = "1234";
-
-        if (null == await AuthService.MarkUserAsAuthenticated(loginData))
+        if (null == await AuthService.LoginAsync(loginData))
         {
             await InvokeAsync(StateHasChanged);
         }

@@ -1,0 +1,24 @@
+﻿@page "/signup"
+@attribute [AllowAnonymous]
+
+<MudContainer>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnSignupButtonClicked">Signup</MudButton>
+</MudContainer>
+
+@code
+{
+    DagaCommon.Models.SignupModel signupData = new()
+        {
+            Email = "test@example.com",
+            Password = "1234",
+            Name = "test",
+        };
+
+    private async Task OnSignupButtonClicked()
+    {
+        if (true == await AuthService.SignupAsync(signupData))
+        {
+            NavigationManager.NavigateTo("login", forceLoad: true);
+        }
+    }
+}
