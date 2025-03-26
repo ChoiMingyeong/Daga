@@ -19,5 +19,8 @@ namespace DagaDB.DB.Tables
 
         [Column("role_id")]
         public byte RoleID { get; set; }
+
+        [Column("favorite", TypeName = "tinyint")]
+        public bool Favorite { get; set; } = false;
     }
 }
