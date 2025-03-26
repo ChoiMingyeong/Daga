@@ -1,5 +1,6 @@
 ﻿using DagaCommon.Models;
 using Microsoft.AspNetCore.Components.Authorization;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace DagaTools.Services
@@ -8,37 +9,49 @@ namespace DagaTools.Services
     {
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            if (null == _account)
+            _claimsPrincipal = AnonymousPrincipal;
+            if (null == Account)
             {
                 var accountJson = await _sessionStorageService.GetItemAsStringAsync(nameof(Account));
                 if (false == string.IsNullOrEmpty(accountJson)
                     && JsonSerializer.Deserialize<Account>(accountJson) is Account account)
                 {
-                    _account = account;
+                    Account = account;
+                    _claimsPrincipal = new(new ClaimsIdentity([new Claim(ClaimTypes.Name, Account.Name)], "apiauth_type"));
+                    await LoadProjectsAsync();
                 }
             }
 
-            return new AuthenticationState(Principal);
+            return new AuthenticationState(_claimsPrincipal);
         }
 
-        public async Task<Account?> LoginAsync(LoginModel data)
+        public async Task<bool> LoginAsync(LoginModel data)
         {
-            _account = await _dbService.LoginAsync(data);
-            if (null == _account)
+            Account = await _dbService.LoginAsync(data);
+            if (null == Account)
             {
-                return null;
+                Projects.Clear();
+                _claimsPrincipal = AnonymousPrincipal;
+                return false;
             }
 
-            await _sessionStorageService.SetItemAsStringAsync(nameof(Account), JsonSerializer.Serialize(_account));
-            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+            _claimsPrincipal = new(new ClaimsIdentity([new Claim(ClaimTypes.Name, Account.Name)], "apiauth_type"));
+            await _sessionStorageService.SetItemAsStringAsync(nameof(Account), JsonSerializer.Serialize(Account));
 
-            return _account;
+            await LoadProjectsAsync();
+
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+            return true;
         }
 
-        public async Task MarkUseAsLoggedOut()
+        public async Task LogoutAsync()
         {
-            _account = null;
+            Account = null;
+            _claimsPrincipal = AnonymousPrincipal;
             await _sessionStorageService.RemoveItemAsync(nameof(Account));
+
+            await LoadProjectsAsync();
+
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 

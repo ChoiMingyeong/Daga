@@ -44,7 +44,7 @@ public class AuthController : ControllerBase
         dbAccount = new()
         {
             ID = AccountTable.CreateID++,
-            Name = recPacket.Nickname,
+            Name = recPacket.Name,
             Email = recPacket.Email,
             Password = recPacket.Password,
         };

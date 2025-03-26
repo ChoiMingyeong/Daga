@@ -43,7 +43,74 @@ namespace DagaTools.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("/auth/signup", data);
+                var response = await _httpClient.PostAsJsonAsync("/auth/signup", new RequestSignup()
+                {
+                    Email = data.Email,
+                    Password = data.Password,
+                    Name = data.Name,
+                });
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<List<Project>?> GetProjectsAsync(uint accountID)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"/project?accountID={accountID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var projects = await response.Content.ReadFromJsonAsync<List<Project>>();
+                    if (null == projects)
+                    {
+                        return null;
+                    }
+
+                    return projects;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+            return null;
+        }
+
+        public async Task<bool> CreateProjectAsync(uint accountID, string projectName, string projectDescription)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("/project", new RequestCreateProject()
+                {
+                    AccountID = accountID,
+                    ProjectName = projectName,
+                    ProjectDescription = projectDescription,
+                });
+
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateProjectFavoriteAsync(uint accountID, ulong projectID, bool favorite)
+        {
+            try
+            {
+                var response = await _httpClient.PatchAsJsonAsync("/project", new RequestUpdateProjectFavorite()
+                {
+                    AccountID = accountID,
+                    ProjectID = projectID,
+                    Favorite = favorite,
+                });
+
                 return response.IsSuccessStatusCode;
             }
             catch
