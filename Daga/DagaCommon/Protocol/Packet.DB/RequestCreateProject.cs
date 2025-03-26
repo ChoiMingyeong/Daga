@@ -8,5 +8,7 @@ namespace DagaCommon.Protocol
         public uint AccountID { get; set; }
 
         public string ProjectName { get; set; } = string.Empty;
+
+        public string ProjectDescription { get; set; } = string.Empty;
     }
 }
