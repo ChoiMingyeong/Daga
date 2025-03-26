@@ -1,9 +1,14 @@
 ﻿@page "/login"
 @attribute [AllowAnonymous]
 
+@if(null != AuthService.Account)
+{
+    NavigationManager.NavigateTo("");
+}
+
 <MudContainer>
     <MudButton Variant="Variant.Filled" OnClick="OnLoginButtonClicked">Login</MudButton>
-    <MudButton Variant="Variant.Filled" OnClick="@(()=>NavigationManager.NavigateTo("signup"))">Signup</MudButton>
+    <MudButton Variant="Variant.Filled" OnClick="OnGoToSignupPageButtonClicked">Signup</MudButton>
 </MudContainer>
 
 @code
@@ -16,13 +21,18 @@
 
     private async Task OnLoginButtonClicked()
     {
-        if (null == await AuthService.LoginAsync(loginData))
-        {
-            await InvokeAsync(StateHasChanged);
-        }
-        else
+        if (true == await AuthService.LoginAsync(loginData))
         {
             NavigationManager.NavigateTo("", forceLoad: true);
         }
+        else
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private void OnGoToSignupPageButtonClicked()
+    {
+        NavigationManager.NavigateTo("signup");
     }
 }

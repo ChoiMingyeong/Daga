@@ -2,6 +2,30 @@
 @attribute [Authorize]
 
 <MudContainer>
-    <MudText Typo="Typo.h6">Welcome to DagaTools!</MudText>
-    <MudText Typo="Typo.body1">Please Select Project Or Create Project.</MudText>
+    <MudGrid Justify="Justify.FlexStart">
+        @foreach (var project in AuthService.Projects)
+        {
+            <ProjectCard Project="project" />
+        }
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Create Project</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudIconButton Icon="@Icons.Material.Filled.AddCircle" OnClick="OnCreateProjectButtonClicked" />
+            </MudCardContent>
+        </MudCard>
+    </MudGrid>
 </MudContainer>
+
+@code
+{
+    private async Task OnCreateProjectButtonClicked()
+    {
+        var projectCount = AuthService.Projects.Count + 1;
+        await AuthService.CreateProjectAsync($"Test Project {projectCount}", $"This is test project {projectCount}.");
+        await InvokeAsync(StateHasChanged);
+    }
+}

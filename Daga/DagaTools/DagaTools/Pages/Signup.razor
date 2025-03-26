@@ -2,7 +2,19 @@
 @attribute [AllowAnonymous]
 
 <MudContainer>
-    <MudButton Variant="Variant.Filled" OnClick="OnSignupButtonClicked">Signup</MudButton>
+    <MudGrid Justify="Justify.Center">
+        <MudCard>
+            <MudCardContent>
+                <MudForm>
+
+                </MudForm>
+
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Filled" OnClick="OnSignupButtonClicked">Signup</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudGrid>
 </MudContainer>
 
 @code

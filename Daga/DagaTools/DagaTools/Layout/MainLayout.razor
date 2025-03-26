@@ -6,23 +6,29 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="0">
-        <MudIconButton Color="Color.Secondary" Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+    <MudAppBar Elevation="0" Dense="true">
+        <MudLink Typo="Typo.h6" Class="px-4" Href="" Color="Color.Secondary">
+            <MudIcon Icon="@Icons.Material.Filled.Build" />
+            DagaTools
+        </MudLink>
         <MudSpacer />
-        <MudAvatar Color="Color.Secondary">
-            <MudIconButton Icon="@Icons.Material.Filled.Person" />
-        </MudAvatar>
+        @if (null != AuthService.Account)
+        {
+            <MudLink OnClick="OnLogoutButtonClicked" Color="Color.Secondary">Logout</MudLink>
+            <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" Color="Color.Secondary" />
+        }
+        else
+        {
+            <MudLink Href="login" Color="Color.Secondary">Login</MudLink>
+        }
     </MudAppBar>
-    <MudDrawer @bind-Open="@drawerOpen">
-        <NavMenu />
-    </MudDrawer>
     <MudMainContent>
         @Body
     </MudMainContent>
 </MudLayout>
 
 @code {
-    MudTheme theme = new()
+    private MudTheme theme = new()
         {
             PaletteLight = new()
             {
@@ -32,12 +38,14 @@
             },
         };
 
-    bool drawerOpen = true;
-    bool isDefaultAvartar = false;
-    //string src = "icon-192.png";
-
-    void DrawerToggle()
+    protected override async Task OnInitializedAsync()
     {
-        drawerOpen = !drawerOpen;
+        await AuthService.GetAuthenticationStateAsync();
+    }
+
+    private async Task OnLogoutButtonClicked()
+    {
+        await AuthService.LogoutAsync();
+        NavigationManager.NavigateTo("login", forceLoad: true);
     }
 }

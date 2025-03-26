@@ -4,7 +4,7 @@
         <MudIcon Icon="@Icons.Material.Filled.EnergySavingsLeaf" />
         DagaTools
     </MudLink>
-    <MudSelect @bind-Value="AuthService.SelectedProject"
+   @*  <MudSelect @bind-Value="AuthService.SelectedProject"
                ReadOnly="true"
                Variant="Variant.Outlined"
                Label="Project"
@@ -14,7 +14,7 @@
         {
             <MudSelectItem Value="@project">@project.Name</MudSelectItem>
         }
-    </MudSelect>
+    </MudSelect> *@
     <MudDivider Class="my-2" />
     <MudNavLink Href="/datatable">데이터테이블</MudNavLink>
 </MudNavMenu>
