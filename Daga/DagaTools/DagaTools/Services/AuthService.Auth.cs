@@ -1,6 +1,5 @@
 ﻿using DagaCommon.Models;
 using Microsoft.AspNetCore.Components.Authorization;
-using System.Security.Claims;
 using System.Text.Json;
 
 namespace DagaTools.Services
@@ -17,7 +16,6 @@ namespace DagaTools.Services
                     && JsonSerializer.Deserialize<Account>(accountJson) is Account account)
                 {
                     Account = account;
-                    _claimsPrincipal = new(new ClaimsIdentity([new Claim(ClaimTypes.Name, Account.Name)], "apiauth_type"));
                     await LoadProjectsAsync();
                 }
             }
@@ -27,18 +25,14 @@ namespace DagaTools.Services
 
         public async Task<bool> LoginAsync(LoginModel data)
         {
-            Account = await _dbService.LoginAsync(data);
-            if (null == Account)
+            if (await _dbService.LoginAsync(data) is not Account account)
             {
-                Projects.Clear();
-                _claimsPrincipal = AnonymousPrincipal;
                 return false;
             }
 
-            _claimsPrincipal = new(new ClaimsIdentity([new Claim(ClaimTypes.Name, Account.Name)], "apiauth_type"));
-            await _sessionStorageService.SetItemAsStringAsync(nameof(Account), JsonSerializer.Serialize(Account));
-
+            Account = account;
             await LoadProjectsAsync();
+            await _sessionStorageService.SetItemAsStringAsync(nameof(Account), JsonSerializer.Serialize(Account));
 
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
             return true;
@@ -47,11 +41,8 @@ namespace DagaTools.Services
         public async Task LogoutAsync()
         {
             Account = null;
-            _claimsPrincipal = AnonymousPrincipal;
             await _sessionStorageService.RemoveItemAsync(nameof(Account));
-
-            await LoadProjectsAsync();
-
+            
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 

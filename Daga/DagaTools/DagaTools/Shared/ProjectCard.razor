@@ -1,21 +1,24 @@
 ﻿<MudCard>
     <MudCardHeader>
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Project.Name</MudText>
+            <MudText Typo="Typo.h6">
+                @if (IsAdmin)
+                {
+                    <MudIcon Icon="@Icons.Custom.Uncategorized.ChessQueen" Color="Color.Warning" Size="Size.Small" />
+                }
+                @Project.Name
+            </MudText>
         </CardHeaderContent>
         <CardHeaderActions>
-            <MudIconButton Icon="@Icons.Material.Filled.Star"
-            Color="@FavoriteIconColor"
-            OnClick="OnProjectFavoriteIconButtonClicked" />
+            <MudIconButton Icon="@Icons.Material.Filled.Star" Color="@FavoriteIconColor" OnClick="OnProjectFavoriteIconButtonClicked" />
         </CardHeaderActions>
     </MudCardHeader>
     <MudCardContent>
         <MudText Typo="Typo.body1">@Project.Description</MudText>
     </MudCardContent>
     <MudCardActions>
-        <MudIcon Icon="@Icons.Material.Filled.Person" Color="Color.Default">
-            <MudText Typo="Typo.body2" Color="Color.Default">@(Project.Accounts.Count)</MudText>
-        </MudIcon>
+        <MudIcon Icon="@Icons.Material.Filled.Person" Color="Color.Default" Size="Size.Small"/>
+        <MudText Typo="Typo.body2" Color="Color.Default">@(Project.Accounts.Count)</MudText>
         <MudSpacer />
         <MudButton Variant="Variant.Filled">Open</MudButton>
     </MudCardActions>
@@ -25,11 +28,12 @@
     [Parameter]
     required public DagaCommon.Models.Project Project { get; set; }
 
+    private bool IsAdmin => Project.Accounts[AuthService.Account!.ID] == DagaCommon.Models.Role.Admin.ID;
     private Color FavoriteIconColor => Project.Favorite ? Color.Warning : Color.Default;
 
     private async Task OnProjectFavoriteIconButtonClicked()
     {
-        if(true == await AuthService.UpdateProjectFavoriteAsync(Project.ID, !Project.Favorite))
+        if (true == await AuthService.UpdateProjectFavoriteAsync(Project.ID, !Project.Favorite))
         {
             await InvokeAsync(StateHasChanged);
         }

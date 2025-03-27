@@ -1,0 +1,37 @@
+﻿@using DagaCommon.Models
+
+<MudPaper>
+    <MudStack>
+        @if (false == string.IsNullOrEmpty(TitleText))
+        {
+            <MudText>
+                @TitleText
+                @if (Reset)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Refresh" OnClick="OnResetButtonClicked" />
+                }
+            </MudText>
+        }
+    </MudStack>
+    <MudPaper>
+
+    </MudPaper>
+    <MudPagination />
+</MudPaper>
+
+@code {
+    [Parameter] required public List<Project> Projects { get; set; }
+    [Parameter] public int ItemCountPerPage { get; set; } = 10;
+    [Parameter] public string TitleText { get; set; } = string.Empty;
+    [Parameter] public bool Reset { get; set; } = false;
+    [Parameter] public Func<Task>? ResetFunc { get; set; }
+
+    public async Task OnResetButtonClicked()
+    {
+        if (null != ResetFunc)
+        {
+            await InvokeAsync(ResetFunc);
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+}
