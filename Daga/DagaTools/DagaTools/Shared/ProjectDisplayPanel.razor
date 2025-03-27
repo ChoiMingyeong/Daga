@@ -4,34 +4,52 @@
     <MudStack>
         @if (false == string.IsNullOrEmpty(TitleText))
         {
-            <MudText>
-                @TitleText
-                @if (Reset)
-                {
-                    <MudIconButton Icon="@Icons.Material.Filled.Refresh" OnClick="OnResetButtonClicked" />
-                }
-            </MudText>
+            <MudPaper>
+                <MudText>
+                    @TitleText
+                    @if (Reset)
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.Refresh" OnClick="OnResetButtonClicked" />
+                    }
+                </MudText>
+                <MudSpacer />
+                <MudIconButton Icon="@Icons.Material.Filled.AddCircle" OnClick="OnCreateProjectButtonClicked" />
+            </MudPaper>
         }
     </MudStack>
     <MudPaper>
-
+        <MudGrid Justify="Justify.FlexStart">
+            @foreach (var project in AuthService.Projects.Take(new Range(ItemCountPerPage * SelectedPage, ItemCountPerPage * SelectedPage + ItemCountPerPage)))
+            {
+                <ProjectCard Project="project" />
+            }
+        </MudGrid>
     </MudPaper>
-    <MudPagination />
+    <MudPagination Count="PageCount" Selected="SelectedPage"/>
 </MudPaper>
 
 @code {
-    [Parameter] required public List<Project> Projects { get; set; }
-    [Parameter] public int ItemCountPerPage { get; set; } = 10;
+    [Parameter] public int ItemCountPerPage { get; set; } = 5;
     [Parameter] public string TitleText { get; set; } = string.Empty;
-    [Parameter] public bool Reset { get; set; } = false;
+    [Parameter] public bool Reset { get; set; }
     [Parameter] public Func<Task>? ResetFunc { get; set; }
 
-    public async Task OnResetButtonClicked()
+    private int PageCount => (AuthService.Projects.Count / ItemCountPerPage) + ((AuthService.Projects.Count % ItemCountPerPage == 0) ? 0 : 1);
+    private int SelectedPage = 0;
+
+    private async Task OnResetButtonClicked()
     {
         if (null != ResetFunc)
         {
             await InvokeAsync(ResetFunc);
-            await InvokeAsync(StateHasChanged);
         }
+
+        await InvokeAsync(StateHasChanged);
+    }
+    private async Task OnCreateProjectButtonClicked()
+    {
+        var projectCount = AuthService.Projects.Count + 1;
+        await AuthService.CreateProjectAsync($"Test Project {projectCount}", $"This is test project {projectCount}.");
+        await InvokeAsync(StateHasChanged);
     }
 }
