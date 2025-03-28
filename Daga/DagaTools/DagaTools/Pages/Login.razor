@@ -6,9 +6,8 @@
     NavigationManager.NavigateTo("");
 }
 
-<MudContainer>
-    <MudButton Variant="Variant.Filled" OnClick="OnLoginButtonClicked">Login</MudButton>
-    <MudButton Variant="Variant.Filled" OnClick="OnGoToSignupPageButtonClicked">Signup</MudButton>
+<MudContainer Style="margin=10px">
+    <LoginForm/>
 </MudContainer>
 
 @code
@@ -18,21 +17,4 @@
             Email = "test@example.com",
             Password = "1234",
         };
-
-    private async Task OnLoginButtonClicked()
-    {
-        if (true == await AuthService.LoginAsync(loginData))
-        {
-            NavigationManager.NavigateTo("", forceLoad: true);
-        }
-        else
-        {
-            await InvokeAsync(StateHasChanged);
-        }
-    }
-
-    private void OnGoToSignupPageButtonClicked()
-    {
-        NavigationManager.NavigateTo("signup");
-    }
 }

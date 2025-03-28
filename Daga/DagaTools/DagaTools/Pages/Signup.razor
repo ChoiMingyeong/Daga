@@ -1,6 +1,11 @@
 ﻿@page "/signup"
 @attribute [AllowAnonymous]
 
+@if (null != AuthService.Account)
+{
+    NavigationManager.NavigateTo("");
+}
+
 <MudContainer>
     <MudGrid Justify="Justify.Center">
         <MudCard>

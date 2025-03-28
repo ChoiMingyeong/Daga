@@ -1,4 +1,5 @@
 ﻿using DagaCommon.Models;
+using DagaTools.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Text.Json;
 
@@ -23,9 +24,9 @@ namespace DagaTools.Services
             return new AuthenticationState(_claimsPrincipal);
         }
 
-        public async Task<bool> LoginAsync(LoginModel data)
+        public async Task<bool> LoginAsync(string email, string password)
         {
-            if (await _dbService.LoginAsync(data) is not Account account)
+            if (await _dbService.LoginAsync(email, password) is not Account account)
             {
                 return false;
             }

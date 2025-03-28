@@ -1,0 +1,12 @@
+﻿@page "/forgot"
+@attribute [AllowAnonymous]
+
+@if (null != AuthService.Account)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3>Forgot</h3>
+
+@code {
+
+}

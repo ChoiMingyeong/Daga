@@ -6,14 +6,14 @@ namespace DagaTools.Services
 {
     public partial class DBService
     {
-        public async Task<Account?> LoginAsync(LoginModel data)
+        public async Task<Account?> LoginAsync(string email, string password)
         {
             try
             {
                 var response = await _httpClient.PostAsJsonAsync("/auth/login", new RequestLogin()
                 {
-                    Email = data.Email,
-                    Password = data.Password
+                    Email = email,
+                    Password = password
                 });
 
                 if (response.IsSuccessStatusCode)
