@@ -14,8 +14,12 @@
         <MudSpacer />
         @if (null != AuthService.Account)
         {
-            <MudLink OnClick="OnLogoutButtonClicked" Color="Color.Secondary">Logout</MudLink>
-            <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" Color="Color.Secondary" />
+            <div>
+                <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" Color="Color.Secondary" OnClick="@OnProfilIconButtonClicked" />
+                <MudPopover Open="@profilePopoverOpen" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopCenter" RelativeWidth="DropdownWidth.Adaptive">
+                    <MudButton OnClick="OnLogoutButtonClicked">로그아웃</MudButton>
+                </MudPopover>
+            </div>
         }
         else
         {
@@ -37,10 +41,16 @@
                 Secondary = Colors.Yellow.Lighten5,
             },
         };
+    private bool profilePopoverOpen = false;
 
     protected override async Task OnInitializedAsync()
     {
         await AuthService.GetAuthenticationStateAsync();
+    }
+
+    private void OnProfilIconButtonClicked()
+    {
+        profilePopoverOpen = !profilePopoverOpen;
     }
 
     private async Task OnLogoutButtonClicked()
