@@ -1,5 +1,6 @@
 ﻿using DagaCommon.Models;
 using DagaCommon.Protocol;
+using DagaTools.Models;
 using System.Net.Http.Json;
 
 namespace DagaTools.Services

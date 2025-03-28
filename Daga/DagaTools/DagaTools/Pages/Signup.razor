@@ -7,33 +7,42 @@
 }
 
 <MudContainer>
-    <MudGrid Justify="Justify.Center">
+    <EditForm Model="@signupModel" OnValidSubmit="OnSignupButtonClicked" class="d-flex justify-content-center">
+        <DataAnnotationsValidator />
         <MudCard>
             <MudCardContent>
-                <MudForm>
-
-                </MudForm>
-
+                <MudText Typo="Typo.h6">Signup</MudText>
+                <MudDivider />
+                <MudStack Spacing="0">
+                    <MudTextField Variant="Variant.Outlined" @bind-Value="signupModel.Email" For="@(()=>signupModel.Email)" Immediate="true" />
+                    <MudTextField Variant="Variant.Outlined" @bind-Value="signupModel.Password" For="@(() => signupModel.Password)" InputType="InputType.Password" Immediate="true" />
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" OnClick="OnSignupButtonClicked">Login</MudButton>
+                </MudStack>
             </MudCardContent>
-            <MudCardActions>
-                <MudButton Variant="Variant.Filled" OnClick="OnSignupButtonClicked">Signup</MudButton>
-            </MudCardActions>
+            <MudCardContent>
+                <MudDivider />
+                <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Row="true">
+                    <MudLink Href="forgot">Forgot...</MudLink>
+                    <MudText Color="Color.Default">/</MudText>
+                    <MudLink Href="signup">Signup</MudLink>
+                </MudStack>
+            </MudCardContent>
         </MudCard>
-    </MudGrid>
+    </EditForm>
 </MudContainer>
 
 @code
 {
-    DagaCommon.Models.SignupModel signupData = new()
+    private SignupModel signupModel = new()
         {
             Email = "test@example.com",
-            Password = "1234",
+            Password = "12341234",
             Name = "test",
         };
 
     private async Task OnSignupButtonClicked()
     {
-        if (true == await AuthService.SignupAsync(signupData))
+        if (true == await AuthService.SignupAsync(signupModel))
         {
             NavigationManager.NavigateTo("login");
         }

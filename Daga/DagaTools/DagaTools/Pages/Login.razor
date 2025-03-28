@@ -6,15 +6,43 @@
     NavigationManager.NavigateTo("");
 }
 
-<MudContainer Style="margin=10px">
-    <LoginForm/>
+<MudContainer>
+    <EditForm Model="@loginModel" OnValidSubmit="OnLoginButtonClicked" class="d-flex justify-content-center">
+        <DataAnnotationsValidator />
+        <MudCard>
+            <MudCardContent>
+                <MudText Typo="Typo.h6">Login</MudText>
+                <MudDivider />
+                <MudStack Spacing="0">
+                    <MudTextField Variant="Variant.Outlined" @bind-Value="loginModel.Email" For="@(()=>loginModel.Email)" Immediate="true" />
+                    <MudTextField Variant="Variant.Outlined" @bind-Value="loginModel.Password" For="@(() => loginModel.Password)" InputType="InputType.Password" Immediate="true" />
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" OnClick="OnLoginButtonClicked">Login</MudButton>
+                </MudStack>
+            </MudCardContent>
+            <MudCardContent>
+                <MudDivider />
+                <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Row="true">
+                    <MudLink Href="forgot">Forgot...</MudLink>
+                    <MudText Color="Color.Default">/</MudText>
+                    <MudLink Href="signup">Signup</MudLink>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </EditForm>
 </MudContainer>
 
-@code
-{
-    DagaCommon.Models.LoginModel loginData = new()
+@code {
+    private LoginModel loginModel = new();
+
+    private async Task OnLoginButtonClicked()
+    {
+        if (true == await AuthService.LoginAsync(loginModel.Email, loginModel.Password))
         {
-            Email = "test@example.com",
-            Password = "1234",
-        };
+            NavigationManager.NavigateTo("", forceLoad: true);
+        }
+        else
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+    }
 }
