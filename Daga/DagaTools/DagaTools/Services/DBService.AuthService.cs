@@ -58,6 +58,16 @@ namespace DagaTools.Services
             }
         }
 
+        public async Task<bool> SendEmailVerificationCodeAsync(string email)
+        {
+            return true;
+        }
+
+        public async Task<bool> VerifyCodeAsync(string code)
+        {
+            return true;
+        }
+
         public async Task<List<Project>?> GetProjectsAsync(uint accountID)
         {
             try

@@ -51,5 +51,15 @@ namespace DagaTools.Services
         {
             return await _dbService.SignupAsync(data);
         }
+
+        public async Task<bool> SendEmailVerificationCodeAsync(string email)
+        {
+            return await _dbService.SendEmailVerificationCodeAsync(email);
+        }
+
+        public async Task<bool> VerifyCodeAsync(string code)
+        {
+            return await _dbService.VerifyCodeAsync(code);
+        }
     }
 }
