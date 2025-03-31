@@ -14,17 +14,17 @@
                 <MudText Typo="Typo.h6">Signup</MudText>
                 <MudDivider />
                 <MudStack Spacing="0">
-                    <MudTextField Variant="Variant.Outlined" @bind-Value="signupModel.Email" For="@(()=>signupModel.Email)" Immediate="true" />
+                    <MudStack Row>
+                        <MudTextField Variant="Variant.Outlined" @bind-Value="signupModel.Email" For="@(()=>signupModel.Email)" Immediate="true" />
+                        <MudButton Variant="Variant.Filled" OnClick="OnSendButtonClicked">Send</MudButton>
+                    </MudStack>
+                    <MudStack Row="true" hidden="@(!sendVerificationCode)">
+                        <MudTextField Variant="Variant.Outlined" @bind-Value="verificationCodeInput" For="@(()=>verificationCodeInput)" />
+                        <MudButton Variant="Variant.Filled" OnClick="OnVerifyButtonClicked" Disabled="verified">Verify</MudButton>
+                    </MudStack>
                     <MudTextField Variant="Variant.Outlined" @bind-Value="signupModel.Password" For="@(() => signupModel.Password)" InputType="InputType.Password" Immediate="true" />
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" OnClick="OnSignupButtonClicked">Login</MudButton>
-                </MudStack>
-            </MudCardContent>
-            <MudCardContent>
-                <MudDivider />
-                <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Row="true">
-                    <MudLink Href="forgot">Forgot...</MudLink>
-                    <MudText Color="Color.Default">/</MudText>
-                    <MudLink Href="signup">Signup</MudLink>
+                    <MudTextField Variant="Variant.Outlined" @bind-Value="signupModel.ComparePassword" For="@(() => signupModel.ComparePassword)" InputType="InputType.Password" Immediate="true" />
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" OnClick="OnSignupButtonClicked">Signup</MudButton>
                 </MudStack>
             </MudCardContent>
         </MudCard>
@@ -33,15 +33,56 @@
 
 @code
 {
-    private SignupModel signupModel = new()
+    private SignupModel signupModel = new();
+    private bool sendVerificationCode = false;
+    private string verificationCodeInput = string.Empty;
+    private DateTime verificationCodeExpireDate = DateTime.MinValue;
+    private bool verified = false;
+    private string verifiedEmail = string.Empty;
+
+    private async Task OnSendButtonClicked()
+    {
+        if (string.IsNullOrWhiteSpace(signupModel.Email))
         {
-            Email = "test@example.com",
-            Password = "12341234",
-            Name = "test",
-        };
+            return;
+        }
+
+        if (true == await AuthService.SendEmailVerificationCodeAsync(signupModel.Email))
+        {
+            sendVerificationCode = true;
+            verifiedEmail = signupModel.Email;
+            verificationCodeExpireDate = DateTime.UtcNow.AddMinutes(3);
+        }
+    }
+
+    private async Task OnVerifyButtonClicked()
+    {
+        if (string.IsNullOrWhiteSpace(verificationCodeInput))
+        {
+            return;
+        }
+
+        if (true == await AuthService.VerifyCodeAsync(verificationCodeInput))
+        {
+            verified = true;
+            verifiedEmail = signupModel.Email;
+        }
+    }
 
     private async Task OnSignupButtonClicked()
     {
+        // 인증받은 메일과 가입하려는 메일 주소가 다름
+        if (verifiedEmail != signupModel.Email)
+        {
+            // todo : 토스트 메세지 - 이메일 인증 필요
+            sendVerificationCode = false;
+            verificationCodeInput = string.Empty;
+            verified = false;
+            verifiedEmail = string.Empty;
+            return;
+        }
+
+        // 가입 성공
         if (true == await AuthService.SignupAsync(signupModel))
         {
             NavigationManager.NavigateTo("login");
