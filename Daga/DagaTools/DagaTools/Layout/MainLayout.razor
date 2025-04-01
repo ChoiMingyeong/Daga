@@ -7,27 +7,25 @@
 
 <MudLayout>
     <MudAppBar Elevation="0" Dense="true">
-        <MudLink Typo="Typo.h6" Class="px-4" Href="" Color="Color.Secondary">
+        <MudLink Typo="Typo.h6" Class="px-4" Href="" Color="Color.Inherit">
             <MudIcon Icon="@Icons.Material.Filled.Build" />
-            DagaTools
+            DagaTool
         </MudLink>
         <MudSpacer />
-        @if (null != AuthService.Account)
-        {
-            <div>
-                <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" Color="Color.Secondary" OnClick="@OnProfilIconButtonClicked" />
-                <MudPopover Open="@profilePopoverOpen" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopCenter" RelativeWidth="DropdownWidth.Adaptive">
-                    <MudButton OnClick="OnLogoutButtonClicked">로그아웃</MudButton>
-                </MudPopover>
-            </div>
-        }
-        else
-        {
-            <MudLink Href="login" Color="Color.Secondary">Login</MudLink>
-        }
+        <MudItem hidden="@(null == AuthService.Account)">
+            <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" Color="Color.Inherit" OnClick="@OnProfilIconButtonClicked" />
+            <MudPopover Open="@profilePopoverOpen" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopCenter" RelativeWidth="DropdownWidth.Adaptive">
+                <MudButton OnClick="OnLogoutButtonClicked">로그아웃</MudButton>
+            </MudPopover>
+        </MudItem>
+        <MudItem hidden="@(null != AuthService.Account)">
+            <MudLink Href="login" Color="Color.Inherit">Login</MudLink>
+        </MudItem>
     </MudAppBar>
     <MudMainContent>
-        @Body
+        <MudContainer MaxWidth="MaxWidth.Medium" Style="margin-top: 50px">
+            @Body
+        </MudContainer>
     </MudMainContent>
 </MudLayout>
 
@@ -38,7 +36,6 @@
             {
                 AppbarBackground = Colors.Brown.Darken3,
                 Primary = Colors.LightGreen.Darken3,
-                Secondary = Colors.Yellow.Lighten5,
             },
         };
     private bool profilePopoverOpen = false;
