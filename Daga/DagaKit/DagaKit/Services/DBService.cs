@@ -1,4 +1,4 @@
-﻿namespace DagaTools.Services
+﻿namespace DagaKit.Services
 {
     public partial class DBService
     {

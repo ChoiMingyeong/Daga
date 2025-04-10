@@ -1,12 +1,12 @@
 using Blazored.SessionStorage;
-using DagaTools.Services;
+using DagaKit.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 
-namespace DagaTools;
+namespace DagaKit;
 
 public class Program
 {

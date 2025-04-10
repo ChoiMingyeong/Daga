@@ -1,9 +1,9 @@
 ﻿using DagaCommon.Models;
-using DagaTools.Models;
+using DagaKit.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Text.Json;
 
-namespace DagaTools.Services
+namespace DagaKit.Services
 {
     public partial class AuthService
     {

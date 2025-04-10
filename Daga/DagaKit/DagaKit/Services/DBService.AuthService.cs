@@ -1,9 +1,9 @@
 ﻿using DagaCommon.Models;
 using DagaCommon.Protocol;
-using DagaTools.Models;
+using DagaKit.Models;
 using System.Net.Http.Json;
 
-namespace DagaTools.Services
+namespace DagaKit.Services
 {
     public partial class DBService
     {

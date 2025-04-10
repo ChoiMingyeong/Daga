@@ -3,7 +3,7 @@ using DagaCommon.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 
-namespace DagaTools.Services
+namespace DagaKit.Services
 {
     public partial class AuthService : AuthenticationStateProvider
     {

@@ -1,7 +1,7 @@
 ﻿using MudBlazor;
 using System.ComponentModel.DataAnnotations;
 
-namespace DagaTools.Models
+namespace DagaKit.Models
 {
     public class LoginModel
     {

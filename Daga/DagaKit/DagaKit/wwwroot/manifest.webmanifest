@@ -1,6 +1,6 @@
 {
-  "name": "Daga",
-  "short_name": "Daga",
+  "name": "DagaKit",
+  "short_name": "DagaKit",
   "id": "./",
   "start_url": "./",
   "display": "standalone",

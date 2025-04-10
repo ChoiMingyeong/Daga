@@ -1,6 +1,6 @@
 ﻿using DagaCommon.Models;
 
-namespace DagaTools.Services
+namespace DagaKit.Services
 {
     public partial class AuthService
     {
