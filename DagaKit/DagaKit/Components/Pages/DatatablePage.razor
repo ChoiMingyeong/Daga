@@ -1,0 +1,30 @@
+﻿@page "/datatable"
+
+<PageTitle>Datatable</PageTitle>
+
+<MudStack Row="true">
+    <MudDataGrid T="DagaDatatable" Items="dataTables">
+        <ToolBarContent>
+            @* <MudTextField @bind-Value="tableSearchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+            AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"/> *@
+        </ToolBarContent>
+        <Columns>
+            <SelectColumn T="DagaDatatable"/>
+            <PropertyColumn Property="x=>x.TableName" />
+        </Columns>
+    </MudDataGrid>
+    @if (null != selectedDataTable)
+    {
+        <MudDataGrid T="System.Data.DataColumn" Items="selectedDataTable.DataColumns">
+            <Columns>
+                <PropertyColumn Property="x=>x.ColumnName"/>
+            </Columns>
+        </MudDataGrid>
+    }
+</MudStack>
+
+@code {
+    string tableSearchString = string.Empty;
+    DagaDatatable? selectedDataTable = null;
+    List<DagaDatatable> dataTables = [new("DataTable1"), new("DataTable2")];
+}

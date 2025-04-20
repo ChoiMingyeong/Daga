@@ -14,7 +14,7 @@
             </MudStack>
         </MudElement>
         <MudSpacer />
-        <MudSelect T="ProjectModel" @bind-Value="SelectedProject" Label="Select Project" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" FitContent="true">
+        <MudSelect T="ProjectModel" @bind-Value="selectedProject" Label="Select Project" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" FitContent="true">
             @foreach (var project in projects)
             {
                 <MudSelectItem T="ProjectModel" Value="@project">@project.Name</MudSelectItem>
@@ -44,7 +44,7 @@
                 Primary = Colors.Indigo.Darken3,
             },
         };
-    private ProjectModel? SelectedProject = null;
+    private ProjectModel? selectedProject = null;
     private List<ProjectModel> projects = [];
 
     protected override async Task OnInitializedAsync()
