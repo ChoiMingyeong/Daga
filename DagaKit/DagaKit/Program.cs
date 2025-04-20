@@ -1,5 +1,6 @@
 using DagaKit.Components;
 using MudBlazor.Services;
+using Microsoft.AspNetCore.Components.WebAssembly.Server;
 
 internal class Program
 {
@@ -8,7 +9,9 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+        builder.Services.AddRazorComponents()
+            .AddInteractiveServerComponents()
+            .AddInteractiveWebAssemblyComponents();
         builder.Services.AddMudServices();
 
         var app = builder.Build();
@@ -28,7 +31,8 @@ internal class Program
 
         app.MapStaticAssets();
         app.MapRazorComponents<App>()
-            .AddInteractiveServerRenderMode();
+            .AddInteractiveServerRenderMode()
+            .AddInteractiveWebAssemblyRenderMode();
 
         app.Run();
     }
