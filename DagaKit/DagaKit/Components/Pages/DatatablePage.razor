@@ -3,19 +3,19 @@
 <PageTitle>Datatable</PageTitle>
 
 <MudStack Row="true">
-    <MudDataGrid T="DagaDatatable" Items="dataTables">
+    <MudDataGrid T="DagaDataTable" Items="@(DataTableSvc.DataTables)">
         <ToolBarContent>
             @* <MudTextField @bind-Value="tableSearchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
             AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"/> *@
         </ToolBarContent>
         <Columns>
-            <SelectColumn T="DagaDatatable"/>
+            <SelectColumn T="DagaDataTable"/>
             <PropertyColumn Property="x=>x.TableName" />
         </Columns>
     </MudDataGrid>
-    @if (null != selectedDataTable)
+    @if (null != DataTableSvc.SelectedDataTable)
     {
-        <MudDataGrid T="System.Data.DataColumn" Items="selectedDataTable.DataColumns">
+        <MudDataGrid T="System.Data.DataColumn" Items="DataTableSvc.SelectedDataTable.DataColumns">
             <Columns>
                 <PropertyColumn Property="x=>x.ColumnName"/>
             </Columns>
@@ -25,6 +25,4 @@
 
 @code {
     string tableSearchString = string.Empty;
-    DagaDatatable? selectedDataTable = null;
-    List<DagaDatatable> dataTables = [new("DataTable1"), new("DataTable2")];
 }

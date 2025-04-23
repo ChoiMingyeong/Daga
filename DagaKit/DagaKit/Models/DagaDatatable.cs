@@ -1,20 +1,21 @@
-﻿using System.Data;
+﻿using TSID.Creator.NET;
+using System.Data;
 
 namespace DagaKit.Models
 {
-    public class DagaDatatable : DataTable
+    public class DagaDataTable : DataTable
     {
+        public readonly ProjectModel Project;
+
+        public Tsid Tsid { get; init; }
+
         public List<DataColumn> DataColumns => [.. Columns.Cast<DataColumn>()];
 
-        public ushort Id { get; init; }
-
-        public DagaDatatable(string tableName) : base(tableName)
+        public DagaDataTable(in ProjectModel project, string tableName) : base(tableName)
         {
-            DataColumn idColumn = new("Id", typeof(uint))
+            Project = project;
+            DataColumn idColumn = new("Id", typeof(ulong))
             {
-                AutoIncrement = true,
-                AutoIncrementSeed = 1,
-                AutoIncrementStep = 1,
                 ReadOnly = true
             };
             Columns.Add(idColumn);

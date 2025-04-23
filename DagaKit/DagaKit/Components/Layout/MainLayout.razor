@@ -14,8 +14,8 @@
             </MudStack>
         </MudElement>
         <MudSpacer />
-        <MudSelect T="ProjectModel" @bind-Value="selectedProject" Label="Select Project" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" FitContent="true">
-            @foreach (var project in projects)
+        <MudSelect T="ProjectModel" @bind-Value="@(ProjectSvc.SelectedProject)" Label="Select Project" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" FitContent="true">
+            @foreach (var project in ProjectSvc.Projects)
             {
                 <MudSelectItem T="ProjectModel" Value="@project">@project.Name</MudSelectItem>
             }
@@ -23,7 +23,7 @@
         <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Dark" Edge="Edge.End" />
         <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" />
     </MudAppBar>
-    <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
+    <MudDrawer Open="@(null!=ProjectSvc.SelectedProject)" ClipMode="DrawerClipMode.Always" Elevation="2">
         <MudNavMenu>
             <MudNavLink Href="/datatable">데이터테이블</MudNavLink>
         </MudNavMenu>
@@ -44,13 +44,9 @@
                 Primary = Colors.Indigo.Darken3,
             },
         };
-    private ProjectModel? selectedProject = null;
-    private List<ProjectModel> projects = [];
 
     protected override async Task OnInitializedAsync()
     {
-        projects.Add(new ProjectModel(){ Id = 1, Name = "Project1"});
-        projects.Add(new ProjectModel(){ Id = 2, Name = "Project2"});
-        projects.Add(new ProjectModel(){ Id = 3, Name = "Project3"});
+        await ProjectSvc.LoadProjectsAsync();
     }
 }

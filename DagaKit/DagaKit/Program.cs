@@ -1,6 +1,7 @@
 using DagaKit.Components;
 using MudBlazor.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Server;
+using DagaKit.Services;
 
 internal class Program
 {
@@ -14,6 +15,9 @@ internal class Program
             .AddInteractiveWebAssemblyComponents();
         builder.Services.AddMudServices();
 
+        builder.Services.AddScoped<ProjectService>();
+        builder.Services.AddScoped<DataTableService>();
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -25,7 +29,6 @@ internal class Program
         }
 
         app.UseHttpsRedirection();
-
 
         app.UseAntiforgery();
 
