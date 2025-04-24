@@ -1,6 +1,5 @@
 using DagaKit.Components;
 using MudBlazor.Services;
-using Microsoft.AspNetCore.Components.WebAssembly.Server;
 using DagaKit.Services;
 
 internal class Program
