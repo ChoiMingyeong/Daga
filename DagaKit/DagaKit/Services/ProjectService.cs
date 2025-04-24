@@ -19,19 +19,8 @@ namespace DagaKit.Services
         public async Task LoadProjectsAsync()
         {
             // Simulate loading projects from a database or API
-            await Task.Delay(1000);
-            Projects =
-            [
-                new ProjectModel ("Project A"),
-                new ProjectModel ("Project B"),
-                new ProjectModel ("Project C"),
-            ];
-
-            foreach (var project in Projects)
-            {
-                // Simulate loading data tables for each project
-                await _dataTableService.LoadDataTablesAsync(project.Tsid);
-            }
+            await Task.Delay(100);
+            Projects = TempDb.Projects;
         }
     }
 }

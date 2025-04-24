@@ -1,23 +1,25 @@
 ﻿@page "/datatable"
 
+
 <PageTitle>Datatable</PageTitle>
 
 <MudStack Row="true">
-    <MudDataGrid T="DagaDataTable" Items="@(DataTableSvc.DataTables)">
+    <MudDataGrid T="DagaDataTable" Items="@(DataTableSvc.DataTables)" SelectOnRowClick="true" RowClick="OnRowClicked">
         <ToolBarContent>
             @* <MudTextField @bind-Value="tableSearchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
             AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"/> *@
         </ToolBarContent>
         <Columns>
-            <SelectColumn T="DagaDataTable"/>
+            <SelectColumn T="DagaDataTable" />
             <PropertyColumn Property="x=>x.TableName" />
         </Columns>
     </MudDataGrid>
     @if (null != DataTableSvc.SelectedDataTable)
     {
-        <MudDataGrid T="System.Data.DataColumn" Items="DataTableSvc.SelectedDataTable.DataColumns">
+        <MudDataGrid T="System.Data.DataColumn" Items="DataTableSvc.SelectedDataTable.DataColumns" Bordered="true">
             <Columns>
-                <PropertyColumn Property="x=>x.ColumnName"/>
+                <PropertyColumn Property="p=>p.ColumnName" Title="Column Name"/>
+                <PropertyColumn Property="p=>p.DataType" Title="Datatype"/>
             </Columns>
         </MudDataGrid>
     }
@@ -25,4 +27,21 @@
 
 @code {
     string tableSearchString = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (null == ProjectSvc.SelectedProject)
+        {
+            Navigation.NavigateTo("/", true);
+            return;
+        }
+        ;
+
+        await DataTableSvc.LoadDataTablesAsync(ProjectSvc.SelectedProject.Tsid);
+    }
+
+    private void OnRowClicked(DataGridRowClickEventArgs<DagaDataTable> args)
+    {
+        DataTableSvc.SelectedDataTable = args.Item;
+    }
 }
