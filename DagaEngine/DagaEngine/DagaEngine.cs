@@ -2,10 +2,23 @@
 {
     public sealed class DagaEngine
     {
+        private readonly List<DagaManager> dagaManagers = [];
+
         private bool isRunning;
+
+        public DagaEngine()
+        {
+            // Initialize the engine
+
+        }
 
         public async Task InitializeAsync()
         {
+            await Parallel.ForEachAsync(dagaManagers, async (manager, _) =>
+            {
+                // Update each manager
+                await manager.InitializeAsync();
+            });
         }
 
         public async Task RunAsync()
@@ -24,8 +37,11 @@
 
         private async Task UpdateAsync()
         {
-            // Simulate some work
-            await Task.Delay(1000);
+            await Parallel.ForEachAsync(dagaManagers, async (manager, _) =>
+            {
+                // Update each manager
+                await manager.UpdateAsync();
+            });
         }
 
         public void Shutdown()
