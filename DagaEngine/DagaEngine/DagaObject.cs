@@ -5,25 +5,28 @@ namespace DagaEngine
 
     public class DagaObject
     {
+        public Tsid ID { get; init; } = TsidCreator.GetTsid();
+
+        public string Name { get; set; } = string.Empty;
+
         public DagaObject()
         {
             
         }
 
-        public Tsid ObjectID { get; init; } = TsidCreator.GetTsid();
-
-        public string Name { get; set; } = string.Empty;
-
-        public async Task InitializeAsync()
+        public virtual Task InitializeAsync()
         {
-            // Simulate some work
-            await Task.Delay(100);
+            return Task.CompletedTask;
         }
 
-        public async Task UpdateAsync()
+        public virtual Task StartAsync()
         {
-            // Simulate some work
-            await Task.Delay(100);
+            return Task.CompletedTask;
+        }
+
+        public virtual Task UpdateAsync()
+        {
+            return Task.CompletedTask;
         }
     }
 }

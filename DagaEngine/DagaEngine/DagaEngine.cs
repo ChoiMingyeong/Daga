@@ -1,10 +1,10 @@
 ﻿namespace DagaEngine
 {
-    public sealed class DagaEngine
+    public sealed class DagaEngine : Singleton<DagaEngine>
     {
-        private readonly List<DagaManager> dagaManagers = [];
+        public readonly DagaSceneManager SceneManager = new();
 
-        private bool isRunning;
+        private bool _isRunning = false;
 
         public DagaEngine()
         {
@@ -14,40 +14,26 @@
 
         public async Task InitializeAsync()
         {
-            await Parallel.ForEachAsync(dagaManagers, async (manager, _) =>
-            {
-                // Update each manager
-                await manager.InitializeAsync();
-            });
+            await SceneManager.InitializeAsync();
         }
 
         public async Task RunAsync()
         {
-            // Initialize the engine
-            await InitializeAsync();
-
             // Main loop
-            isRunning = true;
-            while (isRunning)
+            _isRunning = true;
+            while (_isRunning)
             {
+                DagaTime.Update();
+
                 // Update the engine
-                await UpdateAsync();
+                await SceneManager.UpdateAsync();
             }
         }
 
-        private async Task UpdateAsync()
-        {
-            await Parallel.ForEachAsync(dagaManagers, async (manager, _) =>
-            {
-                // Update each manager
-                await manager.UpdateAsync();
-            });
-        }
-
-        public void Shutdown()
+        public void Stop()
         {
             // Clean up resources
-            isRunning = false;
+            _isRunning = false;
         }
     }
 }
