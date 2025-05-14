@@ -1,8 +1,10 @@
-﻿namespace DagaEngine
+﻿using System.Diagnostics;
+
+namespace DagaEngine
 {
     public class DagaScene : DagaObject
     {
-        public readonly DagaGameObjectManager GameObjectManager = new();
+        private DagaGameObjectManager _gameObjectManager = new();
 
         public DagaScene()
         {
@@ -11,22 +13,22 @@
 
         public override async Task InitializeAsync()
         {
-            await GameObjectManager.InitializeAsync();
+            await _gameObjectManager.InitializeAsync();
         }
 
         public override async Task StartAsync()
         {
-            await GameObjectManager.StartAsync();
+            await _gameObjectManager.StartAsync();
         }
 
         public override async Task UpdateAsync()
         {
-            await GameObjectManager.UpdateAsync();
+            await _gameObjectManager.UpdateAsync();
         }
 
         public void Stop()
         {
-            GameObjectManager.Stop();
+            _gameObjectManager.Stop();
         }
     }
 }

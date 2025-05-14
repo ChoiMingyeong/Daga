@@ -2,7 +2,11 @@
 {
     public sealed class DagaGameObject : DagaObject
     {
-        public List<DagaComponent> Components { get; } = [];
+        public bool Disable { get; set; } = false;
+
+        public bool Visible { get; set; } = true;
+
+        public List<DagaComponent> Components { get; private set; } = [];
 
         public DagaGameObject()
         {
@@ -34,11 +38,20 @@
 
         public void Stop()
         {
-            // Clean up resources
             foreach (var component in Components)
             {
                 component.Stop();
             }
+        }
+
+        public void AddComponent(DagaComponent component)
+        {
+            Components.Add(component);
+        }
+
+        public void RemoveComponent(DagaComponent component)
+        {
+            Components.Remove(component);
         }
     }
 }

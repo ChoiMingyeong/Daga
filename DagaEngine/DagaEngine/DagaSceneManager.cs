@@ -11,7 +11,7 @@ namespace DagaEngine
         public override async Task InitializeAsync()
         {
             await GlobalGameObjectManager.InitializeAsync();
-            if(null != NowScene)
+            if (null != NowScene)
             {
                 await NowScene.InitializeAsync();
             }
@@ -33,6 +33,25 @@ namespace DagaEngine
             {
                 await NowScene.UpdateAsync();
             }
+        }
+
+        public void AddScene(DagaScene scene)
+        {
+            if(_objects.TryAdd(scene.ID, scene))
+            {
+                NowScene ??= scene;
+            }
+        }
+
+        public void RemoveScene(Tsid sceneID)
+        {
+            if(NowScene?.ID == sceneID)
+            {
+                NowScene.Stop();
+                NowScene = null;
+            }
+
+            _objects.Remove(sceneID);
         }
 
         public async Task ChangeScene(Tsid sceneID)
