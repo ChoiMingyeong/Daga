@@ -1,10 +1,22 @@
-﻿namespace DagaEngine
-{
-    public sealed class DagaGameObject : DagaObject
-    {
-        public bool Disable { get; set; } = false;
+﻿using System.Numerics;
 
-        public bool Visible { get; set; } = true;
+namespace DagaEngine
+{
+    public class DagaGameObject : DagaObject
+    {
+        public Vector3 Position = new Vector3(0, 0, 0);
+
+        public Vector3 Rotation = new Vector3(0, 0, 0);
+
+        public Vector3 Scale = new Vector3(1, 1, 1);
+
+        public byte Layer = 0;
+
+        public int Order = 0;
+
+        public bool Disable = false;
+
+        public bool Visible = true;
 
         public List<DagaComponent> Components { get; private set; } = [];
 
@@ -12,7 +24,7 @@
         {
         }
 
-        public override sealed async Task InitializeAsync()
+        public override async Task InitializeAsync()
         {
             await Parallel.ForEachAsync(Components, async (component, _) =>
             {
@@ -20,7 +32,7 @@
             });
         }
 
-        public override sealed async Task StartAsync()
+        public override async Task StartAsync()
         {
             await Parallel.ForEachAsync(Components, async (component, _) =>
             {
@@ -28,7 +40,7 @@
             });
         }
 
-        public override sealed async Task UpdateAsync()
+        public override async Task UpdateAsync()
         {
             await Parallel.ForEachAsync(Components, async (component, _) =>
             {

@@ -1,6 +1,6 @@
 ﻿using TSID.Creator.NET;
 
-namespace DagaEngine
+namespace DagaEngine.Managers
 {
     public class DagaGameObjectManager : DagaManager<DagaGameObject>
     {

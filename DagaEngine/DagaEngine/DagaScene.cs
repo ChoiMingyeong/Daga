@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using DagaEngine.Managers;
+using System.Diagnostics;
+using TSID.Creator.NET;
 
 namespace DagaEngine
 {
@@ -29,6 +31,21 @@ namespace DagaEngine
         public void Stop()
         {
             _gameObjectManager.Stop();
+        }
+
+        public void AddGameObject(DagaGameObject gameObject)
+        {
+            _gameObjectManager.AddGameObject(gameObject);
+        }
+
+        public void RemoveGameObject(DagaGameObject gameObject)
+        {
+            _gameObjectManager.RemoveGameObject(gameObject);
+        }
+
+        public void RemoveGameObject(Tsid gameObjectID)
+        {
+            _gameObjectManager.RemoveGameObject(gameObjectID);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using TSID.Creator.NET;
 
-namespace DagaEngine
+namespace DagaEngine.Managers
 {
     public interface IDagaManager
     {
@@ -40,6 +40,11 @@ namespace DagaEngine
             {
                 await obj.UpdateAsync();
             });
+        }
+
+        public virtual Task StopAsync()
+        {
+            return Task.CompletedTask;
         }
 
         public void AddObject(T obj)
