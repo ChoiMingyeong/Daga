@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DagaBlazorLibrary", "DagaBlazorLibrary.csproj", "{7BB1590B-A1F2-4313-BD35-2B4C3A7E5D39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1", "..\BlazorApp1\BlazorApp1.csproj", "{D2796247-D7DB-417D-94D9-7AC53686D33F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BB1590B-A1F2-4313-BD35-2B4C3A7E5D39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BB1590B-A1F2-4313-BD35-2B4C3A7E5D39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BB1590B-A1F2-4313-BD35-2B4C3A7E5D39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BB1590B-A1F2-4313-BD35-2B4C3A7E5D39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2796247-D7DB-417D-94D9-7AC53686D33F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2796247-D7DB-417D-94D9-7AC53686D33F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2796247-D7DB-417D-94D9-7AC53686D33F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2796247-D7DB-417D-94D9-7AC53686D33F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8046ED9D-5088-4877-8FD2-C90985445E31}
+	EndGlobalSection
+EndGlobal
