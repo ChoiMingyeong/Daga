@@ -1,0 +1,38 @@
+﻿@using DagaBlazorLibrary.Models
+@inject IScreenSizeService ScreenService
+@inherits LayoutComponentBase
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code
+{
+    private ScreenDimensions _screen = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ScreenService.OnResizeHandler += (_, dims) =>
+        {
+            _screen = dims;
+            StateHasChanged();
+        };
+
+        await ScreenService.InitializeAsync();
+        _screen = await ScreenService.GetCurrentSizeAsync();
+
+        Console.WriteLine($"초기 화면 크기: {_screen.Width} x {_screen.Height}");
+    }
+
+}

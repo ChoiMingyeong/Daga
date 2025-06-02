@@ -1,0 +1,32 @@
+﻿@page "/"
+@inject CanvasHelperService Canvas
+
+<canvas id="myCanvas" width="300" height="200" style="border:1px solid black;"></canvas>
+<button @onclick="DrawRectAsync">사각형 그리기</button>
+<button @onclick="DrawImageAsync">이미지 그리기</button>
+<button @onclick="Clear">지우기</button>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Canvas.InitAsync("myCanvas");
+        }
+    }
+
+    private async Task DrawRectAsync()
+    {
+        await Canvas.DrawRectAsync(50, 50, 100, 50, "blue", "black");
+    }
+
+    private async Task DrawImageAsync()
+    {
+        await Canvas.DrawImageAsync("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcGbz7k%2FbtsD1mY2YBd%2FLkWiVVFa4fwyHiCkSW0Ru0%2Fimg.png", 10, 10, 100, 100);
+    }
+
+    private async Task Clear()
+    {
+        await Canvas.ClearAsync();
+    }
+}
