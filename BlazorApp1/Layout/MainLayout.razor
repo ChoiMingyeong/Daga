@@ -1,5 +1,4 @@
 ﻿@using DagaBlazorLibrary.Models
-@inject ScreenSizeService ScreenService
 @inherits LayoutComponentBase
 <div class="page">
     <div class="sidebar">
@@ -19,20 +18,4 @@
 
 @code
 {
-    private ScreenDimensions _screen = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-        var _screen = await ScreenService.GetCurrentSizeAsync();
-        ScreenService.OnResizeHandler += (_, dims) =>
-        {
-            _screen = dims;
-            StateHasChanged();
-        };
-
-        await ScreenService.InitializeAsync();
-
-        Console.WriteLine($"초기 화면 크기: {_screen.X} x {_screen.Y}");
-    }
-
 }
