@@ -1,15 +1,15 @@
 ﻿window.screenHelper = {
     getDimensions: () => {
         return {
-            width: window.innerWidth,
-            height: window.innerHeight
+            X: window.innerWidth,
+            Y: window.innerHeight
         };
     },
     registerResizeCallback: (dotNetObjectRef) => {
         window.onresize = () => {
             dotNetObjectRef.invokeMethodAsync('OnResize', {
-                width: window.innerWidth,
-                height: window.innerHeight
+                X: window.innerWidth,
+                Y: window.innerHeight
             });
         };
     }

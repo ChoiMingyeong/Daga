@@ -1,22 +1,23 @@
 ﻿using DagaBlazorLibrary.Models;
 using Microsoft.JSInterop;
+using System.Numerics;
 
 namespace DagaBlazorLibrary.Services
 {
-    public class ScreenSizeService : IScreenSizeService, IAsyncDisposable
+    public class ScreenSizeService : IAsyncDisposable
     {
         private readonly IJSRuntime _js;
         private DotNetObjectReference<ScreenSizeService>? _objRef;
-        public event EventHandler<ScreenDimensions>? OnResizeHandler;
+        public event EventHandler<Vector2>? OnResizeHandler;
 
         public ScreenSizeService(IJSRuntime js)
         {
             _js = js;
         }
 
-        public async Task<ScreenDimensions> GetCurrentSizeAsync()
+        public async Task<Vector2> GetCurrentSizeAsync()
         {
-            return await _js.InvokeAsync<ScreenDimensions>("screenHelper.getDimensions");
+            return await _js.InvokeAsync<Vector2>("screenHelper.getDimensions");
         }
 
         public async Task InitializeAsync()
@@ -26,9 +27,9 @@ namespace DagaBlazorLibrary.Services
         }
 
         [JSInvokable]
-        public void OnResize(ScreenDimensions dimensions)
+        public void OnResize(Vector2 screen)
         {
-            OnResizeHandler?.Invoke(this, dimensions);
+            OnResizeHandler?.Invoke(this, screen);
         }
 
         public ValueTask DisposeAsync()
