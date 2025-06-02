@@ -16,10 +16,18 @@
             ctx.strokeStyle = strokeColor;
             ctx.strokeRect(x, y, width, height);
         },
+        drawImage: function (imageUrl, x, y, width, height) {
+            if (!ctx) return;
+            const img = new Image();
+            img.onload = function () {
+                ctx.drawImage(img, x, y, width, height);
+            };
+            img.src = imageUrl;
+        },
         clear: function () {
             if (ctx && canvas) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
-        }
+        },
     };
 })();
