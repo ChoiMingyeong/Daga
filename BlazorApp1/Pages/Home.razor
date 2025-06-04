@@ -1,7 +1,15 @@
 ﻿@page "/"
-@inherits PageBase
-
-<canvas id="myCanvas" width="300" height="200" style="border:1px solid black;"></canvas>
+@using DagaBlazorEngine.Components
+<DagaCanvas @ref="canvasRef" />
 
 @code {
+    private DagaCanvas? canvasRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && canvasRef is not null)
+        {
+            await canvasRef.UpdateAsync();
+        }
+    }
 }

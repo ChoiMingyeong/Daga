@@ -18,9 +18,9 @@ namespace DagaBlazorLibrary.Engines
             _renderEngine.Initialize();
         }
 
-        public async Task InitializeAsync()
+        public Task InitializeAsync()
         {
-
+            throw new NotImplementedException();
         }
 
         public async Task OnFirstRenderAsync()

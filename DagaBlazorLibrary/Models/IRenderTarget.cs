@@ -1,10 +1,12 @@
-﻿namespace DagaBlazorLibrary.Models
+﻿using System.Numerics;
+
+namespace DagaBlazorLibrary.Models
 {
     public abstract class IRenderTarget : Transform
     {
         public abstract Task PreloadAsync();
 
-        public abstract Task DrawAsync();
+        public abstract Task DrawAsync(Vector2 screen);
     }
 
     public class RectangleRenderTarget : IRenderTarget
@@ -14,7 +16,7 @@
             return Task.CompletedTask;
         }
 
-        public async override Task DrawAsync()
+        public async override Task DrawAsync(Vector2 screen)
         {
 
         }

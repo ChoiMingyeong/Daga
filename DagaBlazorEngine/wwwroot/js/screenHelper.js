@@ -1,11 +1,11 @@
-﻿export function getDimensions() {
+﻿export function getScreenSize() {
     return {
         X: window.innerWidth,
         Y: window.innerHeight
     };
 }
 
-export function registerResizeCallback(dotNetObjectRef) {
+export function resizeCallback(dotNetObjectRef) {
     window.onresize = () => {
         dotNetObjectRef.invokeMethodAsync('OnResize', {
             X: window.innerWidth,
