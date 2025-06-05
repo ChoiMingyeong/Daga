@@ -7,9 +7,10 @@
     private ElementReference _canvasRef;
     private DotNetObjectReference<DagaCanvas>? _dotNetRef;
     private IJSObjectReference? _screenSizeModule;
+    private IJSObjectReference? _canvasModule;
 
-    public int CanvasWidth { get; private set; } = 800;
-    public int CanvasHeight { get; private set; } = 600;
+    public int CanvasWidth { get; private set; }
+    public int CanvasHeight { get; private set; }
 
     [Inject]
     private IJSRuntime JSRuntime { get; set; } = default!;
@@ -19,10 +20,12 @@
         if (firstRender)
         {
             _dotNetRef = DotNetObjectReference.Create(this);
-            _screenSizeModule = await JSRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "/_content/DagaBlazorEngine/js/screenHelper.js");
+            _screenSizeModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/screenHelper.js");
+            _canvasModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/canvasHelper.js");
             await _screenSizeModule.InvokeVoidAsync("resizeCallback", _dotNetRef);
         }
+
+        await UpdateAsync();
     }
 
     [JSInvokable]
@@ -37,7 +40,11 @@
 
     public async Task UpdateAsync()
     {
+        if (null == _canvasModule)
+            return;
+
         // 캔버스 다시 그리기 로직
+        await _canvasModule.InvokeVoidAsync("drawRectangle", _canvasRef, 0, 0, CanvasWidth/2, CanvasHeight/2);
     }
 
     public async ValueTask DisposeAsync()
@@ -45,6 +52,8 @@
         _dotNetRef?.Dispose();
         if (_screenSizeModule is not null)
             await _screenSizeModule.DisposeAsync();
+        if (_canvasModule is not null)
+            await _canvasModule.DisposeAsync();
     }
 
     public class ScreenSize

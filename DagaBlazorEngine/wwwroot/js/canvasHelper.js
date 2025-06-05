@@ -6,6 +6,18 @@
     uiCache: new Map()
 };
 
+export function drawRectangle(canvas, x, y, width, height, color = "green") {
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, width, height);
+}
+
 export function init(canvasId) {
     ctxCache.canvas = document.getElementById(canvasId);
     if (ctxCache.canvas)
