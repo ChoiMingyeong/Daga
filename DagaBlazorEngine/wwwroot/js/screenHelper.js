@@ -6,10 +6,13 @@
 }
 
 export function resizeCallback(dotNetObjectRef) {
-    window.onresize = () => {
-        dotNetObjectRef.invokeMethodAsync('OnResize', {
+    function notifyResize() {
+        dotNetObjectRef.invokeMethodAsync("OnResize", {
             X: window.innerWidth,
             Y: window.innerHeight
         });
-    };
+    }
+
+    window.onresize = notifyResize;
+    notifyResize();
 }

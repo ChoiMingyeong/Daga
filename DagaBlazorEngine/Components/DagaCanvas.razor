@@ -6,53 +6,50 @@
 @code {
     private ElementReference _canvasRef;
     private DotNetObjectReference<DagaCanvas>? _dotNetRef;
-    private event EventHandler<Vector2>? OnResizeHandler;
     private IJSObjectReference? _screenSizeModule;
 
-
-    public int CanvasWidth { get; private set; }
-    public int CanvasHeight { get; private set; }
+    public int CanvasWidth { get; private set; } = 800;
+    public int CanvasHeight { get; private set; } = 600;
 
     [Inject]
     private IJSRuntime JSRuntime { get; set; } = default!;
-
-    protected override void OnInitialized()
-    {
-        _dotNetRef = DotNetObjectReference.Create(this);
-        OnResizeHandler += async (_, screenSize) => { await OnResize(screenSize); };
-    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            _screenSizeModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/screenHelper.js");
-
+            _dotNetRef = DotNetObjectReference.Create(this);
+            _screenSizeModule = await JSRuntime.InvokeAsync<IJSObjectReference>(
+                "import", "/_content/DagaBlazorEngine/js/screenHelper.js");
             await _screenSizeModule.InvokeVoidAsync("resizeCallback", _dotNetRef);
         }
     }
 
     [JSInvokable]
-    public async Task OnResize(Vector2 screenSize)
+    public async Task OnResize(ScreenSize screenSize)
     {
         CanvasWidth = (int)screenSize.X;
         CanvasHeight = (int)screenSize.Y;
 
         await UpdateAsync();
-
         await InvokeAsync(StateHasChanged);
     }
 
     public async Task UpdateAsync()
     {
-        // 캔버스에 다시 그리는 로직
+        // 캔버스 다시 그리기 로직
     }
 
     public async ValueTask DisposeAsync()
     {
+        _dotNetRef?.Dispose();
         if (_screenSizeModule is not null)
             await _screenSizeModule.DisposeAsync();
+    }
 
-        _dotNetRef?.Dispose();
+    public class ScreenSize
+    {
+        public float X { get; set; }
+        public float Y { get; set; }
     }
 }
