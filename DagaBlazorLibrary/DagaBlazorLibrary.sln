@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DagaBlazorLibrary", "DagaBlazorLibrary.csproj", "{7BB1590B-A1F2-4313-BD35-2B4C3A7E5D39}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1", "..\BlazorApp1\BlazorApp1.csproj", "{D2796247-D7DB-417D-94D9-7AC53686D33F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DagaBlazorEngine", "..\DagaBlazorEngine\DagaBlazorEngine.csproj", "{47DBFDE0-40F9-4484-919C-7C09F3898570}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DagaBlazorLibrary", "DagaBlazorLibrary.csproj", "{23E1BFBD-79A9-BCA0-9A1F-9DD6318983F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7BB1590B-A1F2-4313-BD35-2B4C3A7E5D39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7BB1590B-A1F2-4313-BD35-2B4C3A7E5D39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7BB1590B-A1F2-4313-BD35-2B4C3A7E5D39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7BB1590B-A1F2-4313-BD35-2B4C3A7E5D39}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D2796247-D7DB-417D-94D9-7AC53686D33F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D2796247-D7DB-417D-94D9-7AC53686D33F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2796247-D7DB-417D-94D9-7AC53686D33F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2796247-D7DB-417D-94D9-7AC53686D33F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47DBFDE0-40F9-4484-919C-7C09F3898570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47DBFDE0-40F9-4484-919C-7C09F3898570}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47DBFDE0-40F9-4484-919C-7C09F3898570}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47DBFDE0-40F9-4484-919C-7C09F3898570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23E1BFBD-79A9-BCA0-9A1F-9DD6318983F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E1BFBD-79A9-BCA0-9A1F-9DD6318983F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E1BFBD-79A9-BCA0-9A1F-9DD6318983F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E1BFBD-79A9-BCA0-9A1F-9DD6318983F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
