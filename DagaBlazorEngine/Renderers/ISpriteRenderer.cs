@@ -1,6 +1,6 @@
 ﻿namespace DagaBlazorEngine.Renderers
 {
-    internal interface IUIRenderer : IRenderer
+    internal interface ISpriteRenderer : IRenderer
     {
     }
 }

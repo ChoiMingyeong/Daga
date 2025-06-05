@@ -1,15 +1,5 @@
 ﻿@page "/"
 @using DagaBlazorEngine.Components
-<DagaCanvas @ref="canvasRef" />
-
+    <ColliderCanvas/>
 @code {
-    private DagaCanvas? canvasRef;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender && canvasRef is not null)
-        {
-            await canvasRef.UpdateAsync();
-        }
-    }
 }

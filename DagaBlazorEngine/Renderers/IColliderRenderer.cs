@@ -1,6 +1,7 @@
 ﻿namespace DagaBlazorEngine.Renderers
 {
-    public interface IColliderRenderer : IRenderer
+    internal interface IColliderRenderer : IRenderer
     {
+        public Task DrawAsync();
     }
 }

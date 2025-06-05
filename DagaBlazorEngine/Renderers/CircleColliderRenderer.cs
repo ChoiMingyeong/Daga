@@ -1,14 +1,12 @@
 ﻿
+using DagaBlazorEngine.Models;
+
 namespace DagaBlazorEngine.Renderers
 {
-    public class SpriteRenderer : IRenderer
+
+    internal class CircleColliderRenderer : DagaObject, IColliderRenderer
     {
         public Task DrawAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task PreloadAsync()
         {
             throw new NotImplementedException();
         }

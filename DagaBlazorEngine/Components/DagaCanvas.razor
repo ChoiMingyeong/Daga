@@ -2,6 +2,9 @@
 @using System.Numerics
 
 <canvas @ref="_canvasRef" width="@CanvasWidth" height="@CanvasHeight" />
+<button style=@($"position:absolute; top:{CanvasHeight/2}px; left:{CanvasWidth/2}px; width:{CanvasWidth * 0.1}px; height:{CanvasWidth * 0.1}px; border:none; padding:0; background:transparent;")>
+    <img src="~/icon-512.png" style="width: 100%; height: 100%;" />
+</button>
 
 @code {
     private ElementReference _canvasRef;
@@ -20,7 +23,7 @@
         if (firstRender)
         {
             _dotNetRef = DotNetObjectReference.Create(this);
-            _screenSizeModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/screenHelper.js");
+            _screenSizeModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/screenSizeModule.js");
             _canvasModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/canvasHelper.js");
             await _screenSizeModule.InvokeVoidAsync("resizeCallback", _dotNetRef);
         }
@@ -54,11 +57,5 @@
             await _screenSizeModule.DisposeAsync();
         if (_canvasModule is not null)
             await _canvasModule.DisposeAsync();
-    }
-
-    public class ScreenSize
-    {
-        public float X { get; set; }
-        public float Y { get; set; }
     }
 }
