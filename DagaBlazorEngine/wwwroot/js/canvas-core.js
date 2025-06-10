@@ -1,13 +1,14 @@
-﻿let ctxDisplay;
+﻿import { drawBackground } from "/_content/DagaBlazorEngine/js/layer-background.js";
+import { drawMain } from "/_content/DagaBlazorEngine/js/layer-main.js";
+import { drawUI } from "/_content/DagaBlazorEngine/js/layer-ui.js";
+
+let ctxDisplay;
 let ctxBackground, ctxMain, ctxUI, ctxBuffer;
 
-export function init(canvas) {
+export function init(canvas, w, h) {
     ctxDisplay = canvas.getContext("2d");
 
-    const width = ctxDisplay.canvas.width;
-    const height = ctxDisplay.canvas.height;
-
-    const create = () => new OffscreenCanvas(width, height).getContext("2d");
+    const create = () => new OffscreenCanvas(w, h).getContext("2d");
 
     ctxBackground = create();
     ctxMain = create();
@@ -28,6 +29,10 @@ export function getCtxUI() {
 export function flush() {
     const width = ctxDisplay.canvas.width;
     const height = ctxDisplay.canvas.height;
+
+    if (width == 0 || height == 0) {
+        return;
+    })
 
     ctxBuffer.clearRect(0, 0, width, height);
 
