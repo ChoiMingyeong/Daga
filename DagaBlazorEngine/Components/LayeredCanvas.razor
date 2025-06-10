@@ -1,0 +1,64 @@
+﻿<canvas @ref="_canvasRef" width="@CanvasWidth" height="@CanvasHeight" />
+
+@code {
+    private ElementReference _canvasRef;
+    private DotNetObjectReference<LayeredCanvas>? _dotNetRef;
+    private IJSObjectReference? _screenSizeModule;
+    private IJSObjectReference? core, bg, main, ui;
+
+    public int CanvasWidth { get; private set; }
+    public int CanvasHeight { get; private set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _dotNetRef = DotNetObjectReference.Create(this);
+            _screenSizeModule = await JS.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/screenSizeModule.js");
+            if (await _screenSizeModule.InvokeAsync<ScreenSize>("getScreenSize") is ScreenSize screenSize)
+            {
+                CanvasWidth = (int)screenSize.X;
+                CanvasHeight = (int)screenSize.Y;
+            }
+
+            core = await JS.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/canvas-core.js");
+            bg = await JS.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/layer-background.js");
+            main = await JS.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/layer-main.js");
+            ui = await JS.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/layer-ui.js");
+            await core.InvokeVoidAsync("init", _canvasRef);
+        }
+
+        await RenderAsync();
+    }
+
+    [JSInvokable]
+    public async Task OnResize(ScreenSize screenSize)
+    {
+        CanvasWidth = (int)screenSize.X;
+        CanvasHeight = (int)screenSize.Y;
+
+        await RenderAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async Task RenderAsync()
+    {
+        if (core is null)
+        {
+            return;
+        }
+
+        await bg.InvokeVoidAsync("draw", await core.InvokeAsync<IJSObjectReference>("getCtxBackground"));
+        await main.InvokeVoidAsync("draw", await core.InvokeAsync<IJSObjectReference>("getCtxMain"));
+        await ui.InvokeVoidAsync("draw", await core.InvokeAsync<IJSObjectReference>("getCtxUI"));
+
+        await core.InvokeVoidAsync("flush");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        _dotNetRef?.Dispose();
+        if (_screenSizeModule is not null)
+            await _screenSizeModule.DisposeAsync();
+    }
+}
