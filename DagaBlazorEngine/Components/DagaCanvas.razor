@@ -1,5 +1,4 @@
-﻿@using Microsoft.JSInterop
-@using System.Numerics
+﻿@using System.Numerics
 
 <canvas @ref="_canvasRef" />
 
@@ -11,9 +10,7 @@
     {
         if (firstRender)
         {
-            _canvasModule = await JS.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/canvas.js");
-            await _canvasModule.InvokeVoidAsync("init", _canvasRef);
-
+            await DagaRenderSvc.InitializeAsync(_canvasRef);
             await Task.Run(StartRenderLoopAsync);
         }
     }
@@ -22,18 +19,7 @@
     {
         while (true)
         {
-            if (_canvasModule is not null)
-            {
-                await _canvasModule.InvokeVoidAsync("drawBegin");
-                await _canvasModule.InvokeVoidAsync("drawImage", "https://ssl.pstatic.net/melona/libs/1533/1533884/35df8dac7240606036fc_20250609152934784.jpg", 0, 0);
-                await _canvasModule.InvokeVoidAsync("drawFillRect", 100, 100, 200, 80, "blue");
-                await _canvasModule.InvokeVoidAsync("drawFillCircle", 110, 110, 100, "red");
-                await _canvasModule.InvokeVoidAsync("drawStrokeRect", 0, 0, 100, 100);
-                await _canvasModule.InvokeVoidAsync("drawStrokeCircle", 10, 10, 50);
-                await _canvasModule.InvokeVoidAsync("drawText", "test Text 테스트", 200, 200);
-                await _canvasModule.InvokeVoidAsync("drawEnd");
-            }
-
+            await DagaRenderSvc.UpdateAsync();
             await InvokeAsync(StateHasChanged);
             await Task.Delay(16); // 약 60fps (1000ms / 60 ≈ 16ms)
         }

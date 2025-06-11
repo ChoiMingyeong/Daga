@@ -1,4 +1,4 @@
-﻿import { getScreenSize } from "/_content/DagaBlazorEngine/js/module-screensize.js";
+﻿import { getScreenSize } from "/_content/DagaBlazorEngine/js/screensize.js";
 
 let targetCtx;
 let offscreen;
@@ -16,12 +16,12 @@ export function init(canvas) {
 function resizeCanvas() {
     if (!targetCtx || !offscreen) return;
 
-    const { w, h } = getScreenSize();
-    targetCtx.canvas.width = w;
-    targetCtx.canvas.height = h;
+    const { Width, Height } = getScreenSize();
+    targetCtx.canvas.width = Width;
+    targetCtx.canvas.height = Height;
 
-    offscreen.width = w;
-    offscreen.height = h;
+    offscreen.width = Width;
+    offscreen.height = Height;
 }
 
 export function drawBegin() {

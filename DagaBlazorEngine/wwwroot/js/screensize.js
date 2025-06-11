@@ -4,7 +4,7 @@
     const height = window.innerHeight * dpr;
 
     return {
-        w: width,
-        h: height
+        Width: width,
+        Height: height
     };
 }

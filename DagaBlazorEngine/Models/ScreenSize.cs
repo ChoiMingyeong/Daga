@@ -2,7 +2,7 @@
 {
     public class ScreenSize
     {
-        public float w { get; set; }
-        public float h { get; set; }
+        public float Width { get; set; }
+        public float Height { get; set; }
     }
 }

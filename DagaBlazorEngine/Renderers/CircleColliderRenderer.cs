@@ -1,14 +1,13 @@
-﻿
-using DagaBlazorEngine.Models;
+﻿using Microsoft.JSInterop;
 
 namespace DagaBlazorEngine.Renderers
 {
 
-    internal class CircleColliderRenderer : DagaObject, IColliderRenderer
+    public class CircleColliderRenderer(in IJSObjectReference canvasModule) : IRenderer(canvasModule)
     {
-        public Task DrawAsync()
+        public override async Task DrawAsync()
         {
-            throw new NotImplementedException();
+            await _canvasModule.InvokeVoidAsync("drawStrokeCircle", Position.X, Position.Y, Scale.X, "green");
         }
     }
 }

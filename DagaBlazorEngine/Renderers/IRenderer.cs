@@ -1,7 +1,13 @@
-﻿namespace DagaBlazorEngine.Renderers
+﻿using DagaBlazorEngine.Models;
+using Microsoft.JSInterop;
+
+namespace DagaBlazorEngine.Renderers
 {
 
-    internal interface IRenderer
+    public abstract class IRenderer(in IJSObjectReference canvasModule) : DagaObject
     {
+        protected readonly IJSObjectReference _canvasModule = canvasModule;
+
+        public abstract Task DrawAsync();
     }
 }
