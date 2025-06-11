@@ -1,4 +1,4 @@
-﻿<canvas @ref="_canvasRef" width="@CanvasWidth" height="@CanvasHeight" />
+﻿@* <canvas @ref="_canvasRef" width="@CanvasWidth" height="@CanvasHeight" />
 
 @code {
     private ElementReference _canvasRef;
@@ -60,5 +60,19 @@
         _dotNetRef?.Dispose();
         if (_screenSizeModule is not null)
             await _screenSizeModule.DisposeAsync();
+    }
+} *@
+
+<canvas id="mainCanvas" />
+
+@code {
+    private bool _initialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await JS.InvokeVoidAsync("init");
+        }
     }
 }

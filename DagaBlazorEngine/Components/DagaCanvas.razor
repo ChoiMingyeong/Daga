@@ -1,61 +1,44 @@
 ﻿@using Microsoft.JSInterop
 @using System.Numerics
 
-<canvas @ref="_canvasRef" width="@CanvasWidth" height="@CanvasHeight" />
-<button style=@($"position:absolute; top:{CanvasHeight/2}px; left:{CanvasWidth/2}px; width:{CanvasWidth * 0.1}px; height:{CanvasWidth * 0.1}px; border:none; padding:0; background:transparent;")>
-    <img src="~/icon-512.png" style="width: 100%; height: 100%;" />
-</button>
+<canvas @ref="_canvasRef" />
 
 @code {
     private ElementReference _canvasRef;
-    private DotNetObjectReference<DagaCanvas>? _dotNetRef;
-    private IJSObjectReference? _screenSizeModule;
     private IJSObjectReference? _canvasModule;
 
-    public int CanvasWidth { get; private set; }
-    public int CanvasHeight { get; private set; }
-
-    [Inject]
-    private IJSRuntime JSRuntime { get; set; } = default!;
+    private float x = 0f;
+    private float y = 0f;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            _dotNetRef = DotNetObjectReference.Create(this);
-            _screenSizeModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/screenSizeModule.js");
-            _canvasModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/canvasHelper.js");
-            await _screenSizeModule.InvokeVoidAsync("resizeCallback", _dotNetRef);
+            _canvasModule = await JS.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/canvas.js");
+            await _canvasModule.InvokeVoidAsync("init");
+            await Task.Run(StartRenderLoopAsync);
         }
-
-        await UpdateAsync();
     }
 
-    [JSInvokable]
-    public async Task OnResize(ScreenSize screenSize)
+    private async Task StartRenderLoopAsync()
     {
-        CanvasWidth = (int)screenSize.X;
-        CanvasHeight = (int)screenSize.Y;
+        while (true)
+        {
+            x += 0.1f;
+            y += 0.1f;
+            x %= 100f;
+            y %= 100f;
 
-        await UpdateAsync();
-        await InvokeAsync(StateHasChanged);
-    }
+            if (_canvasModule is not null)
+            {
+                await _canvasModule.InvokeVoidAsync("drawBegin", _canvasRef);
+                await _canvasModule.InvokeVoidAsync("drawFillRect", 100 + x, 100 + y, 200, 80, "blue");
+                await _canvasModule.InvokeVoidAsync("drawStrokeRect", 0 + x, 0 + y, 100, 100);
+                await _canvasModule.InvokeVoidAsync("drawEnd", _canvasRef);
+            }
 
-    public async Task UpdateAsync()
-    {
-        if (null == _canvasModule)
-            return;
-
-        // 캔버스 다시 그리기 로직
-        await _canvasModule.InvokeVoidAsync("drawRectangle", _canvasRef, 0, 0, CanvasWidth/2, CanvasHeight/2);
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        _dotNetRef?.Dispose();
-        if (_screenSizeModule is not null)
-            await _screenSizeModule.DisposeAsync();
-        if (_canvasModule is not null)
-            await _canvasModule.DisposeAsync();
+            await InvokeAsync(StateHasChanged);
+            await Task.Delay(16); // 약 60fps (1000ms / 60 ≈ 16ms)
+        }
     }
 }

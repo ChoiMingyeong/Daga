@@ -1,18 +1,10 @@
 ﻿export function getScreenSize() {
+    const dpr = window.devicePixelRatio || 1;
+    const width = window.innerWidth * dpr;
+    const height = window.innerHeight * dpr;
+
     return {
-        X: window.innerWidth,
-        Y: window.innerHeight
+        w: width,
+        h: height
     };
-}
-
-export function resizeCallback(dotNetObjectRef) {
-    function notifyResize() {
-        dotNetObjectRef.invokeMethodAsync("OnResize", {
-            X: window.innerWidth,
-            Y: window.innerHeight
-        });
-    }
-
-    window.onresize = notifyResize;
-    notifyResize();
 }
