@@ -10,7 +10,7 @@ export function init(canvas) {
     offscreenCtx = offscreen.getContext("2d");
 
     resizeCanvas();
-    window.addEventListener("resize", resizeCanvas());
+    window.addEventListener("resize", resizeCanvas);
 }
 
 function resizeCanvas() {
@@ -19,6 +19,7 @@ function resizeCanvas() {
     const { w, h } = getScreenSize();
     targetCtx.canvas.width = w;
     targetCtx.canvas.height = h;
+
     offscreen.width = w;
     offscreen.height = h;
 }
@@ -71,14 +72,16 @@ export function drawText(t, x, y, s = 20, f = "sans-serif", c = "black", a = "le
     offscreenCtx.fillText(t, x, y);
 }
 
-export async function drawImage(url, x, y, w, h) {
+export async function drawImage(url, x, y, w = 0, h = 0) {
     if (!offscreenCtx) return;
 
-    const image = new Image();
+    let image = new Image();
     image.src = url;
 
     await image.decode();
-    offscreenCtx.drawImage(image, x, y, w, h);
+    let width = w <= 0 ? image.naturalWidth : w;
+    let height = h <= 0 ? image.naturalHeight : h;
+    offscreenCtx.drawImage(image, x, y, width, height);
 }
 
 export function drawEnd() {
