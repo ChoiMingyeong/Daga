@@ -6,16 +6,20 @@
 @code {
     private ElementReference _canvasRef;
     private IJSObjectReference? _canvasModule;
+    private IJSObjectReference? _screenSizeModule;
+
+    private int CanvasWidth;
+    private int CanvasHeight;
 
     private float x = 0f;
-    private float y = 0f;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            _screenSizeModule = await JS.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/module-screensize.js");
             _canvasModule = await JS.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/canvas.js");
-            await _canvasModule.InvokeVoidAsync("init");
+            await _canvasModule.InvokeVoidAsync("init", _canvasRef);
             await Task.Run(StartRenderLoopAsync);
         }
     }
@@ -24,17 +28,17 @@
     {
         while (true)
         {
-            x += 0.1f;
-            y += 0.1f;
-            x %= 100f;
-            y %= 100f;
+            x += 1f;
+
+            var size = await _screenSizeModule!.InvokeAsync<ScreenSize>("getScreenSize");
+            x %= size.w;
 
             if (_canvasModule is not null)
             {
-                await _canvasModule.InvokeVoidAsync("drawBegin", _canvasRef);
-                await _canvasModule.InvokeVoidAsync("drawFillRect", 100 + x, 100 + y, 200, 80, "blue");
-                await _canvasModule.InvokeVoidAsync("drawStrokeRect", 0 + x, 0 + y, 100, 100);
-                await _canvasModule.InvokeVoidAsync("drawEnd", _canvasRef);
+                await _canvasModule.InvokeVoidAsync("drawBegin");
+                await _canvasModule.InvokeVoidAsync("drawFillRect", 100 + x, 100, 200, 80, "blue");
+                await _canvasModule.InvokeVoidAsync("drawStrokeRect", 0 + x, 0, 100, 100);
+                await _canvasModule.InvokeVoidAsync("drawEnd");
             }
 
             await InvokeAsync(StateHasChanged);
