@@ -11,7 +11,9 @@
         if (firstRender)
         {
             await DagaRenderSvc.InitializeAsync(_canvasRef);
+            //var outline = await DagaRenderSvc.GetOutline("favicon.png");
             await Task.Run(StartRenderLoopAsync);
+
         }
     }
 

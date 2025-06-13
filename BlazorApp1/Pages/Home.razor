@@ -1,6 +1,11 @@
 ﻿@page "/"
-@using DagaBlazorEngine.Components
-    <DagaCanvas/>
+@using DagaBlazorEngine.BlazorComponents
+<div style="z-index: 0;">
+    <DagaCanvas />
+</div>
+<div style="position: absolute; z-index: 10;">
+    <Radzen.Blazor.RadzenButton Text="Click Me" Click="@(() => Console.WriteLine("Button clicked!"))" />
+</div>
 @code {
 
 }

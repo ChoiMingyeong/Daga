@@ -1,7 +1,11 @@
-﻿using DagaBlazorEngine.Renderers;
+﻿using DagaBlazorEngine.Components;
+using DagaBlazorEngine.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
+using System.Numerics;
 
 namespace DagaBlazorEngine.Services
 {
@@ -10,7 +14,7 @@ namespace DagaBlazorEngine.Services
         private readonly IJSRuntime _jsRuntime;
 
         private IJSObjectReference? _canvasModule;
-        private List<IRenderer> _renderers = [];
+        private List<DagaObject> _dagaObjects = [];
 
         public DagaRenderService(IJSRuntime jsRuntime)
         {
@@ -22,8 +26,17 @@ namespace DagaBlazorEngine.Services
             _canvasModule = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/canvas.js");
             await _canvasModule.InvokeVoidAsync("init", canvasRef);
 
-            _renderers.Add(new CircleColliderRenderer(_canvasModule) { Position = new(50, 50), Scale = new(50, 0) });
-            _renderers.Add(new RectColliderRenderer(_canvasModule) { Position = new(50, 25), Scale = new(100, 50) });
+            DagaObject circle = new();
+            circle.Transform.Position = new Vector2(50, 50);
+            circle.Transform.Scale = new Vector2(50, 50);
+            circle.AddComponents(new StrokeCircleRenderer(_canvasModule));
+            _dagaObjects.Add(circle);
+
+            DagaObject rect = new();
+            rect.Transform.Position = new Vector2(200, 50);
+            rect.Transform.Scale = new Vector2(100, 50);
+            rect.AddComponents(new StrokeRectRenderer(_canvasModule));
+            _dagaObjects.Add(rect);
         }
 
         [MemberNotNull(nameof(_canvasModule))]
@@ -54,11 +67,23 @@ namespace DagaBlazorEngine.Services
             ThrowIfNotInitialized();
 
             await DrawBeginAsync();
-            foreach (var renderer in _renderers)
+            foreach (var renderer in _dagaObjects
+                .Where(p=>p.Active && p.Visible)
+                .SelectMany(p => p.Components.OfType<IRenderer>()).Where(p=>p.Active))
             {
                 await renderer.DrawAsync();
             }
             await DrawEndAsync();
+        }
+
+        public async Task<List<PointF>> GetOutline(string url, int threshold = 10)
+        {
+            ThrowIfNotInitialized();
+
+            var rawPoints = await _canvasModule.InvokeAsync<List<List<double>>>("traceImageOutline", url, threshold);
+            var outline = rawPoints.Where(p => p.Count >= 2).Select(p => new PointF((float)p[0], (float)p[1])).ToList();
+
+            return outline;
         }
     }
 }
