@@ -23,20 +23,20 @@ namespace DagaBlazorEngine.Services
 
         public async Task InitializeAsync(ElementReference canvasRef)
         {
-            _canvasModule = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/canvas.js");
+            _canvasModule = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/DagaBlazorEngine/js/webgl.js");
             await _canvasModule.InvokeVoidAsync("init", canvasRef);
 
-            DagaObject circle = new();
-            circle.Transform.Position = new Vector2(50, 50);
-            circle.Transform.Scale = new Vector2(50, 50);
-            circle.AddComponents(new StrokeCircleRenderer(_canvasModule));
-            _dagaObjects.Add(circle);
+            //DagaObject circle = new();
+            //circle.Transform.Position = new Vector2(50, 50);
+            //circle.Transform.Scale = new Vector2(50, 50);
+            //circle.AddComponents(new StrokeCircleRenderer(_canvasModule));
+            //_dagaObjects.Add(circle);
 
-            DagaObject rect = new();
-            rect.Transform.Position = new Vector2(200, 50);
-            rect.Transform.Scale = new Vector2(100, 50);
-            rect.AddComponents(new StrokeRectRenderer(_canvasModule));
-            _dagaObjects.Add(rect);
+            //DagaObject rect = new();
+            //rect.Transform.Position = new Vector2(200, 50);
+            //rect.Transform.Scale = new Vector2(100, 50);
+            //rect.AddComponents(new StrokeRectRenderer(_canvasModule));
+            //_dagaObjects.Add(rect);
         }
 
         [MemberNotNull(nameof(_canvasModule))]
@@ -52,14 +52,14 @@ namespace DagaBlazorEngine.Services
         {
             ThrowIfNotInitialized();
 
-            await _canvasModule.InvokeVoidAsync("drawBegin");
+            //await _canvasModule.InvokeVoidAsync("drawBegin");
         }
 
         private async Task DrawEndAsync()
         {
             ThrowIfNotInitialized();
 
-            await _canvasModule.InvokeVoidAsync("drawEnd");
+            //await _canvasModule.InvokeVoidAsync("drawEnd");
         }
 
         public async Task UpdateAsync()
