@@ -22,6 +22,15 @@ function resizeCanvas() {
     targetCtx.viewport(0, 0, Width, Height);
 }
 
+export function drawBegin() {
+    if (!targetCtx) return;
+
+    targetCtx.clearColor(0.1, 0.1, 0.1, 1.0);
+    targetCtx.clear(targetCtx.COLOR_BUFFER_BIT);
+}
+
+
+
 //let gl;
 //let program;
 //let positionBuffer;
