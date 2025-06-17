@@ -52,7 +52,7 @@ namespace DagaBlazorEngine.Services
         {
             ThrowIfNotInitialized();
 
-            //await _canvasModule.InvokeVoidAsync("drawBegin");
+            await _canvasModule.InvokeVoidAsync("drawBegin");
         }
 
         private async Task DrawEndAsync()

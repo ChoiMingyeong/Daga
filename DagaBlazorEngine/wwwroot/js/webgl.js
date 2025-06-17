@@ -8,6 +8,7 @@ export function init(canvas) {
     if (!targetCtx) return;
 
     resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
     targetCtx.clearColor(0.0, 0.0, 0.0, 1.0);
     targetCtx.clear(targetCtx.COLOR_BUFFER_BIT);
