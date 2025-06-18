@@ -9,9 +9,6 @@ export function init(canvas) {
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
-
-    targetCtx.clearColor(0.0, 0.0, 0.0, 1.0);
-    targetCtx.clear(targetCtx.COLOR_BUFFER_BIT);
 }
 function resizeCanvas() {
     if (!targetCtx) return;
@@ -21,6 +18,8 @@ function resizeCanvas() {
     targetCtx.canvas.height = Height;
 
     targetCtx.viewport(0, 0, Width, Height);
+    targetCtx.clearColor(0.1, 0.1, 0.1, 1.0);
+    targetCtx.clear(targetCtx.COLOR_BUFFER_BIT);
 }
 
 export function drawBegin() {
