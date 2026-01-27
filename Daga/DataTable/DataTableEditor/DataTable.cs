@@ -1,25 +1,18 @@
-﻿namespace DataTableEditor.Core
+﻿using DataTableEditor.Core;
+
+namespace DataTableEditor
 {
-    public partial class DataTable
+    public class DataTable
     {
 
-        public ID ProjectId { get; set; }
-
-        public ID Id { get; set; }
-
-        public string Name { get; set; } = string.Empty;
-
-        public string Description { get; set; } = string.Empty;
-
-        public 
     }
 
-    public interface IDefaultInfo
+    public class DataCell
     {
-        ID Id { get; set; }
+        public ID ColumnID { get; set; }
 
-        string Name { get; set; }
+        public ID RowID { get; set; }
 
-        string Description { get; set; }
+        public string Value { get; set; } = string.Empty;
     }
 }
