@@ -5,19 +5,10 @@ namespace DagaDataTableEditor
     public class DataCell
     {
         [JsonIgnore]
-        public DataColumnDefinition ColumnDef { get; set; }
+        public DataColumnDefinition? ColumnDef { get; set; }
 
         #region 파일 저장용
         public Id<DataColumnDefinition> ColumnId { get; set; }
-
-        public void SetColumnDef(ref IDictionary<Id<DataColumnDefinition>, DataColumnDefinition> colDefs)
-        {
-            if (!colDefs.TryGetValue(ColumnId, out DataColumnDefinition? colDef))
-            {
-                throw new ArgumentException($"Column definition with id {ColumnId} not found in provided column definitions.");
-            }
-            ColumnDef = colDef;
-        }
         #endregion
 
         public string? Value { get; set; } = string.Empty;
