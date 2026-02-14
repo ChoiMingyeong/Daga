@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36915.13 d17.14
+VisualStudioVersion = 17.14.36915.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTableEditor", "DataTableEditor\DataTableEditor.csproj", "{C2D259A1-F07E-4385-8EB8-7319AA9B077B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DagaDataTableEditor", "DagaDataTableEditor\DagaDataTableEditor.csproj", "{F5E710DA-807D-4FC6-8FA3-B9CFE85498E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C2D259A1-F07E-4385-8EB8-7319AA9B077B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2D259A1-F07E-4385-8EB8-7319AA9B077B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2D259A1-F07E-4385-8EB8-7319AA9B077B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2D259A1-F07E-4385-8EB8-7319AA9B077B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5E710DA-807D-4FC6-8FA3-B9CFE85498E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5E710DA-807D-4FC6-8FA3-B9CFE85498E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5E710DA-807D-4FC6-8FA3-B9CFE85498E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5E710DA-807D-4FC6-8FA3-B9CFE85498E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

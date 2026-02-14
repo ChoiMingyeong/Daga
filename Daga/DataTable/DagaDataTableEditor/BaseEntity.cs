@@ -1,8 +1,8 @@
 ﻿namespace DagaDataTableEditor
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity<T>
     {
-        public ID ID { get; set; }
+        public Id<T> Id { get; set; }
 
         public string Name { get; set; } = string.Empty;
 
